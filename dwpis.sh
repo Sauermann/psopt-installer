@@ -1,12 +1,12 @@
-
 #!/bin/sh
 
-echo "pis.sh - PSOPT Installation Script for Debian Wheezy"
-echo "Copyright 2014 Markus Sauermann"
+echo "dwpis.sh - Debian Wheezy PSOPT Installation Script"
+echo ""
+echo "Copyright (C) 2014 Markus Sauermann"
 echo ""
 echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
-echo "under certain conditions."
+echo "under certain conditions; see the filecontent for more information."
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ echo ""
 echo "Make sure that the current user is in the groups sudo and staff."
 echo ""
 read -s -p "Press enter to start the installation."
+
 # install needed packages
 sudo apt-get install gfortran g++ autoconf libtool libgd2-xpm-dev libpango1.0-dev unzip libf2c2-dev libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
 # add directory for content

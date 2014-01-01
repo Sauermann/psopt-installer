@@ -1,12 +1,23 @@
-pis.sh
+PSOPT-Installer
 
-Copyright 2014 Markus Sauermann
+Copyright (C) 2014 Markus Sauermann
+
 
 An installation script for PSOPT [1] on Debian Wheezy [2]
 
-You can contact me at my E-Mail address
-psopt-installer@sauermann-consulting.de
 
+Usage:
+In a shell on Debian do the following:
+# wget https://raw.github.com/Sauermann/psopt-installer/master/dwpis.sh
+# chmod a+x dwpis.sh
+# ./dwpis.sh
+
+Follow the instructions (mainly enter password for sudo)
+
+
+
+Send comments or correctins via the github page
+https://github.com/Sauermann/psopt-installer
 
 [1] http://www.psopt.org/
 [2] http://www.debian.org/releases/wheezy/
