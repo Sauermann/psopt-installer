@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "uppis.sh - Ubuntu Precise Pangolin 12.04 PSOPT Installation Script"
 echo ""

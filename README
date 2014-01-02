@@ -41,8 +41,8 @@ If you do not have downloaded the script yet, do:
 Known issues
 ============
 
-On debian some examples do not give the expected results.
-On ubuntu the display of gnuplot charts does not happen automatically
+On Debian some examples do not give the expected results.
+On Ubuntu the display of gnuplot charts does not happen automatically.
 
 
 Contact
