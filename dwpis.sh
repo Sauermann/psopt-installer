@@ -28,7 +28,7 @@ echo ""
 read -s -p "Press enter to start the installation."
 
 # install needed packages
-sudo apt-get install gfortran g++ autoconf libtool libgd2-xpm-dev libpango1.0-dev unzip libf2c2-dev libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
+sudo apt-get install gfortran g++ libgd2-xpm-dev libpango1.0-dev unzip libf2c2-dev libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
 # add directory for content
 cd ~
 mkdir packages
@@ -100,7 +100,6 @@ make
 cd ../..
 # and Adol-C Compilation
 # see http://list.coin-or.org/pipermail/adol-c/2012-March/000808.html
-autoreconf -f -i
 ./configure --enable-sparse --enable-static
 make
 make install
