@@ -1,0 +1,92 @@
+This software uses, downloads and installs multiple software packages.
+this list contains information about their licenses.
+
+MinGW/MSYS
+==========
+Version of 2013-10-04
+Available at http://www.mingw.org
+View it's license at LICENSE_MSYS.rtf
+
+TDM-GCC
+=======
+Version 4.8.1
+Available at http://tdm-gcc.tdragon.net/
+View it's license at LICENSE_MinGW-w64-runtime.txt and also
+LICENSE_MinGW-w64-runtime.txt
+
+OpenBLAS
+========
+Version 0.2.8
+Available at http://www.openblas.net/
+View it's license at LICENSE_OpenBLAS.txt
+
+Ipopt
+=====
+Version 3.9.3 with the patch from
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
+Available at https://projects.coin-or.org/Ipopt
+It is available under the EPLv1.0
+LICENSE_EclipsePublicLicenseV1_0.txt
+
+Metis
+=====
+Version 4.0.1 with the patch from
+http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
+Available at http://glaros.dtc.umn.edu/gkhome/metis/metis/overview
+View it's license at LICENSE_Metis.txt
+Version 5.03 and later are published under Apache License Version 2.0.
+
+Mumps
+=====
+Version 4.9.2
+Available at http://mumps.enseeiht.fr/index.php
+View it's Public Domain license at LICENSE_Mumps.txt
+
+ADOL-C
+======
+Version 2.1.12
+Available at http://www.coin-or.org/projects/ADOL-C.xml
+View it's license at LICENSE_CommonPublicLicenseV1_0.txt
+
+Colpack
+=======
+Version 1.0.3
+Available at http://www.cscapes.org/coloringpage/software.htm
+View it's LGPL license at LICENSE_LGPLV3.txt
+
+dlfcn-win32
+===========
+Version r19-6
+Available at https://code.google.com/p/dlfcn-win32/ and respectively
+at http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/
+View it's LGPL license at LICENSE_DLFCN.txt
+
+libf2c
+======
+Version of Thu Sep 26 16:42:35 MDT 2013
+Available at http://www.netlib.org/f2c/
+View it's license at LICENSE_libf2c.txt
+
+Psopt
+=====
+Version 3.02
+Available at http://www.psopt.org/
+View it's LGPL license at LICENSE_PSOPT.txt
+
+UFconfig
+========
+Version 3.6.1
+Available at https://www.cise.ufl.edu/research/sparse/SuiteSparse_config/
+View it's license at LICENSE_UFconfig.txt
+
+CXSparse
+========
+Version 2.2.5
+Available at https://www.cise.ufl.edu/research/sparse/CXSparse/
+View it's LGPL license at LICENSE_CXSparse.txt
+
+lusol
+=====
+Version of 2008-02-01
+Available at http://www.stanford.edu/group/SOL/software/lusol.html
+View it's LGPL license at LICENSE_LUSOL.txt

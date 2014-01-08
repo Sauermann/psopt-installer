@@ -2,9 +2,13 @@ PSOPT-Installer
 
 Copyright (C) 2014 Markus Sauermann
 
-Installation scripts for PSOPT [1] on Linux.
+Installation scripts for PSOPT [1]
 
-Currently supported: Debian Wheezy [2] and Ubuntu 12.04 [3]
+Currently supported: Debian Wheezy [2] natively, Ubuntu 12.04 [3]
+natively and Windows 7 [4] with MinGW 64 [5] and TDM-GCC [6]
+
+The three scripts dwpis.sh, uppis.sh and wmpis.sh are used to install
+PSOPT in Debian, Ubuntu and Windows respectively.
 
 
 Installation on Debian
@@ -38,18 +42,101 @@ If you do not have downloaded the script yet, do:
 # ./uppis.sh
 
 
+Installation on Windows
+=======================
+
+This installation relies completely on Open-source-software, no
+compiler from Microsoft is needed.
+
+OpenBLAS [7] is used as replacement of the
+Blas-Reference-Implementation.
+
+It was only tested on Windows 7, but should work on other systems as
+well.
+
+MSYS
+----
+
+Get the MinGW/MSYS Installation tool mingw-get-setup.exe from [5].
+
+Install it in the directory $MinGWInstallDir
+of your choice (should not have whitespaces) with these packages:
+- msys-base
+- msys-wget
+- msys-unzip
+- mingw-developer-tooklitm.
+
+TDM-GCC
+-------
+
+For 64-bit support a 64 bit version of MinGW is needed.  According to
+the IPOPT recomentation download tdm-gcc-webdl.exe from [6].  Follow
+the installation instructions and install it in the directory
+$InstallationPathOfMinGW64 of your choice (must be different from
+$MinGWInstallDir)
+
+->Create ->select MinGW-w64/TDM64 (32-bit and 64-bit)
+
+Select the following components to install:
+- gcc -> core
+- gcc -> c++
+- gcc -> fortran
+- gcc -> openmp
+- binutils
+- mingw64-runtime
+- mingw32-make: no
+- gdb: optional
+- Menu items: optional
+- Add to PATH: no
+
+In the directory $MinGWInstallDir/msys/1.0/etc/ copy fstab.sample to
+fstab and change in this file the lines
+---
+c:/mingw		/mingw
+c:/ActiveState/perl	/perl
+---
+to
+---
+$InstallationPathOfMinGW64		/mingw
+#c:/ActiveState/perl	/perl
+---
+
+This article might be helpful:
+http://article.gmane.org/gmane.comp.gnu.mingw.msys/3930
+
+Installation
+------------
+
+start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
+user@computer:~$ wget https://raw.github.com/Sauermann/psopt-installer/master/wmpis.sh
+user@computer:~$ ./wmips.sh
+
+
 Known issues
 ============
 
 On Debian some examples do not give the expected results.
 On Ubuntu the display of gnuplot charts does not happen automatically.
+On Windows Installation of Gnuplot is not supported
 
 
 Contact
 =======
 
-Send comments or corrections via the github page
+Send bugreports, comments or corrections via the github page
 https://github.com/Sauermann/psopt-installer
+or to the E-Mail psopt-installer@sauermann-consulting.de
+
+
+License
+=======
+
+This software "Psopt-Installer" is distributed under GPL V3.
+
+While using this software, other software-packages will be downloaded
+and used - according to my knowledge this is allowed, but
+redistribution of the software Metis 4.0.1 [8] may be prohibited.  See
+the directory LICENSES for more details about each of their licenses.
 
 
 References
@@ -58,3 +145,8 @@ References
 [1] http://www.psopt.org/
 [2] http://www.debian.org/releases/wheezy/
 [3] http://releases.ubuntu.com/12.04/
+[4] http://windows.microsoft.com
+[5] http://www.mingw.org/
+[6] http://tdm-gcc.tdragon.net/
+[7] http://www.openblas.net/
+[8] http://glaros.dtc.umn.edu/gkhome/metis/metis/overview

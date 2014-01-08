@@ -1,4 +1,4 @@
-Installation of Debian in a virtual machine under windows
+Installation of Debian in a virtual machine under Windows
 
 1. Installation of VirtualBox
 

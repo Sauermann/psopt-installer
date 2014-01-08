@@ -147,3 +147,4 @@ sed -n 'H;${x;s/libcoinhsl.a/& $(IPOPTLIBDIR)\/ThirdParty\/libcoinmumps.a $(IPOP
 mv temp_file PSOPT/examples/Makefile_linux.inc
 # Psopt Compilation
 make all
+echo "installation finished"
