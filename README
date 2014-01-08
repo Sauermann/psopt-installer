@@ -113,7 +113,7 @@ Installation
 
 start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
 user@computer:~$ wget https://raw.github.com/Sauermann/psopt-installer/master/wmpis.sh
-user@computer:~$ ./wmips.sh
+user@computer:~$ ./wmpis.sh
 
 
 Known issues
@@ -129,7 +129,7 @@ Contact
 
 Send bugreports, comments or corrections via the github page
 https://github.com/Sauermann/psopt-installer
-or to the E-Mail psopt-installer@sauermann-consulting.de
+or to the E-Mail mailto:psopt-installer@sauermann-consulting.de
 
 
 References
