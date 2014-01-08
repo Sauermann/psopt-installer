@@ -58,6 +58,11 @@ Blas-Reference-Implementation.
 It was only tested on Windows 7, but should work on other systems as
 well.
 
+PSOPT will be installed in the directory C:\psopt\ and no other
+directories will be changed.
+
+You may uninstall it by deleting the directory C:\psopt\
+
 MSYS
 ----
 
@@ -129,7 +134,7 @@ Contact
 
 Send bugreports, comments or corrections via the github page
 https://github.com/Sauermann/psopt-installer
-or to the E-Mail mailto:psopt-installer@sauermann-consulting.de
+or to the E-Mail psopt-installer@sauermann-consulting.de
 
 
 References
