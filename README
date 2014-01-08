@@ -2,6 +2,10 @@ PSOPT-Installer
 
 Copyright (C) 2014 Markus Sauermann
 
+This program is free software: you can redistribute it and/or modify
+it under the GPL V3 terms in the file COPYING.
+
+
 Installation scripts for PSOPT [1]
 
 Currently supported: Debian Wheezy [2] natively, Ubuntu 12.04 [3]
@@ -126,17 +130,6 @@ Contact
 Send bugreports, comments or corrections via the github page
 https://github.com/Sauermann/psopt-installer
 or to the E-Mail psopt-installer@sauermann-consulting.de
-
-
-License
-=======
-
-This software "Psopt-Installer" is distributed under GPL V3.
-
-While using this software, other software-packages will be downloaded
-and used - according to my knowledge this is allowed, but
-redistribution of the software Metis 4.0.1 [8] may be prohibited.  See
-the directory LICENSES for more details about each of their licenses.
 
 
 References
