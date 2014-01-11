@@ -20,6 +20,12 @@ Version 0.2.8
 Available at http://www.openblas.net/
 View it's license at LICENSE_OpenBLAS
 
+LAPACK
+======
+Version 3.4.2
+Available at http://www.netlib.org/lapack/
+View it's license at LICENSE_LAPACK
+
 Ipopt
 =====
 Version 3.9.3 with the patch from
@@ -90,3 +96,9 @@ lusol
 Version of 2008-02-01
 Available at http://www.stanford.edu/group/SOL/software/lusol.html
 View it's LGPL license at LICENSE_LUSOL
+
+DMatrix
+=======
+Version of Thu Jul 28 2011
+Available as part of Psopt
+View it's LGPL license at LICENSE_DMatrix
