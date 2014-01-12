@@ -1,6 +1,9 @@
 This software uses, downloads and installs multiple software packages.
 this list contains information about their licenses.
 
+Some of these are not touched on all installationsytems. View the
+package directory for detailled information about them.
+
 MinGW/MSYS
 ==========
 Version of 2013-10-04

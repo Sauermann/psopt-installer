@@ -9,7 +9,7 @@ it under the GPL V3 terms in the file COPYING.
 Installation scripts for PSOPT [1]
 
 Currently supported: Debian Wheezy [2] natively, Ubuntu 12.04 [3]
-natively and Windows 7 [4] with MinGW 64 [5] and TDM-GCC [6]
+natively and Windows 7 [4] with MinGW/MSYS [5] and TDM-GCC [6]
 
 The three scripts dwpis.sh, uppis.sh and wmpis.sh are used to install
 PSOPT in Debian, Ubuntu and Windows respectively.
@@ -52,16 +52,15 @@ Installation on Windows
 This installation relies completely on Open-source-software, no
 compiler from Microsoft is needed.
 
-OpenBLAS [7] is used as replacement of the
-Blas-Reference-Implementation.
+OpenBLAS [7] is used as replacement of the Blas Reference
+Implementation.
 
 It was only tested on Windows 7, but should work on other systems as
 well.
 
-PSOPT will be installed in the directory C:\psopt\ and no other
-directories will be changed.
+PSOPT will be installed in the directory where the script is executed.
 
-You may uninstall it by deleting the directory C:\psopt\
+You may uninstall it by deleting the directory it was installed into.
 
 MSYS
 ----
@@ -113,13 +112,33 @@ $InstallationPathOfMinGW64		/mingw
 This article might be helpful:
 http://article.gmane.org/gmane.comp.gnu.mingw.msys/3930
 
+Gnuplot
+-------
+
+Usage of Gnuplot is optional but supported.
+
+Get the latest version from http://www.gnuplot.info/ and install it.
+Be sure to include the gnuplot executable into the path - the
+installer has an option for this.
+
 Installation
 ------------
 
-start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
-user@computer:~$ wget https://raw.github.com/Sauermann/psopt-installer/master/wmpis.sh
-user@computer:~$ ./wmpis.sh
+During the installation process several software packages are
+downloaded and compiled so be aware that it will take some time. On my
+computer it lasts about 60 minutes.
 
+Start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
+user@computer:~$ cd installation_dir
+user@computer:~/installation_dir$ wget https://raw.github.com/Sauermann/psopt-installer/master/wmpis.sh
+user@computer:~/installation_dir$ ./wmpis.sh
+
+Usage
+-----
+
+In the directory 'installation_dir' there will be an example-project
+'obscacle' from the PSOPT-examples dir. the accompanying Makefile
+should help you get started to create your own projet.
 
 Known issues
 ============
