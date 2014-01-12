@@ -26,7 +26,7 @@ In a shell on Debian do the following:
 
 
 If you do not have downloaded the script yet, do:
-# wget https://raw.github.com/Sauermann/psopt-installer/master/dwpis.sh
+# wget --no-check-certificate https://raw.github.com/Sauermann/psopt-installer/master/dwpis.sh
 # chmod a+x dwpis.sh
 # ./dwpis.sh
 
@@ -41,7 +41,7 @@ In a shell on Ububtu do the following:
 # ./uppis.sh
 
 If you do not have downloaded the script yet, do:
-# wget https://raw.github.com/Sauermann/psopt-installer/master/uppis.sh
+# wget --no-check-certificate https://raw.github.com/Sauermann/psopt-installer/master/uppis.sh
 # chmod a+x uppis.sh
 # ./uppis.sh
 
@@ -130,7 +130,7 @@ computer it lasts about 60 minutes.
 
 Start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
 user@computer:~$ cd installation_dir
-user@computer:~/installation_dir$ wget https://raw.github.com/Sauermann/psopt-installer/master/wmpis.sh
+user@computer:~/installation_dir$ wget --no-check-certificate https://raw.github.com/Sauermann/psopt-installer/master/wmpis.sh
 user@computer:~/installation_dir$ ./wmpis.sh
 
 Usage
