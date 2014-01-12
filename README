@@ -125,8 +125,8 @@ Installation
 ------------
 
 During the installation process several software packages are
-downloaded and compiled so be aware that it will take some time. On my
-computer it lasts about 60 minutes.
+downloaded and compiled so be aware that it will take some time. On a
+test computer it lasts about 60 minutes.
 
 Start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
 user@computer:~$ cd installation_dir
