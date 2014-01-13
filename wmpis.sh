@@ -258,14 +258,15 @@ OBJECT_DEPS =
 # include default PSOPT make-rules for the project
 include ../Makefile_include.mk
 " > obstacle/Makefile
-echo -e "CXX       = g++
+echo -e 'CXX       = g++
+INSTALLDIR = $(dir $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)))
 CXXFLAGS  = -O0 -g -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -fomit-frame-pointer -pipe -DNDEBUG -pedantic-errors -Wall -DHAVE_MALLOC
 
-INCLUDES  = -I../.target/include
-#LINKFLAGS = -fPIC -L../.target/lib -L../.target/lib/coin -L../.target/lib/coin/ThirdParty -L../.target/lib64
+INCLUDES  = -I$(INSTALLDIR)/.target/include
+#LINKFLAGS = -fPIC -L$(INSTALLDIR)/.target/lib -L$(INSTALLDIR)/.target/lib/coin -L$(INSTALLDIR)/.target/lib/coin/ThirdParty -L$(INSTALLDIR)/.target/lib64
 #LIBRARIES = -lpsopt -ldmatrix -lcxsparse -ladolc -llusol -lipopt -lcoinmumps -lopenblas -lcoinmetis -lgfortran -ldl -lm -lgcc
-LIBRARIES = -fPIC -L../.target/lib -lcombinedpsopt -lm -lgcc
-"'
+LIBRARIES = -fPIC -L$(INSTALLDIR)/.target/lib -lcombinedpsopt -lm -lgcc
+
 $(TARGET): $(TARGET).o $(OBJECT_DEPS)
 \t$(CXX) $(CXXFLAGS) $(LINKFLAGS) $^ -o $@ $(LIBRARIES)
 
