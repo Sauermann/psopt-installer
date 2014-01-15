@@ -130,8 +130,8 @@ test computer it lasts about 60 minutes.
 
 Start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
 user@computer:~$ cd installation_dir
-user@computer:~/installation_dir$ wget --no-check-certificate https://github.com/Sauermann/psopt-installer/archive/devel.zip
-user@computer:~/installation_dir$ unzip devel.zip
+user@computer:~/installation_dir$ wget -O psopt-installer.zip --no-check-certificate https://github.com/Sauermann/psopt-installer/archive/devel.zip
+user@computer:~/installation_dir$ unzip psopt-installer.zip
 user@computer:~/installation_dir$ ./psopt-installer-devel/wmpis.sh
 
 Usage
