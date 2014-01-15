@@ -127,6 +127,9 @@ make hadd
 sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' Makefile
 sed -i -n 'H;${x;s/a.out/a.exe/g;p;}' Makefile
 sed -i -n 'H;${x;s/CFLAGS = -O/& -DUSE_CLOCK/;p;}' Makefile
+sed -i -n 'H;${x;s|#define abs(x) ((x) >= 0 ? (x) : -(x))|//&|;p;}' f2c.h
+sed -i -n 'H;${x;s|#define min(a,b) ((a) <= (b) ? (a) : (b))|//&|;p;}' f2c.h
+sed -i -n 'H;${x;s|#define max(a,b) ((a) >= (b) ? (a) : (b))|//&|;p;}' f2c.h
 make
 export LIBDIR=$PSOPT_BUILD_DIR/.target/lib
 make install
@@ -259,6 +262,9 @@ CXXFLAGSEXTRA =
 # include default PSOPT make-rules for the project
 include ../Makefile_include.mk
 
+#this is called from clean
+projectclean:
+
 # put additional make recepies for further objects here
 " > obstacle/Makefile
 echo -e 'CXX       = g++
@@ -276,10 +282,10 @@ $(TARGET): $(TARGET).o $(OBJECT_DEPS)
 $(TARGET).o: $(TARGET).cxx
 \t$(CXX) -c $(CXXFLAGS) $(CXXFLAGSEXTRA) $(INCLUDES) $< -o $@
 
-clean:
+clean: projectclean
 \trm -f *.o $(TARGET) $(TARGET).exe
 
-distclean: clean
+psoptclean: clean
 \trm -f $(TARGET).txt *.dat mesh_statistics* *.out psopt_solution_*.txt gnuplot.scp
 ' > Makefile_include.mk
 cd obstacle
