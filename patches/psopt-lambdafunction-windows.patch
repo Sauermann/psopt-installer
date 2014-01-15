@@ -1,0 +1,36 @@
+diff -ru Psopt3/PSOPT/src/psopt.h Psopt3-new/PSOPT/src/psopt.h
+--- Psopt3/PSOPT/src/psopt.h	2011-07-28 10:41:57 +0000
++++ Psopt3-new/PSOPT/src/psopt.h	2014-01-15 16:51:12 +0000
+@@ -31,7 +31,7 @@
+ 
+ #define CINDEX( i )    ((i)-1)
+ 
+-
++#include <functional>
+ #include "dmatrixv.h"
+ 
+ 
+@@ -370,17 +370,17 @@
+ 
+    Phases&   phases(int iphase);
+ 
+-   adouble (*endpoint_cost)(adouble* initial_states, adouble* final_states, adouble* parameters,adouble& t0, adouble& tf, adouble* xad, int iphase);
++   std::function<adouble (adouble* initial_states, adouble* final_states, adouble* parameters,adouble& t0, adouble& tf, adouble* xad, int iphase)> endpoint_cost;
+ 
+-   adouble (*integrand_cost)(adouble* states, adouble* controls, adouble* parameters, adouble& time,  adouble* xad, int iphase);
++   std::function<adouble (adouble* states, adouble* controls, adouble* parameters, adouble& time,  adouble* xad, int iphase)> integrand_cost;
+ 
+-   void (*dae)(adouble* derivatives, adouble* path, adouble* states, adouble* controls, adouble* parameters, adouble& time, adouble* xad, int iphase);
++   std::function<void (adouble* derivatives, adouble* path, adouble* states, adouble* controls, adouble* parameters, adouble& time, adouble* xad, int iphase)> dae;
+ 
+-   void (*events)(adouble* e, adouble* initial_states, adouble* final_states, adouble* parameters,adouble& t0, adouble& tf, adouble* xad, int iphase);
++   std::function<void (adouble* e, adouble* initial_states, adouble* final_states, adouble* parameters,adouble& t0, adouble& tf, adouble* xad, int iphase)> events;
+ 
+-   void (*linkages)( adouble* linkages, adouble* xad);
++   std::function<void ( adouble* linkages, adouble* xad)> linkages;
+ 
+-   void (*observation_function)(adouble* observed_variable, adouble* states, adouble* controls, adouble* parameters, adouble& time, int k, adouble* xad, int iphase);
++   std::function<void (adouble* observed_variable, adouble* states, adouble* controls, adouble* parameters, adouble& time, int k, adouble* xad, int iphase)> observation_function;
+ 
+ };
+ 

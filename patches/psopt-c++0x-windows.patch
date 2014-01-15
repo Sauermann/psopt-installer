@@ -1,0 +1,36 @@
+diff -ru Psopt3/PSOPT/examples/Makefile_linux.inc Psopt3-new/PSOPT/examples/Makefile_linux.inc
+--- Psopt3/PSOPT/examples/Makefile_linux.inc	2011-07-28 10:41:58 +0000
++++ Psopt3-new/PSOPT/examples/Makefile_linux.inc	2014-01-15 16:39:22 +0000
+@@ -34,7 +34,7 @@
+ 
+ CXX           = /usr/bin/g++
+ CC            = /usr/bin/gcc
+-CXXFLAGS      = -O0 -g -I$(DMATRIXDIR)/include  -I$(PSOPTSRCDIR) -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR) -fomit-frame-pointer -pipe -DNDEBUG -pedantic-errors -Wimplicit -Wparentheses -Wreturn-type -Wcast-qual -Wall -Wpointer-arith -Wwrite-strings -Wconversion -fPIC -DHAVE_MALLOC
++CXXFLAGS      = -O0 -g -std=c++0x -I$(DMATRIXDIR)/include  -I$(PSOPTSRCDIR) -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR) -fomit-frame-pointer -pipe -DNDEBUG -pedantic-errors -Wimplicit -Wparentheses -Wreturn-type -Wcast-qual -Wall -Wpointer-arith -Wwrite-strings -Wconversion -fPIC -DHAVE_MALLOC
+ 
+ CFLAGS        = -O0 -fPIC
+ 
+diff -ru Psopt3/PSOPT/lib/Makefile Psopt3-new/PSOPT/lib/Makefile
+--- Psopt3/PSOPT/lib/Makefile	2011-07-28 10:41:58 +0000
++++ Psopt3-new/PSOPT/lib/Makefile	2014-01-15 16:39:22 +0000
+@@ -26,7 +26,7 @@
+ 
+ CXX           = /usr/bin/g++
+ CC            = /usr/bin/gcc
+-CXXFLAGS      = -O0 -g -I$(SNOPTDIR)/cppsrc -I$(DMATRIXDIR)/include -I$(SNOPTDIR)/cppexamples -I$(PSOPTSRCDIR) -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR) -fomit-frame-pointer -pipe -DNDEBUG -pedantic-errors -Wimplicit -Wparentheses -Wreturn-type -Wcast-qual -Wall -Wpointer-arith -Wwrite-strings -Wconversion -fPIC -DHAVE_MALLOC
++CXXFLAGS      = -O0 -g -std=c++0x -I$(SNOPTDIR)/cppsrc -I$(DMATRIXDIR)/include -I$(SNOPTDIR)/cppexamples -I$(PSOPTSRCDIR) -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR) -fomit-frame-pointer -pipe -DNDEBUG -pedantic-errors -Wimplicit -Wparentheses -Wreturn-type -Wcast-qual -Wall -Wpointer-arith -Wwrite-strings -Wconversion -fPIC -DHAVE_MALLOC
+ 
+ CFLAGS        = -O0 -fPIC
+ 
+diff -ru Psopt3/PSOPT/src/psopt.cxx Psopt3-new/PSOPT/src/psopt.cxx
+--- Psopt3/PSOPT/src/psopt.cxx	2014-01-15 16:22:17 +0000
++++ Psopt3-new/PSOPT/src/psopt.cxx	2014-01-15 16:39:22 +0000
+@@ -9896,7 +9896,7 @@
+         }
+       }
+ 
+-      fprintf(outfile,"\n\n>>>>> Rank of parameter covariance matrix: %i ", rank(Cp));
++      fprintf(outfile,"\n\n>>>>> Rank of parameter covariance matrix: %i ", ::rank(Cp));
+ 
+       fprintf(outfile,"\n\n>>> 95 percent statistical confidence limits on estimated parameters ");
+       fprintf(outfile,"\nPhase\tParameter\t(Low Confidence Limit) \t(Value) \t\t(High Confidence Limit)");

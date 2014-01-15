@@ -172,6 +172,8 @@ unzip ../../.download/patch_3.02.zip
 cp patch_3.02/psopt.cxx PSOPT/src/
 # Apply local patches
 patch -p1 < ../../psopt-installer-devel/patches/psopt-gnuplot-windows.patch
+patch -p1 < ../../psopt-installer-devel/patches/psopt-c++0x-windows.patch
+patch -p1 < ../../psopt-installer-devel/patches/psopt-lambdafunction-windows.patch
 # PSOPT static library
 sed -i -n 'H;${x;s#/usr/bin/##g;p;}' PSOPT/lib/Makefile
 sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include#-U WIN32#g;p;}' PSOPT/lib/Makefile
@@ -261,7 +263,7 @@ include ../Makefile_include.mk
 " > obstacle/Makefile
 echo -e 'CXX       = g++
 INSTALLDIR = $(dir $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)))
-CXXFLAGS  = -O0 -g -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -fomit-frame-pointer -pipe -DNDEBUG -pedantic-errors -Wall -DHAVE_MALLOC
+CXXFLAGS  = -O0 -g -std=c++0x -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -fomit-frame-pointer -pipe -DNDEBUG -pedantic-errors -Wall -DHAVE_MALLOC
 
 INCLUDES  = -I$(INSTALLDIR).target/include
 #LINKFLAGS = -fPIC -L$(INSTALLDIR).target/lib -L$(INSTALLDIR).target/lib/coin -L$(INSTALLDIR).target/lib/coin/ThirdParty -L$(INSTALLDIR).target/lib64

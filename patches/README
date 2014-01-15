@@ -19,3 +19,16 @@ actual filename) - after the installation, the file
 $INSTALL_DIR/obstacle/obstacle.cxx contains an example of this usage.
 
 [1] https://groups.google.com/forum/?_escaped_fragment_=topic/psopt-users-group/voh77wB2KCs#!topic/psopt-users-group/voh77wB2KCs
+
+psopt-c++0x-windows.patch
+=========================
+
+This patch enables Psopt and it's examples to be built with compiler
+option -std=c++0x that provides some new c++11 functionality.
+
+psopt-lambdafunction-windows.patch
+==================================
+
+This patch replaces in the struct prob_str the function references by
+std::function. The intention is to be able to store lambda functions
+in them.
