@@ -1,0 +1,21 @@
+psopt-gnuplot-windows.patch
+===========================
+
+This patch is intended for the Windows version and applies the
+following changes to the sourcecode of PSOPT 3.02
+
+- Adjust the Gnuplot-parameters to support newer versions of Gnuplot
+  than 4.2.6 [1]
+- Remove the '-persist' option to the Gnuplot call. The effect is that
+  now Gnuplot windows do not stay open
+
+To enable simultaneous display of the plots, I recommed to save all
+plots to files and insert a line
+
+   system("explorer.exe $FILENAME_OF_OUTPUTFILE");
+
+after every plot statemet. (replace $FILENAME_OF_OUTPUTFILE by the
+actual filename) - after the installation, the file
+$INSTALL_DIR/obstacle/obstacle.cxx contains an example of this usage.
+
+[1] https://groups.google.com/forum/?_escaped_fragment_=topic/psopt-users-group/voh77wB2KCs#!topic/psopt-users-group/voh77wB2KCs

@@ -1,0 +1,147 @@
+diff -ru Psopt3/PSOPT/src/psopt.cxx Psopt3-new/PSOPT/src/psopt.cxx
+--- Psopt3/PSOPT/src/psopt.cxx	2011-07-28 10:41:57 +0000
++++ Psopt3-new/PSOPT/src/psopt.cxx	2014-01-15 14:18:44 +0000
+@@ -7821,7 +7821,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data line");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -7865,7 +7865,7 @@
+ 
+          fclose(gscript);
+ 
+-         system("gnuplot -persist gnuplot.scp ");
++         system("gnuplot gnuplot.scp ");
+ 
+ 
+ 
+@@ -7926,7 +7926,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data line");
+ 
+          fprintf(gscript,"\nset multiplot layout %i,%i columnsfirst", nnrows,nncols);
+ 
+@@ -7999,7 +7999,7 @@
+ 
+          fclose(gscript);
+ 
+-         system("gnuplot -persist gnuplot.scp ");
++         system("gnuplot gnuplot.scp ");
+ 
+ 
+ 
+@@ -8057,7 +8057,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data line");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -8141,7 +8141,7 @@
+ 
+          fclose(gscript);
+ 
+-         system("gnuplot -persist gnuplot.scp ");
++         system("gnuplot gnuplot.scp ");
+ 
+ 
+ 
+@@ -8199,7 +8199,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data line");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -8322,7 +8322,7 @@
+ 
+          fclose(gscript);
+ 
+-         system("gnuplot -persist gnuplot.scp ");
++         system("gnuplot gnuplot.scp ");
+ 
+ 
+ 
+@@ -8379,7 +8379,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data line");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -8418,7 +8418,7 @@
+ 
+          fclose(gscript);
+ 
+-         system("gnuplot -persist gnuplot.scp ");
++         system("gnuplot gnuplot.scp ");
+ 
+ 
+ 
+@@ -8476,7 +8476,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data line");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -8568,7 +8568,7 @@
+ 
+          fclose(gscript);
+ 
+-         system("gnuplot -persist gnuplot.scp ");
++         system("gnuplot gnuplot.scp ");
+ 
+ 
+ 
+@@ -8629,7 +8629,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data line");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -8776,7 +8776,7 @@
+ 
+          fclose(gscript);
+ 
+-         system("gnuplot -persist gnuplot.scp ");
++         system("gnuplot gnuplot.scp ");
+ 
+ 
+ 
+@@ -8878,7 +8878,7 @@
+ 
+          fclose(gscript);
+ 
+-         system("gnuplot -persist gnuplot.scp ");
++         system("gnuplot gnuplot.scp ");
+ 
+ }
+ 
+@@ -8972,7 +8972,7 @@
+ 
+          fclose(gscript);
+ 
+-         system("gnuplot -persist gnuplot.scp ");
++         system("gnuplot gnuplot.scp ");
+ 
+ }
+ 

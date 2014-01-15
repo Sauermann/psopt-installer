@@ -170,10 +170,8 @@ cd ..
 # PSOPT patching to new release
 unzip ../../.download/patch_3.02.zip
 cp patch_3.02/psopt.cxx PSOPT/src/
-# PSOPT patching to support new Gnuplot versions
-# https://groups.google.com/forum/?_escaped_fragment_=topic/psopt-users-group/voh77wB2KCs#!topic/psopt-users-group/voh77wB2KCs
-sed -i -n 'H;${x;s#set data style lines#set style data line#g;p;}' PSOPT/src/psopt.cxx
-sed -i -n 'H;${x;s#-persist ##g;p;}' PSOPT/src/psopt.cxx
+# Apply local patches
+patch -p1 < ../../psopt-installer-devel/patches/psopt-gnuplot-windows.patch
 # PSOPT static library
 sed -i -n 'H;${x;s#/usr/bin/##g;p;}' PSOPT/lib/Makefile
 sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include#-U WIN32#g;p;}' PSOPT/lib/Makefile
@@ -254,9 +252,12 @@ TARGET = obstacle
 # Put the object files of depencencies here and define make-procedures
 # in this file
 OBJECT_DEPS =
-
+# Put extra compilerflags here
+CXXFLAGSEXTRA =
 # include default PSOPT make-rules for the project
 include ../Makefile_include.mk
+
+# put additional make recepies for further objects here
 " > obstacle/Makefile
 echo -e 'CXX       = g++
 INSTALLDIR = $(dir $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST)))
@@ -268,10 +269,10 @@ INCLUDES  = -I$(INSTALLDIR).target/include
 LIBRARIES = -fPIC -L$(INSTALLDIR).target/lib -lcombinedpsopt -lm -lgcc
 
 $(TARGET): $(TARGET).o $(OBJECT_DEPS)
-\t$(CXX) $(CXXFLAGS) $(LINKFLAGS) $^ -o $@ $(LIBRARIES)
+\t$(CXX) $(CXXFLAGS) $(CXXFLAGSEXTRA) $(LINKFLAGS) $^ -o $@ $(LIBRARIES)
 
 $(TARGET).o: $(TARGET).cxx
-\t$(CXX) -c $(CXXFLAGS) $(INCLUDES) $< -o $@
+\t$(CXX) -c $(CXXFLAGS) $(CXXFLAGSEXTRA) $(INCLUDES) $< -o $@
 
 clean:
 \trm -f *.o $(TARGET) $(TARGET).exe
