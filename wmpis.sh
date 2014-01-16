@@ -174,9 +174,9 @@ cd ..
 unzip ../../.download/patch_3.02.zip
 cp patch_3.02/psopt.cxx PSOPT/src/
 # Apply local patches
-patch -p1 < ../../psopt-installer-devel/patches/psopt-gnuplot-windows.patch
-patch -p1 < ../../psopt-installer-devel/patches/psopt-c++0x-windows.patch
-patch -p1 < ../../psopt-installer-devel/patches/psopt-lambdafunction-windows.patch
+patch -p1 < ../../psopt-installer-master/patches/psopt-gnuplot-windows.patch
+patch -p1 < ../../psopt-installer-master/patches/psopt-c++0x-windows.patch
+patch -p1 < ../../psopt-installer-master/patches/psopt-lambdafunction-windows.patch
 # PSOPT static library
 sed -i -n 'H;${x;s#/usr/bin/##g;p;}' PSOPT/lib/Makefile
 sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include#-U WIN32#g;p;}' PSOPT/lib/Makefile
