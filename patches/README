@@ -1,3 +1,18 @@
+The patches in this directory are part of psopt-installer.
+
+Psopt Installer is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+Psopt Installer is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Psopt Installer.  If not, see <http://www.gnu.org/licenses/>.
+
 psopt-gnuplot-windows.patch
 ===========================
 
@@ -32,3 +47,11 @@ psopt-lambdafunction-windows.patch
 This patch replaces in the struct prob_str the function references by
 std::function. The intention is to be able to store lambda functions
 in them.
+
+psopt-bugfix-static-variable.patch
+==================================
+
+Bugfix for Psopt that corrects in psopt_main the variable aux_local to
+static. [2]
+
+[2] http://stackoverflow.com/questions/11137516/scope-vs-lifetime-of-variable

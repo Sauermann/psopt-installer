@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo ""
-echo "wmpis.sh - Windows 7 MinGW-64 PSOPT Installation Script"
+echo "wmpis.sh - PSOPT Installation Script for Windows 7 MinGW-64"
 echo ""
 echo "Copyright (C) 2014 Markus Sauermann"
 echo ""
@@ -9,18 +9,20 @@ echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
 echo "under certain conditions; see the filecontent for more information."
 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# This file is part of Psopt Installer.
 #
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
+# Psopt Installer is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# Psopt Installer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see
+# along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
 echo ""
@@ -177,6 +179,7 @@ cp patch_3.02/psopt.cxx PSOPT/src/
 patch -p1 < ../../psopt-installer-master/patches/psopt-gnuplot-windows.patch
 patch -p1 < ../../psopt-installer-master/patches/psopt-c++0x-windows.patch
 patch -p1 < ../../psopt-installer-master/patches/psopt-lambdafunction-windows.patch
+patch -p1 < ../../psopt-installer-master/patches/psopt-bugfix-static-variable.patch
 # PSOPT static library
 sed -i -n 'H;${x;s#/usr/bin/##g;p;}' PSOPT/lib/Makefile
 sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include#-U WIN32#g;p;}' PSOPT/lib/Makefile

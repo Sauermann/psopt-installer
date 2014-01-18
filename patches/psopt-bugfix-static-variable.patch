@@ -1,0 +1,13 @@
+diff -ru Psopt3/PSOPT/src/psopt.cxx Psopt3-new/PSOPT/src/psopt.cxx
+--- Psopt3/PSOPT/src/psopt.cxx	2014-01-18 11:43:48 +0000
++++ Psopt3-new/PSOPT/src/psopt.cxx	2014-01-18 11:44:55 +0000
+@@ -139,7 +139,7 @@
+ 
+   get_local_time( solution.start_date_and_time );
+ 
+-  AuxLocal aux_local;
++  static AuxLocal aux_local;
+ 
+   aux_local.problem   = &problem;
+   aux_local.solution  = &solution;
+Only in Psopt3-new/PSOPT/src: psopt.cxx~
