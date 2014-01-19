@@ -55,7 +55,7 @@ compiler from Microsoft is needed.
 OpenBLAS [7] is used as replacement of the Blas Reference
 Implementation.
 
-It was only tested on Windows 7, but should work on other systems as
+It was only tested on Windows 7, but should work on other flavors as
 well.
 
 PSOPT will be installed in the directory where the script is executed.
@@ -138,7 +138,7 @@ Usage
 -----
 
 In the directory 'installation_dir' there will be an example-project
-'obscacle' from the PSOPT-examples dir. the accompanying Makefile
+'obscacle' from the PSOPT-examples dir. The accompanying Makefile
 should help you get started to create your own projet.
 
 Known issues

@@ -29,127 +29,167 @@ echo ""
 read -s -p "Press enter to start the installation in the CURRENT DIRECTORY."
 echo ""
 
+wmpisdl()
+{
+    if [ ! -f $1 ]; then
+        wget -O $1 --no-check-certificate $2
+    fi;
+}
 # hide most windows paths
 export ORIGINAL_PATH=$PATH
 export PATH=".:/mingw/bin:/bin:/c/Windows/System32"
 # Build Directory
 export PSOPT_BUILD_DIR=$PWD
 # Download packages
-mkdir .download
+mkdir -p .download
 cd .download
-wget --no-check-certificate https://github.com/xianyi/OpenBLAS/archive/v0.2.8.tar.gz -O OpenBLAS-v0.2.8-x86_64.tar.gz
-wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
-wget http://www.math-linux.com/IMG/patch/metis-4.0.patch
-wget http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.1.12.zip
-wget http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.3.tar.gz
-wget http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
-wget http://www.netlib.org/f2c/libf2c.zip
-wget http://psopt.googlecode.com/files/Psopt3.tgz
-wget http://psopt.googlecode.com/files/patch_3.02.zip
-wget http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
-wget http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
-wget http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
+wmpisdl OpenBLAS-v0.2.8-x86_64.tar.gz https://github.com/xianyi/OpenBLAS/archive/v0.2.8.tar.gz
+wmpisdl Ipopt-3.9.3.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
+wmpisdl metis-4.0.patch http://www.math-linux.com/IMG/patch/metis-4.0.patch
+wmpisdl ADOL-C-2.1.12.zip http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.1.12.zip
+wmpisdl ColPack-1.0.3.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.3.tar.gz
+wmpisdl dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
+wmpisdl libf2c.zip http://www.netlib.org/f2c/libf2c.zip
+wmpisdl Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
+wmpisdl patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
+wmpisdl UFconfig-3.6.1.tar.gz http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
+wmpisdl CXSparse-2.2.5.tar.gz http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
+wmpisdl lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
+wmpisdl modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip
 cd ..
-# OpenBLAS
-mkdir .packages
+# Dircreation
+mkdir -p .packages
 cd .packages
-tar xzvf ../.download/OpenBLAS-v0.2.8-x86_64.tar.gz
+# OpenBLAS
+if [ ! -d OpenBLAS-0.2.8 ]; then
+    tar xzvf ../.download/OpenBLAS-v0.2.8-x86_64.tar.gz
+    cd OpenBLAS-0.2.8
+    make
+    cd ..
+fi
 cd OpenBLAS-0.2.8
-make
 make PREFIX=$PSOPT_BUILD_DIR/.target install
 cd ..
 # Ipopt 3.9.3
-tar xzvf ../.download/Ipopt-3.9.3.tgz
-# Documentation for Ipopt Third Party modules:
-# http://www.coin-or.org/Ipopt/documentation/node13.html
-cd Ipopt-3.9.3/ThirdParty
-# Metis
-cd Metis
-sed -i 's#metis/metis#metis/OLD/metis#g' get.Metis
-sed -i 's#metis-4\.0#metis-4\.0\.1#g' get.Metis
-./get.Metis
-# Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
-patch -p0 < ../../../../.download/metis-4.0.patch
-cd ..
-# Mumps
-cd Mumps
-./get.Mumps
-cd ..
-# bugfix of http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
-cd ..
-sed -i -n 'H;${x;s/#include "IpReferenced.hpp"/#include <cstddef>\
+if [ ! -d Ipopt-3.9.3 ]; then
+    tar xzvf ../.download/Ipopt-3.9.3.tgz
+    # Documentation for Ipopt Third Party modules:
+    # http://www.coin-or.org/Ipopt/documentation/node13.html
+    cd Ipopt-3.9.3/ThirdParty
+    # Metis
+    cd Metis
+    sed -i 's#metis/metis#metis/OLD/metis#g' get.Metis
+    sed -i 's#metis-4\.0#metis-4\.0\.1#g' get.Metis
+    ./get.Metis
+    # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
+    patch -p0 < ../../../../.download/metis-4.0.patch
+    cd ..
+    # Mumps
+    cd Mumps
+    ./get.Mumps
+    cd ..
+    # bugfix of http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
+    cd ..
+    sed -i -n 'H;${x;s/#include "IpReferenced.hpp"/#include <cstddef>\
 \
 &/;p;}' Ipopt/src/Common/IpSmartPtr.hpp
-sed -i -n 'H;${x;s/#include <list>/&\
+    sed -i -n 'H;${x;s/#include <list>/&\
 #include <cstddef>/;p;}' Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp
-# create build directory
-mkdir build
-cd build
-# start building
-../configure --enable-static --prefix $PSOPT_BUILD_DIR/.target -with-blas="-L$PSOPT_BUILD_DIR/.target/lib -llibopenblas"
+    # create build directory
+    mkdir build
+    cd build
+    # start building
+    ../configure --enable-static --prefix $PSOPT_BUILD_DIR/.target -with-blas="-L$PSOPT_BUILD_DIR/.target/lib -llibopenblas"
+    make
+    cd ../..
+fi
+# install
+cd Ipopt-3.9.3/build
 make install
 cd ../..
 # Adol-C
-unzip ../.download/ADOL-C-2.1.12.zip
-# with Colpack
-cd ADOL-C-2.1.12/ThirdParty
-tar -xzvf ../../../.download/ColPack-1.0.3.tar.gz
-cd ColPack
-make
-cd ../..
-# and Adol-C Compilation
-./configure --enable-sparse --enable-static --prefix $PSOPT_BUILD_DIR/.target
-cd ADOL-C
-cp -r src adolc
-cd src
-make
+if [ ! -d ADOL-C-2.1.12 ]; then
+    unzip ../.download/ADOL-C-2.1.12.zip
+    # with Colpack
+    cd ADOL-C-2.1.12/ThirdParty
+    tar -xzvf ../../../.download/ColPack-1.0.3.tar.gz
+    cd ColPack
+    make
+    cd ../..
+    # and Adol-C Compilation
+    ./configure --enable-sparse --enable-static --prefix $PSOPT_BUILD_DIR/.target
+    cd ADOL-C
+    cp -r src adolc
+    cd src
+    make
+    cd ../..
+    cd ..
+fi
+# installation
+cd ADOL-C-2.1.12/ADOL-C/src
 make install
 cd ../../..
 # dlfcn
-mkdir dlfcn-19-6
+if [ ! -d dlfcn-19-6 ]; then
+    mkdir dlfcn-19-6
+    cd dlfcn-19-6
+    tar xJvf ../../.download/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
+    sed -i -n 'H;${x;s/sha512sum/shasum/;p;}' pkgbuild.sh
+    sed -i -n 'H;${x;s/do_fixinstall=1/do_fixinstall=0/;p;}' pkgbuild.sh
+    sed -i -n 'H;${x;s/do_pack=1/do_pack=0/;p;}' pkgbuild.sh
+    sed -i -n 'H;${x;s/do_clean=1/do_clean=0/;p;}' pkgbuild.sh
+    sed -i -n 'H;${x;s#instdir=${pkgbuilddir}/inst#instdir=$PSOPT_BUILD_DIR/.target#;p;}' pkgbuild.sh
+    sed -i -n 'H;${x;s/rm -rf ${blddir} ${instdir}/rm -rf ${blddir}/g;p;}' pkgbuild.sh
+    sed -i -n 'H;${x;s#prefix=/mingw#prefix=#;p;}' pkgbuild.sh
+    cd ..
+fi
 cd dlfcn-19-6
-tar xJvf ../../.download/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
-sed -i -n 'H;${x;s/sha512sum/shasum/;p;}' pkgbuild.sh
-sed -i -n 'H;${x;s/do_fixinstall=1/do_fixinstall=0/;p;}' pkgbuild.sh
-sed -i -n 'H;${x;s/do_pack=1/do_pack=0/;p;}' pkgbuild.sh
-sed -i -n 'H;${x;s/do_clean=1/do_clean=0/;p;}' pkgbuild.sh
-sed -i -n 'H;${x;s#instdir=${pkgbuilddir}/inst#instdir=$PSOPT_BUILD_DIR/.target#;p;}' pkgbuild.sh
-sed -i -n 'H;${x;s/rm -rf ${blddir} ${instdir}/rm -rf ${blddir}/g;p;}' pkgbuild.sh
-sed -i -n 'H;${x;s#prefix=/mingw#prefix=#;p;}' pkgbuild.sh
 export arch=WIN
 ./pkgbuild.sh
 unset arch
 cd ..
 # libf2c
-mkdir libf2c
+if [ ! -d libf2c ]; then
+    mkdir libf2c
+    cd libf2c
+    unzip ../../.download/libf2c.zip
+    cp makefile.u Makefile
+    make hadd
+    sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' Makefile
+    sed -i -n 'H;${x;s/a.out/a.exe/g;p;}' Makefile
+    sed -i -n 'H;${x;s/CFLAGS = -O/& -DUSE_CLOCK/;p;}' Makefile
+    sed -i -n 'H;${x;s|#define abs(x) ((x) >= 0 ? (x) : -(x))|//&|;p;}' f2c.h
+    sed -i -n 'H;${x;s|#define min(a,b) ((a) <= (b) ? (a) : (b))|//&|;p;}' f2c.h
+    sed -i -n 'H;${x;s|#define max(a,b) ((a) >= (b) ? (a) : (b))|//&|;p;}' f2c.h
+    make
+    cd ..
+fi
 cd libf2c
-unzip ../../.download/libf2c.zip
-cp makefile.u Makefile
-make hadd
-sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' Makefile
-sed -i -n 'H;${x;s/a.out/a.exe/g;p;}' Makefile
-sed -i -n 'H;${x;s/CFLAGS = -O/& -DUSE_CLOCK/;p;}' Makefile
-sed -i -n 'H;${x;s|#define abs(x) ((x) >= 0 ? (x) : -(x))|//&|;p;}' f2c.h
-sed -i -n 'H;${x;s|#define min(a,b) ((a) <= (b) ? (a) : (b))|//&|;p;}' f2c.h
-sed -i -n 'H;${x;s|#define max(a,b) ((a) >= (b) ? (a) : (b))|//&|;p;}' f2c.h
-make
 export LIBDIR=$PSOPT_BUILD_DIR/.target/lib
 make install
 unset LIBDIR
 cp f2c.h $PSOPT_BUILD_DIR/.target/include
 cd ..
 # UFconfig
-tar xzvf ../.download/UFconfig-3.6.1.tar.gz
+if [ ! -d UFconfig ]; then
+    tar xzvf ../.download/UFconfig-3.6.1.tar.gz
+    cd UFconfig
+    sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' UFconfig.mk
+    sed -i -n 'H;${x;s#/usr/local#'"$PSOPT_BUILD_DIR"'/.target#g;p;}' UFconfig.mk
+    make
+    cd ..
+fi
 cd UFconfig
-sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' UFconfig.mk
-sed -i -n 'H;${x;s#/usr/local#'"$PSOPT_BUILD_DIR"'/.target#g;p;}' UFconfig.mk
-make
 make install
 cd ..
 # CXSparse
-tar xzvf ../.download/CXSparse-2.2.5.tar.gz
+if [ ! -d CXSparse ]; then
+    tar xzvf ../.download/CXSparse-2.2.5.tar.gz
+    cd CXSparse
+    make library
+    cd ..
+fi
 cd CXSparse
-make library
 make install
 cd ..
 # Unpack PSOPT (makefile needed for lusol)
@@ -250,10 +290,13 @@ LIBDIR = '"$PSOPT_BUILD_DIR"'/.target/lib#;p;}' PSOPT/examples/Makefile_linux.in
 # Compilation
 export PATH=$ORIGINAL_PATH
 unset ORIGINAL_PATH
-make all
+if [ ! -f ../../NO_PSOPT_EXAMPLES ]; then
+    make all
+fi
+cd ..
 # Create Example
-cd ../..
-mkdir obstacle
+cd ..
+mkdir -p obstacle
 cp .packages/Psopt3/PSOPT/examples/obstacle/obstacle.cxx obstacle
 echo "# name of the executable
 TARGET = obstacle
@@ -262,12 +305,16 @@ TARGET = obstacle
 OBJECT_DEPS =
 # Put extra compilerflags here
 CXXFLAGSEXTRA =
+# Put extra libraries here
+EXTRALIBS =
 # include default PSOPT make-rules for the project
 include ../Makefile_include.mk
 
-#this is called from clean
+# this is called from clean
 projectclean:
 
+# this is called from psoptclean
+projectpsoptclean:
 # put additional make recepies for further objects here
 " > obstacle/Makefile
 echo -e 'CXX       = g++
@@ -280,7 +327,7 @@ INCLUDES  = -I$(INSTALLDIR).target/include
 LIBRARIES = -fPIC -L$(INSTALLDIR).target/lib -lcombinedpsopt -lm -lgcc
 
 $(TARGET): $(TARGET).o $(OBJECT_DEPS)
-\t$(CXX) $(CXXFLAGS) $(CXXFLAGSEXTRA) $(LINKFLAGS) $^ -o $@ $(LIBRARIES)
+\t$(CXX) $(CXXFLAGS) $(CXXFLAGSEXTRA) $(LINKFLAGS) $^ -o $@ $(EXTRALIBS) $(LIBRARIES)
 
 $(TARGET).o: $(TARGET).cxx
 \t$(CXX) -c $(CXXFLAGS) $(CXXFLAGSEXTRA) $(INCLUDES) $< -o $@
@@ -288,11 +335,19 @@ $(TARGET).o: $(TARGET).cxx
 clean: projectclean
 \trm -f *.o $(TARGET) $(TARGET).exe
 
-psoptclean: clean
-\trm -f $(TARGET).txt *.dat mesh_statistics* *.out psopt_solution_*.txt gnuplot.scp
+psoptclean: clean projectpsoptclean
+\trm -f $(TARGET).txt *.dat mesh_statistics* *.out psopt_solution_*.txt gnuplot.scp error_message.txt
 ' > Makefile_include.mk
 cd obstacle
 make
 cd ..
+# Modern Psopt Interface
+cd .packages
+unzip ../.download/modern-psopt-interface.zip
+cd modern-psopt-interface-master
+make PSOPT=../..
+make install PREFIX=../../.target
+cd ../..
+# Modern Obstacle Example
 echo ""
 echo "installation finished"
