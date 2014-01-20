@@ -31,23 +31,21 @@ View it's license at LICENSE_LAPACK
 
 Ipopt
 =====
-Version 3.9.3 with the patch from
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
+Version 3.11.7
 Available at https://projects.coin-or.org/Ipopt
 It is available under the EPLv1.0
 LICENSE_EclipsePublicLicenseV1_0
 
 Metis
 =====
-Version 4.0.1 with the patch from
-http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
+Version 4.0.3
 Available at http://glaros.dtc.umn.edu/gkhome/metis/metis/overview
 View it's license at LICENSE_Metis
 Version 5.03 and later are published under Apache License Version 2.0.
 
 Mumps
 =====
-Version 4.9.2
+Version 4.10.0
 Available at http://mumps.enseeiht.fr/index.php
 View it's Public Domain license at LICENSE_Mumps
 

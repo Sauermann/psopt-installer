@@ -10,4 +10,3 @@ diff -ru Psopt3/PSOPT/src/psopt.cxx Psopt3-new/PSOPT/src/psopt.cxx
  
    aux_local.problem   = &problem;
    aux_local.solution  = &solution;
-Only in Psopt3-new/PSOPT/src: psopt.cxx~

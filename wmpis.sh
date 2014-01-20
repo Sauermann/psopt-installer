@@ -44,8 +44,7 @@ export PSOPT_BUILD_DIR=$PWD
 mkdir -p .download
 cd .download
 wmpisdl OpenBLAS-v0.2.8-x86_64.tar.gz https://github.com/xianyi/OpenBLAS/archive/v0.2.8.tar.gz
-wmpisdl Ipopt-3.9.3.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
-wmpisdl metis-4.0.patch http://www.math-linux.com/IMG/patch/metis-4.0.patch
+wmpisdl Ipopt-3.11.7.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.11.7.tgz
 wmpisdl ADOL-C-2.1.12.zip http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.1.12.zip
 wmpisdl ColPack-1.0.3.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.3.tar.gz
 wmpisdl dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
@@ -70,32 +69,22 @@ fi
 cd OpenBLAS-0.2.8
 make PREFIX=$PSOPT_BUILD_DIR/.target install
 cd ..
-# Ipopt 3.9.3
-if [ ! -d Ipopt-3.9.3 ]; then
-    tar xzvf ../.download/Ipopt-3.9.3.tgz
+# Ipopt 3.11.7
+if [ ! -d Ipopt-3.11.7 ]; then
+    tar xzvf ../.download/Ipopt-3.11.7.tgz
     # Documentation for Ipopt Third Party modules:
     # http://www.coin-or.org/Ipopt/documentation/node13.html
-    cd Ipopt-3.9.3/ThirdParty
+    cd Ipopt-3.11.7/ThirdParty
     # Metis
     cd Metis
-    sed -i 's#metis/metis#metis/OLD/metis#g' get.Metis
-    sed -i 's#metis-4\.0#metis-4\.0\.1#g' get.Metis
     ./get.Metis
-    # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
-    patch -p0 < ../../../../.download/metis-4.0.patch
     cd ..
     # Mumps
     cd Mumps
     ./get.Mumps
     cd ..
-    # bugfix of http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
-    cd ..
-    sed -i -n 'H;${x;s/#include "IpReferenced.hpp"/#include <cstddef>\
-\
-&/;p;}' Ipopt/src/Common/IpSmartPtr.hpp
-    sed -i -n 'H;${x;s/#include <list>/&\
-#include <cstddef>/;p;}' Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp
     # create build directory
+    cd ..
     mkdir build
     cd build
     # start building
@@ -104,7 +93,7 @@ if [ ! -d Ipopt-3.9.3 ]; then
     cd ../..
 fi
 # install
-cd Ipopt-3.9.3/build
+cd Ipopt-3.11.7/build
 make install
 cd ../..
 # Adol-C
@@ -220,6 +209,7 @@ patch -p1 < ../../psopt-installer-master/patches/psopt-gnuplot-windows.patch
 patch -p1 < ../../psopt-installer-master/patches/psopt-c++0x-windows.patch
 patch -p1 < ../../psopt-installer-master/patches/psopt-lambdafunction-windows.patch
 patch -p1 < ../../psopt-installer-master/patches/psopt-bugfix-static-variable.patch
+patch -p1 < ../../psopt-installer-master/patches/psopt-ipopt-3-11-7-compatibility.patch
 # PSOPT static library
 sed -i -n 'H;${x;s#/usr/bin/##g;p;}' PSOPT/lib/Makefile
 sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include#-U WIN32#g;p;}' PSOPT/lib/Makefile
@@ -244,7 +234,7 @@ cp PSOPT/src/psopt.h $PSOPT_BUILD_DIR/.target/include
 # mumps -> openblas
 chmod a+w PSOPT/lib/Makefile
 echo -e "
-MERGE_LIBS= -L$PSOPT_BUILD_DIR/.target/lib -L$PSOPT_BUILD_DIR/.target/lib/coin -L$PSOPT_BUILD_DIR/.target/lib/coin/ThirdParty -L$PSOPT_BUILD_DIR/.target/lib64 $< -ldmatrix -lcxsparse -ladolc -llusol -lipopt -lcoinmumps -lopenblas -lcoinmetis -lgfortran -ldl
+MERGE_LIBS= -L$PSOPT_BUILD_DIR/.target/lib -L$PSOPT_BUILD_DIR/.target/lib64 $< -ldmatrix -lcxsparse -ladolc -llusol -lipopt -lcoinmumps -lopenblas -lcoinmetis -lgfortran -ldl
 
 libcombinedpsopt.so: \$(PSOPTSRCDIR)/psopt.o
 \t\$(CXX) -shared \$(CXXFLAGS) \$(MERGE_LIBS) -o \$@
@@ -262,10 +252,10 @@ ADDLIB libdmatrix.a
 ADDLIB libcxsparse.a
 ADDLIB ../lib64/libadolc.a
 ADDLIB liblusol.a
-ADDLIB coin/libipopt.a
-ADDLIB coin/ThirdParty/libcoinmumps.a
+ADDLIB libipopt.a
+ADDLIB libcoinmumps.a
 ADDLIB libopenblas.a
-ADDLIB coin/ThirdParty/libcoinmetis.a
+ADDLIB libcoinmetis.a
 ADDLIB libgfortran.a
 ADDLIB libdl.a
 SAVE
