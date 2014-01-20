@@ -72,7 +72,6 @@ root@debpsopt:~# apt-get update
 root@debpsopt:~# apt-get install xfce4 xfce4-goodies sudo lightdm
 Do you want to continue: Y
 root@debpsopt:~# addgroup USER sudo
-root@debpsopt:~# addgroup USER staff
 root@debpsopt:~# reboot
 <sytem gets restarted with a GUI>
 

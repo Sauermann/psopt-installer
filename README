@@ -18,7 +18,7 @@ PSOPT in Debian, Ubuntu and Windows respectively.
 Installation on Debian
 ======================
 
-As a prerequisite, the user must be in the groups sudo and staff.
+As a prerequisite, the user must be in the group sudo.
 
 Usage:
 In a shell on Debian do the following:

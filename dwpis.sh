@@ -25,128 +25,173 @@ echo "under certain conditions; see the filecontent for more information."
 # <http://www.gnu.org/licenses/>.
 
 echo ""
-echo "Make sure that the current user is in the groups sudo and staff."
+echo "Make sure that the current user is in the group sudo."
 echo ""
 read -s -p "Press enter to start the installation."
 
+wmpisdl()
+{
+    if [ ! -f $1 ]; then
+        wget -O $1 --no-check-certificate $2
+    fi;
+}
+
 # install needed packages
-sudo apt-get install gfortran g++ libgd2-xpm-dev libpango1.0-dev unzip libf2c2-dev libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
-# add directory for content
-cd ~
-mkdir packages
-cd packages
-# get Ipopt 3.9.3
-wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
-tar xzvf Ipopt-3.9.3.tgz
-# Documentation for Ipopt Third Party modules:
-# http://www.coin-or.org/Ipopt/documentation/node13.html
-cd Ipopt-3.9.3/ThirdParty
-# Blas
-cd Blas
-sed -i 's/ftp:/http:/g' get.Blas
-./get.Blas
+# libgd2-xpm-dev libpango1.0-dev  libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
+sudo apt-get install gfortran g++ libopenblas-dev unzip dos2unix libf2c2-dev
+# Build Directory
+export PSOPT_BUILD_DIR=$PWD
+# Download packages
+mkdir -p .download
+cd .download
+wmpisdl Ipopt-3.11.7.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.11.7.tgz
+wmpisdl ADOL-C-2.1.12.zip http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.1.12.zip
+wmpisdl ColPack-1.0.3.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.3.tar.gz
+wmpisdl dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
+wmpisdl libf2c.zip http://www.netlib.org/f2c/libf2c.zip
+wmpisdl Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
+wmpisdl patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
+wmpisdl UFconfig-3.6.1.tar.gz http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
+wmpisdl CXSparse-2.2.5.tar.gz http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
+wmpisdl lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
+wmpisdl modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip
 cd ..
-# Lapack
-cd Lapack
-sed -i 's/ftp:/http:/g' get.Lapack
-./get.Lapack
-cd ..
-# Metis
-cd Metis
-sed -i 's/metis\/metis/metis\/OLD\/metis/g' get.Metis
-sed -i 's/metis-4\.0/metis-4\.0\.1/g' get.Metis
-./get.Metis
-# Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
-wget http://www.math-linux.com/IMG/patch/metis-4.0.patch
-patch -p0 < metis-4.0.patch
-cd ..
-# Mumps
-cd Mumps
-./get.Mumps
-cd ..
-# ASL
-cd ASL
-wget --recursive --include-directories=ampl/solvers http://www.netlib.org/ampl/solvers
-mv www.netlib.org/ampl/solvers .
-rm -rf www.netlib.org/
-sed -i 's/^rm/# rm/g' get.ASL
-sed -i 's/^tar /# tar/g' get.ASL
-sed -i 's/^$wgetcmd/# $wgetcmd/g' get.ASL
-cd ..
-# Compile Ipopt
-cd ..
-# bugfix of http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
-sed -n 'H;${x;s/#include "IpReferenced.hpp"/#include <cstddef>\
-\
-&/;p;}' Ipopt/src/Common/IpSmartPtr.hpp > IpSmartPtr.hpp
-mv IpSmartPtr.hpp Ipopt/src/Common/IpSmartPtr.hpp
-sed -n 'H;${x;s/#include <list>/&\
-#include <cstddef>/;p;}' Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp > IpTripletToCSRConverter.cpp
-mv IpTripletToCSRConverter.cpp Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp
-# create build directory
-mkdir build
-cd build
-# start building
-../configure --enable-static --prefix ~/Ipopt-3.9.3
+# Dir Creation
+mkdir -p .packages
+cd .packages
+# Ipopt 3.11.7
+if [ ! -d Ipopt-3.11.7 ]; then
+    tar xzvf ../.download/Ipopt-3.11.7.tgz
+    # Documentation for Ipopt Third Party modules:
+    # http://www.coin-or.org/Ipopt/documentation/node13.html
+    cd Ipopt-3.11.7/ThirdParty
+    # Metis
+    cd Metis
+    ./get.Metis
+    cd ..
+    # Mumps
+    cd Mumps
+    ./get.Mumps
+    cd ..
+    # create build directory
+    cd ..
+    mkdir build
+    cd build
+    # start building
+    ../configure --enable-static --prefix=$PSOPT_BUILD_DIR/.target --with-blas="-L$PSOPT_BUILD_DIR/.target/lib -lblas"
+    make
+    cd ../..
+fi
+# install
+cd Ipopt-3.11.7/build
 make install
-cd ../../..
-# Adol-C
-wget www.coin-or.org/download/source/ADOL-C/ADOL-C-2.1.12.tgz
-tar xzfv ADOL-C-2.1.12.tgz
-# with Colpack
-cd ADOL-C-2.1.12/ThirdParty
-wget http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.3.tar.gz
-tar -xzvf ColPack-1.0.3.tar.gz
-cd ColPack
-make
 cd ../..
-# and Adol-C Compilation
-# see http://list.coin-or.org/pipermail/adol-c/2012-March/000808.html
-./configure --enable-sparse --enable-static
-make
+# Adol-C
+if [ ! -d ADOL-C-2.1.12 ]; then
+    unzip ../.download/ADOL-C-2.1.12.zip
+    # with Colpack
+    cd ADOL-C-2.1.12/ThirdParty
+    tar -xzvf ../../../.download/ColPack-1.0.3.tar.gz
+    cd ColPack
+    make
+    cd ../..
+    # and Adol-C Compilation
+    ./configure --enable-sparse --enable-static --enable-shared --prefix $PSOPT_BUILD_DIR/.target
+    make
+    cd ..
+fi
+cd ADOL-C-2.1.12
 make install
 cd ..
-# PDFlib for Gnuplot
-cd packages
-wget http://www.pdflib.com/binaries/PDFlib/705/PDFlib-Lite-7.0.5p3.tar.gz
-tar xzvf PDFlib-Lite-7.0.5p3.tar.gz
-cd PDFlib-Lite-7.0.5p3
-./configure --enable-static
-make
-make install
-sudo ldconfig -v
-cd ..
-# Gnuplot
-wget -O gnuplot-4.2.6.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz/download
-tar xzfv gnuplot-4.2.6.tgz
-cd gnuplot-4.2.6
-./configure
-make
+# UFconfig
+if [ ! -d UFconfig ]; then
+    tar xzvf ../.download/UFconfig-3.6.1.tar.gz
+    cd UFconfig
+    sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' UFconfig.mk
+    sed -i -n 'H;${x;s#/usr/local#'"$PSOPT_BUILD_DIR"'/.target#g;p;}' UFconfig.mk
+    sed -i -n 'H;${x;s#CFLAGS = -O3 -fexceptions#& -fPIC#g;p;}' UFconfig.mk
+    make
+    cd ..
+fi
+cd UFconfig
 make install
 cd ..
-# getting PSOPT
-wget http://psopt.googlecode.com/files/Psopt3.tgz
-wget http://psopt.googlecode.com/files/patch_3.02.zip
-wget http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
-wget http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
-wget http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
-unzip patch_3.02.zip
+# CXSparse
+if [ ! -d CXSparse ]; then
+    tar xzvf ../.download/CXSparse-2.2.5.tar.gz
+    cd CXSparse
+    make library
+    cd ..
+fi
+cd CXSparse
+make install
 cd ..
-tar xzvf packages/Psopt3.tgz
-cp packages/patch_3.02/psopt.cxx Psopt3/PSOPT/src/
-cd Psopt3
-tar xzvf ../packages/UFconfig-3.6.1.tar.gz
-tar xzvf ../packages/CXSparse-2.2.5.tar.gz
-unzip ../packages/lusol.zip
-# PSOPT makefile adjustment
-sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}' PSOPT/lib/Makefile > temp_file
-mv temp_file PSOPT/lib/Makefile
-sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
+# Unpack PSOPT (makefile needed for lusol)
+tar xzvf ../.download/Psopt3.tgz
+# lusol
+unzip ../.download/lusol.zip
+cp Psopt3/Makefile.lusol lusol/csrc/Makefile
+cd lusol/csrc
+sed -i -n 'H;${x;s#I = -I.#& -I'"$PSOPT_BUILD_DIR"'/.target/include#;p;}' Makefile
+make
+cp liblusol.a $PSOPT_BUILD_DIR/.target/lib
+cp *.h $PSOPT_BUILD_DIR/.target/include
+cd ../..
+# DMatrix
+cd Psopt3/dmatrix/lib
+sed -i -n 'H;${x;s#-I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR)#-I'"$PSOPT_BUILD_DIR"'/.target/include#g;p;}' Makefile
+make
+cp libdmatrix.a $PSOPT_BUILD_DIR/.target/lib
+cd ..
+cp include/dmatrixv.h $PSOPT_BUILD_DIR/.target/include
+cd ..
+# PSOPT patching to new release
+unzip ../../.download/patch_3.02.zip
+cp patch_3.02/psopt.cxx PSOPT/src/
+# Apply local patches
+dos2unix PSOPT/src/psopt.cxx
+patch --ignore-whitespace -p1 < ../../psopt-installer-master/patches/psopt-bugfix-static-variable.patch
+patch -p1 < ../../psopt-installer-master/patches/psopt-c++0x-windows.patch
+patch --binary -p1 < ../../psopt-installer-master/patches/psopt-lambdafunction-windows.patch
+patch -p1 < ../../psopt-installer-master/patches/psopt-ipopt-3-11-7-compatibility.patch
+
+#patch -p1 < ../../psopt-installer-master/patches/psopt-gnuplot.patch
+# PSOPT static library
+sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include##g;p;}' PSOPT/lib/Makefile
+sed -i -n 'H;${x;s#-I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR)#-I'"$PSOPT_BUILD_DIR"'/.target/include -I'"$PSOPT_BUILD_DIR"'/.target/include/coin#g;p;}' PSOPT/lib/Makefile
+make ./PSOPT/lib/libpsopt.a
+cp PSOPT/lib/libpsopt.a $PSOPT_BUILD_DIR/.target/lib
+cp PSOPT/src/psopt.h $PSOPT_BUILD_DIR/.target/include
+# PSOPT Examples
+sed -n 'H;${x;s#CXXFLAGS      = -O0 -g#& -I$(PSOPT_BUILD_DIR)/.target/include#;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
-sed -n 'H;${x;s/ADOLC_LIBS    = -ladolc/ADOLC_LIBS    = $(USERHOME)\/adolc_base\/lib64\/libadolc.a/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
+sed -n 'H;${x;s#ADOLC_LIBS    = -ladolc#ADOLC_LIBS    = $(PSOPT_BUILD_DIR)/.target/lib64/libadolc.a#;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
-sed -n 'H;${x;s/libcoinhsl.a/& $(IPOPTLIBDIR)\/ThirdParty\/libcoinmumps.a $(IPOPTLIBDIR)\/ThirdParty\/libcoinmetis.a -lpthread/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
+sed -n 'H;${x;s#libcoinhsl.a#& $(PSOPT_BUILD_DIR)/.target/lib/libcoinmumps.a $(PSOPT_BUILD_DIR)/.target/lib/libcoinmetis.a -lpthread/#p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
+
+
+#sed -i -n 'H;${x;s/$(CXSPARSE_LIBS) $(DMATRIX_LIBS) $(LUSOL_LIBS) $(PSOPT_LIBS) dmatrix_examples //;p;}' Makefile
+#sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include  -I$(PSOPTSRCDIR)#-I'"$PSOPT_BUILD_DIR"'/.target/include#;p;}' PSOPT/examples/Makefile_linux.inc
+#sed -i -n 'H;${x;s#DMATRIX_LIBS  =#DMATRIX_LIBS_UNUSED  =#;p;}' PSOPT/examples/Makefile_linux.inc
+#sed -i -n 'H;${x;s#PSOPT_LIBS    =#PSOPT_LIBS_UNUSED    =#;p;}' PSOPT/examples/Makefile_linux.inc
+#sed -i -n 'H;${x;s#SPARSE_LIBS   =#SPARSE_LIBS_UNUSED   =#;p;}' PSOPT/examples/Makefile_linux.inc
+#sed -i -n 'H;${x;s#FLIBS    #FLIBS_UNUSED    #g;p;}' PSOPT/examples/Makefile_linux.inc
+#sed -i -n 'H;${x;s#ALL_LIBRARIES = $(PSOPT_LIBS) $(DMATRIX_LIBS)  $(FLIBS) $(SPARSE_LIBS) $(IPOPT_LIBS)  $(ADOLC_LIBS)#ALL_LIBRARIES = -L'"$PSOPT_BUILD_DIR/.target/lib -lcombinedpsopt -lpthread -ldl#;p;}" PSOPT/examples/Makefile_linux.inc
+#sed -i -n 'H;${x;s#EXAMPLESDIR = .#&\
+#LIBDIR = '"$PSOPT_BUILD_DIR"'/.target/lib#;p;}' PSOPT/examples/Makefile_linux.inc
+
+
+# Compilation
+if [ ! -f ../../NO_PSOPT_EXAMPLES ]; then
+    make all
+fi
+
+
+
+
+# add directory for content
+
 # Psopt Compilation
 make all
 echo "installation finished"
