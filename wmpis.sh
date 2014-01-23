@@ -46,8 +46,8 @@ cd .download
 wmpisdl OpenBLAS-v0.2.8-x86_64.tar.gz https://github.com/xianyi/OpenBLAS/archive/v0.2.8.tar.gz
 wmpisdl Ipopt-3.9.3.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
 wmpisdl metis-4.0.patch http://www.math-linux.com/IMG/patch/metis-4.0.patch
-wmpisdl ADOL-C-2.1.12.zip http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.1.12.zip
-wmpisdl ColPack-1.0.3.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.3.tar.gz
+wmpisdl ADOL-C-2.4.1.tgz http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.4.1.tgz
+wmpisdl ColPack-1.0.9.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
 wmpisdl dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
 wmpisdl libf2c.zip http://www.netlib.org/f2c/libf2c.zip
 wmpisdl Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
@@ -107,28 +107,35 @@ fi
 cd Ipopt-3.9.3/build
 make install
 cd ../..
+# ColPack
+if [ ! -d ColPack-1.0.9 ]; then
+    tar xzvf ../.download/ColPack-1.0.9.tar.gz
+    cd ColPack-1.0.9
+    ./configure --enable-static --prefix $PSOPT_BUILD_DIR/.target --libdir=$PSOPT_BUILD_DIR/.target/lib64
+    make
+    # create shared library (necessary for linking with ADOL-C)
+    # http://stackoverflow.com/questions/12163406/mingw32-compliation-issue-when-static-linking-is-required-adol-c-links-colpack
+    g++ -shared -o libColPack.dll  CoutLock.o command_line_parameter_processor.o File.o DisjointSets.o current_time.o mmio.o Pause.o MatrixDeallocation.o Timer.o StringTokenizer.o extra.o stat.o BipartiteGraphPartialOrdering.o BipartiteGraphPartialColoring.o BipartiteGraphPartialColoringInterface.o BipartiteGraphInputOutput.o BipartiteGraphBicoloring.o BipartiteGraphVertexCover.o BipartiteGraphCore.o BipartiteGraphBicoloringInterface.o BipartiteGraphOrdering.o GraphCore.o GraphColoringInterface.o GraphInputOutput.o GraphOrdering.o GraphColoring.o JacobianRecovery1D.o RecoveryCore.o JacobianRecovery2D.o HessianRecovery.o
+    cd ..
+fi
+cd ColPack-1.0.9
+make install
+cp libColPack.dll $PSOPT_BUILD_DIR/.target/lib64
+sed -i -e "s#^library_names=''#library_names='libColPack.dll'#" $PSOPT_BUILD_DIR/.target/lib64/libColPack.la
+chmod a+w $PSOPT_BUILD_DIR/.target/lib64/libColPack.la
+cd ..
 # Adol-C
-if [ ! -d ADOL-C-2.1.12 ]; then
-    unzip ../.download/ADOL-C-2.1.12.zip
-    # with Colpack
-    cd ADOL-C-2.1.12/ThirdParty
-    tar -xzvf ../../../.download/ColPack-1.0.3.tar.gz
-    cd ColPack
+if [ ! -d ADOL-C-2.4.1 ]; then
+    tar xzvf ../.download/ADOL-C-2.4.1.tgz
+    cd ADOL-C-2.4.1
+    ./configure --enable-sparse --enable-static --with-colpack=$PSOPT_BUILD_DIR/.target --prefix $PSOPT_BUILD_DIR/.target
     make
-    cd ../..
-    # and Adol-C Compilation
-    ./configure --enable-sparse --enable-static --prefix $PSOPT_BUILD_DIR/.target
-    cd ADOL-C
-    cp -r src adolc
-    cd src
-    make
-    cd ../..
     cd ..
 fi
 # installation
-cd ADOL-C-2.1.12/ADOL-C/src
+cd ADOL-C-2.4.1
 make install
-cd ../../..
+cd ..
 # dlfcn
 if [ ! -d dlfcn-19-6 ]; then
     mkdir dlfcn-19-6
@@ -261,6 +268,7 @@ ADDLIB libpsopt.a
 ADDLIB libdmatrix.a
 ADDLIB libcxsparse.a
 ADDLIB ../lib64/libadolc.a
+ADDLIB ../lib64/libColPack.a
 ADDLIB liblusol.a
 ADDLIB coin/libipopt.a
 ADDLIB coin/ThirdParty/libcoinmumps.a
