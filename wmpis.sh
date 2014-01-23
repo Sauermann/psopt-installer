@@ -336,7 +336,7 @@ clean: projectclean
 \trm -f *.o $(TARGET) $(TARGET).exe
 
 psoptclean: clean projectpsoptclean
-\trm -f $(TARGET).txt *.dat mesh_statistics* *.out psopt_solution_*.txt gnuplot.scp error_message.txt
+\trm -f $(TARGET).txt *.dat mesh_statistics* *.out psopt_solution_*.txt gnuplot.scp error_message.txt ADOLC-*.tap
 ' > Makefile_include.mk
 cd obstacle
 make
