@@ -99,7 +99,7 @@ if [ ! -d Ipopt-3.9.3 ]; then
     mkdir build
     cd build
     # start building
-    ../configure --enable-static --prefix $PSOPT_BUILD_DIR/.target -with-blas="-L$PSOPT_BUILD_DIR/.target/lib -llibopenblas"
+    ../configure --enable-static --prefix $PSOPT_BUILD_DIR/.target -with-blas="-L$PSOPT_BUILD_DIR/.target/lib -lopenblas"
     make
     cd ../..
 fi
@@ -223,10 +223,10 @@ cd ..
 unzip ../../.download/patch_3.02.zip
 cp patch_3.02/psopt.cxx PSOPT/src/
 # Apply local patches
-patch -p1 < ../../psopt-installer-master/patches/psopt-gnuplot-windows.patch
-patch -p1 < ../../psopt-installer-master/patches/psopt-c++0x-windows.patch
-patch -p1 < ../../psopt-installer-master/patches/psopt-lambdafunction-windows.patch
-patch -p1 < ../../psopt-installer-master/patches/psopt-bugfix-static-variable.patch
+patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-gnuplot-windows.patch
+patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-c++0x-windows.patch
+patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-lambdafunction-windows.patch
+patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-bugfix-static-variable.patch
 # PSOPT static library
 sed -i -n 'H;${x;s#/usr/bin/##g;p;}' PSOPT/lib/Makefile
 sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include#-U WIN32#g;p;}' PSOPT/lib/Makefile
@@ -354,7 +354,7 @@ cd .packages
 unzip ../.download/modern-psopt-interface.zip
 cd modern-psopt-interface-master
 make PSOPT=../..
-make install PREFIX=../../.target
+make install PSOPT=../.. PREFIX=../../.target
 cd ../..
 # Modern Obstacle Example
 echo ""
