@@ -56,6 +56,8 @@ wmpisdl UFconfig-3.6.1.tar.gz http://www.cise.ufl.edu/research/sparse/SuiteSpars
 wmpisdl CXSparse-2.2.5.tar.gz http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
 wmpisdl lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 wmpisdl modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip
+wmpisdl metis-4.0.1.tar.gz http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/OLD/metis-4.0.1.tar.gz
+wmpisdl MUMPS_4.9.2.tar.gz http://mumps.enseeiht.fr/MUMPS_4.9.2.tar.gz
 cd ..
 # Dircreation
 mkdir -p .packages
@@ -70,26 +72,45 @@ fi
 cd OpenBLAS-0.2.8
 make PREFIX=$PSOPT_BUILD_DIR/.target install
 cd ..
+# Metis
+if [ ! -d metis-4.0 ]; then
+    tar xzvf ../.download/metis-4.0.1.tar.gz
+    cd metis-4.0
+    # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
+    patch -p1 < ../../.download/metis-4.0.patch
+    sed -i 's#CC = cc#CC = gcc#g' Makefile.in
+    sed -i 's#COPTIONS = #&-D __VC__#g' Makefile.in
+    cd Lib
+    make
+    cd ../..
+fi
+cd metis-4.0
+cp libmetis.a ../../.target/lib
+#cp Lib/*.h ../../.target/include not necessary?
+cd ..
+# Mumps
+if [ ! -d MUMPS_4.9.2 ]; then
+    tar xzvf ../.download/MUMPS_4.9.2.tar.gz
+    cd MUMPS_4.9.2
+    cp Make.inc/Makefile.gfortran.SEQ Makefile.inc
+    sed -i 's|#LMETISDIR = /local/metis/|LMETISDIR = $(PSOPT_BUILD_DIR)/.target/lib|' Makefile.inc
+    sed -i 's|#LMETIS    = -L$(LMETISDIR) -lmetis|LMETIS    = -L$(LMETISDIR) -lmetis|' Makefile.inc
+    sed -i 's#ORDERINGSF  = -Dpord#&  -Dmetis#' Makefile.inc
+    sed -i 's#-lblas#-lopenblas#' Makefile.inc
+    make
+    cd ..
+fi
+cd MUMPS_4.9.2
+cp lib/*.a ../../.target/lib
+cp include/*.h ../../.target/include
+cp libseq/mpi.h ../../.target/include
+cp libseq/libmpiseq.a ../../.target/lib
+cd ..
 # Ipopt 3.9.3
 if [ ! -d Ipopt-3.9.3 ]; then
     tar xzvf ../.download/Ipopt-3.9.3.tgz
-    # Documentation for Ipopt Third Party modules:
-    # http://www.coin-or.org/Ipopt/documentation/node13.html
-    cd Ipopt-3.9.3/ThirdParty
-    # Metis
-    cd Metis
-    sed -i 's#metis/metis#metis/OLD/metis#g' get.Metis
-    sed -i 's#metis-4\.0#metis-4\.0\.1#g' get.Metis
-    ./get.Metis
-    # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
-    patch -p0 < ../../../../.download/metis-4.0.patch
-    cd ..
-    # Mumps
-    cd Mumps
-    ./get.Mumps
-    cd ..
-    # bugfix of http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
-    cd ..
+    # bugfix for http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
+    cd Ipopt-3.9.3
     sed -i -n 'H;${x;s/#include "IpReferenced.hpp"/#include <cstddef>\
 \
 &/;p;}' Ipopt/src/Common/IpSmartPtr.hpp
@@ -99,7 +120,7 @@ if [ ! -d Ipopt-3.9.3 ]; then
     mkdir build
     cd build
     # start building
-    ../configure --enable-static --prefix $PSOPT_BUILD_DIR/.target -with-blas="-L$PSOPT_BUILD_DIR/.target/lib -lopenblas"
+    ../configure --enable-static --prefix $PSOPT_BUILD_DIR/.target -with-blas="-L$PSOPT_BUILD_DIR/.target/lib -lopenblas" --with-mumps-lib="-L$PSOPT_BUILD_DIR/.target/lib -ldmumps -lmumps_common -lpord -lmpiseq" --with-mumps-incdir="$PSOPT_BUILD_DIR/.target/include"
     make
     cd ../..
 fi
@@ -251,7 +272,7 @@ cp PSOPT/src/psopt.h $PSOPT_BUILD_DIR/.target/include
 # mumps -> openblas
 chmod a+w PSOPT/lib/Makefile
 echo -e "
-MERGE_LIBS= -L$PSOPT_BUILD_DIR/.target/lib -L$PSOPT_BUILD_DIR/.target/lib/coin -L$PSOPT_BUILD_DIR/.target/lib/coin/ThirdParty -L$PSOPT_BUILD_DIR/.target/lib64 $< -ldmatrix -lcxsparse -ladolc -llusol -lipopt -lcoinmumps -lopenblas -lcoinmetis -lgfortran -ldl
+MERGE_LIBS= -L$PSOPT_BUILD_DIR/.target/lib -L$PSOPT_BUILD_DIR/.target/lib/coin -L$PSOPT_BUILD_DIR/.target/lib/coin/ThirdParty -L$PSOPT_BUILD_DIR/.target/lib64 $< -ldmatrix -lcxsparse -ladolc -llusol -lipopt -ldmumps -lmumps_common -lpord -lmpiseq -lopenblas -lmetis -lgfortran -ldl
 
 libcombinedpsopt.so: \$(PSOPTSRCDIR)/psopt.o
 \t\$(CXX) -shared \$(CXXFLAGS) \$(MERGE_LIBS) -o \$@
@@ -271,9 +292,12 @@ ADDLIB ../lib64/libadolc.a
 ADDLIB ../lib64/libColPack.a
 ADDLIB liblusol.a
 ADDLIB coin/libipopt.a
-ADDLIB coin/ThirdParty/libcoinmumps.a
+ADDLIB libdmumps.a
+ADDLIB libmumps_common.a
+ADDLIB libpord.a
+ADDLIB libmpiseq.a
 ADDLIB libopenblas.a
-ADDLIB coin/ThirdParty/libcoinmetis.a
+ADDLIB libmetis.a
 ADDLIB libgfortran.a
 ADDLIB libdl.a
 SAVE
