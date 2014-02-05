@@ -220,17 +220,17 @@ fi
 cd CXSparse
 make install
 cd ..
-# Unpack PSOPT (makefile needed for lusol)
-tar xzvf ../.download/Psopt3.tgz
 # lusol
 unzip ../.download/lusol.zip
-cp Psopt3/Makefile.lusol lusol/csrc/Makefile
 cd lusol/csrc
+tar xOzvf ../../../.download/Psopt3.tgz ./Psopt3/Makefile.lusol > Makefile
 sed -i -n 'H;${x;s#I = -I.#& -I'"$PSOPT_BUILD_DIR"'/.target/include#;p;}' Makefile
 make
 cp liblusol.a $PSOPT_BUILD_DIR/.target/lib
 cp *.h $PSOPT_BUILD_DIR/.target/include
 cd ../..
+# Unpack PSOPT (needed for DMatrix)
+tar xzvf ../.download/Psopt3.tgz
 # DMatrix
 cd Psopt3/dmatrix/lib
 sed -i -n 'H;${x;s#/usr/bin/##g;p;}' Makefile
