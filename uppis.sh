@@ -31,7 +31,7 @@ read -s -p "Press enter to start the installation."
 sudo apt-get install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
 # add directory for content
 cd ~
-mkdir packages
+mkdir -p packages
 cd packages
 # get Ipopt 3.9.3
 wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
@@ -53,6 +53,7 @@ cd ..
 cd Metis
 sed -i 's/metis\/metis/metis\/OLD\/metis/g' get.Metis
 sed -i 's/metis-4\.0/metis-4\.0\.1/g' get.Metis
+sed -i 's/mv metis/#mv metis/g' get.Metis
 ./get.Metis
 # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
 wget http://www.math-linux.com/IMG/patch/metis-4.0.patch
@@ -64,7 +65,8 @@ cd Mumps
 cd ..
 # ASL
 cd ASL
-wget --recursive --include-directories=ampl/solvers http://www.netlib.org/ampl/solvers
+wget --recursive --include-directories=ampl/solvers http://www.netlib.org/ampl/solvers || true
+rm -rf solvers
 mv www.netlib.org/ampl/solvers .
 rm -rf www.netlib.org/
 sed -i 's/^rm/# rm/g' get.ASL
@@ -81,7 +83,7 @@ sed -n 'H;${x;s/#include <list>/&\
 #include <cstddef>/;p;}' Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp > IpTripletToCSRConverter.cpp
 mv IpTripletToCSRConverter.cpp Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp
 # create build directory
-mkdir build
+mkdir -p build
 cd build
 # start building
 ../configure --enable-static --prefix ~/Ipopt-3.9.3
@@ -115,11 +117,11 @@ sudo ldconfig -v
 cd ..
 # Gnuplot
 wget -O gnuplot-4.2.6.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz/download
-tar xzfv gnuplot-4.2.6.tgz
+tar xzfv gnuplot-4.2.6.tar.gz
 cd gnuplot-4.2.6
-./configure
+./configure --without-tutorial
 make
-sudo make install
+sudo make install || true
 cd ..
 # getting PSOPT
 wget http://psopt.googlecode.com/files/Psopt3.tgz
