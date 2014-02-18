@@ -55,3 +55,9 @@ Bugfix for Psopt that corrects in psopt_main the variable aux_local to
 static. [2]
 
 [2] http://stackoverflow.com/questions/11137516/scope-vs-lifetime-of-variable
+
+scotch-mingw-64.patch
+=====================
+
+Allow compilation of Scotch in Mingw-64.
+Add a dummy function 'pipe' and make changes to Makefile.inc

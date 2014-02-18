@@ -45,7 +45,6 @@ mkdir -p .download
 cd .download
 wmpisdl OpenBLAS-v0.2.8-x86_64.tar.gz https://github.com/xianyi/OpenBLAS/archive/v0.2.8.tar.gz
 wmpisdl Ipopt-3.9.3.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
-wmpisdl metis-4.0.patch http://www.math-linux.com/IMG/patch/metis-4.0.patch
 wmpisdl ADOL-C-2.4.1.tgz http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.4.1.tgz
 wmpisdl ColPack-1.0.9.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
 wmpisdl dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
@@ -56,8 +55,8 @@ wmpisdl UFconfig-3.6.1.tar.gz http://www.cise.ufl.edu/research/sparse/SuiteSpars
 wmpisdl CXSparse-2.2.5.tar.gz http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
 wmpisdl lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 wmpisdl modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip
-wmpisdl metis-4.0.1.tar.gz http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/OLD/metis-4.0.1.tar.gz
 wmpisdl MUMPS_4.9.2.tar.gz http://mumps.enseeiht.fr/MUMPS_4.9.2.tar.gz
+wmpisdl scotch_6.0.0_esmumps.tar.gz https://gforge.inria.fr/frs/download.php/31832/scotch_6.0.0_esmumps.tar.gz
 cd ..
 # Dircreation
 mkdir -p .packages
@@ -72,30 +71,61 @@ fi
 cd OpenBLAS-0.2.8
 make PREFIX=$PSOPT_BUILD_DIR/.target install
 cd ..
-# Metis
-if [ ! -d metis-4.0 ]; then
-    tar xzvf ../.download/metis-4.0.1.tar.gz
-    cd metis-4.0
-    # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
-    patch -p1 < ../../.download/metis-4.0.patch
-    sed -i 's#CC = cc#CC = gcc#g' Makefile.in
-    sed -i 's#COPTIONS = #&-D __VC__#g' Makefile.in
-    cd Lib
-    make
+# # zlib for Scotch
+# if [ ! -d zlib-1.2.8 ]; then
+#     tar xJvf ../.download/zlib-1.2.8.tar.xz
+#     cd zlib-1.2.8
+#     make -fwin32/Makefile.gcc
+#     cd ..
+# fi
+# cd zlib-1.2.8
+# export DESTDIR=$PSOPT_BUILD_DIR/.target/
+# export BINARY_PATH=bin
+# export LIBRARY_PATH=lib
+# export INCLUDE_PATH=include
+# make -fwin32/Makefile.gcc install
+# unset DESTDIR
+# unset BINARY_PATH
+# unset LIBRARY_PATH
+# unset INCLUDE_PATH
+# cd ..
+# 
+# Scotch
+if [ ! -d scotch_6.0.0_esmumps ]; then
+    tar xzvf ../.download/scotch_6.0.0_esmumps.tar.gz
+    cd scotch_6.0.0_esmumps
+    patch -p1 < $PSOPT_BUILD_DIR/patches/scotch-mingw-64.patch
+    cd src
+    make esmumps
     cd ../..
 fi
-cd metis-4.0
-cp libmetis.a ../../.target/lib
-#cp Lib/*.h ../../.target/include not necessary?
+cd scotch_6.0.0_esmumps
+cp include/scotch.h include scotchf.h $PSOPT_BUILD_DIR/.target/include
+cp lib/*.a $PSOPT_BUILD_DIR/.target/lib
 cd ..
+# # Metis
+# if [ ! -d metis-4.0 ]; then
+#     tar xzvf ../.download/metis-4.0.1.tar.gz
+#     cd metis-4.0
+#     # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
+#     patch -p1 < ../../.download/metis-4.0.patch
+#     sed -i 's#CC = cc#CC = gcc#g' Makefile.in
+#     sed -i 's#COPTIONS = #&-D __VC__#g' Makefile.in
+#     cd Lib
+#     make
+#     cd ../..
+# fi
+# cd metis-4.0
+# cp libmetis.a ../../.target/lib
+# cd ..
 # Mumps
 if [ ! -d MUMPS_4.9.2 ]; then
     tar xzvf ../.download/MUMPS_4.9.2.tar.gz
     cd MUMPS_4.9.2
     cp Make.inc/Makefile.gfortran.SEQ Makefile.inc
-    sed -i 's|#LMETISDIR = /local/metis/|LMETISDIR = $(PSOPT_BUILD_DIR)/.target/lib|' Makefile.inc
-    sed -i 's|#LMETIS    = -L$(LMETISDIR) -lmetis|LMETIS    = -L$(LMETISDIR) -lmetis|' Makefile.inc
-    sed -i 's#ORDERINGSF  = -Dpord#&  -Dmetis#' Makefile.inc
+    sed -i 's|#SCOTCHDIR  = ${HOME}/scotch_5.1_esmumps|SCOTCHDIR  = $(PSOPT_BUILD_DIR)/.target/lib|' Makefile.inc
+    sed -i 's|#LSCOTCH    = -L$(SCOTCHDIR)/lib -lesmumps -lscotch -lscotcherr|LSCOTCH    = -L$(SCOTCHDIR) -lesmumps -lscotch -lscotcherr|' Makefile.inc
+    sed -i 's#ORDERINGSF  = -Dpord#& -Dscotch#' Makefile.inc
     sed -i 's#-lblas#-lopenblas#' Makefile.inc
     make
     cd ..
@@ -272,7 +302,7 @@ cp PSOPT/src/psopt.h $PSOPT_BUILD_DIR/.target/include
 # mumps -> openblas
 chmod a+w PSOPT/lib/Makefile
 echo -e "
-MERGE_LIBS= -L$PSOPT_BUILD_DIR/.target/lib -L$PSOPT_BUILD_DIR/.target/lib/coin -L$PSOPT_BUILD_DIR/.target/lib/coin/ThirdParty -L$PSOPT_BUILD_DIR/.target/lib64 $< -ldmatrix -lcxsparse -ladolc -llusol -lipopt -ldmumps -lmumps_common -lpord -lmpiseq -lopenblas -lmetis -lgfortran -ldl
+MERGE_LIBS= -L$PSOPT_BUILD_DIR/.target/lib -L$PSOPT_BUILD_DIR/.target/lib/coin -L$PSOPT_BUILD_DIR/.target/lib/coin/ThirdParty -L$PSOPT_BUILD_DIR/.target/lib64 $< -ldmatrix -lcxsparse -ladolc -llusol -lipopt -ldmumps -lmumps_common -lpord -lmpiseq -lopenblas -lgfortran -ldl
 
 libcombinedpsopt.so: \$(PSOPTSRCDIR)/psopt.o
 \t\$(CXX) -shared \$(CXXFLAGS) \$(MERGE_LIBS) -o \$@
@@ -297,7 +327,9 @@ ADDLIB libmumps_common.a
 ADDLIB libpord.a
 ADDLIB libmpiseq.a
 ADDLIB libopenblas.a
-ADDLIB libmetis.a
+ADDLIB libesmumps.a
+ADDLIB libscotch.a
+ADDLIB libscotcherr.a
 ADDLIB libgfortran.a
 ADDLIB libdl.a
 SAVE
