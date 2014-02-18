@@ -56,6 +56,12 @@ static. [2]
 
 [2] http://stackoverflow.com/questions/11137516/scope-vs-lifetime-of-variable
 
+psopt-ipopt-3-11-7-compatibility.patch
+======================================
+
+Allow Psopt to be compiled with Ipopt 3.11.7: Include the cassert
+standard header
+
 scotch-mingw-64.patch
 =====================
 

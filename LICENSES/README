@@ -31,8 +31,7 @@ View it's license at LICENSE_LAPACK
 
 Ipopt
 =====
-Version 3.9.3 with the patch from
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
+Version 3.11.7
 Available at https://projects.coin-or.org/Ipopt
 It is available under the EPLv1.0
 LICENSE_EclipsePublicLicenseV1_0

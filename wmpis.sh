@@ -44,7 +44,7 @@ export PSOPT_BUILD_DIR=$PWD
 mkdir -p .download
 cd .download
 wmpisdl OpenBLAS-v0.2.8-x86_64.tar.gz https://github.com/xianyi/OpenBLAS/archive/v0.2.8.tar.gz
-wmpisdl Ipopt-3.9.3.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
+wmpisdl Ipopt-3.11.7.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.11.7.tgz
 wmpisdl ADOL-C-2.4.1.tgz http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.4.1.tgz
 wmpisdl ColPack-1.0.9.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
 wmpisdl dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
@@ -71,25 +71,6 @@ fi
 cd OpenBLAS-0.2.8
 make PREFIX=$PSOPT_BUILD_DIR/.target install
 cd ..
-# # zlib for Scotch
-# if [ ! -d zlib-1.2.8 ]; then
-#     tar xJvf ../.download/zlib-1.2.8.tar.xz
-#     cd zlib-1.2.8
-#     make -fwin32/Makefile.gcc
-#     cd ..
-# fi
-# cd zlib-1.2.8
-# export DESTDIR=$PSOPT_BUILD_DIR/.target/
-# export BINARY_PATH=bin
-# export LIBRARY_PATH=lib
-# export INCLUDE_PATH=include
-# make -fwin32/Makefile.gcc install
-# unset DESTDIR
-# unset BINARY_PATH
-# unset LIBRARY_PATH
-# unset INCLUDE_PATH
-# cd ..
-# 
 # Scotch
 if [ ! -d scotch_6.0.0_esmumps ]; then
     tar xzvf ../.download/scotch_6.0.0_esmumps.tar.gz
@@ -103,21 +84,6 @@ cd scotch_6.0.0_esmumps
 cp include/scotch.h include scotchf.h $PSOPT_BUILD_DIR/.target/include
 cp lib/*.a $PSOPT_BUILD_DIR/.target/lib
 cd ..
-# # Metis
-# if [ ! -d metis-4.0 ]; then
-#     tar xzvf ../.download/metis-4.0.1.tar.gz
-#     cd metis-4.0
-#     # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
-#     patch -p1 < ../../.download/metis-4.0.patch
-#     sed -i 's#CC = cc#CC = gcc#g' Makefile.in
-#     sed -i 's#COPTIONS = #&-D __VC__#g' Makefile.in
-#     cd Lib
-#     make
-#     cd ../..
-# fi
-# cd metis-4.0
-# cp libmetis.a ../../.target/lib
-# cd ..
 # Mumps
 if [ ! -d MUMPS_4.9.2 ]; then
     tar xzvf ../.download/MUMPS_4.9.2.tar.gz
@@ -136,18 +102,13 @@ cp include/*.h ../../.target/include
 cp libseq/mpi.h ../../.target/include
 cp libseq/libmpiseq.a ../../.target/lib
 cd ..
-# Ipopt 3.9.3
-if [ ! -d Ipopt-3.9.3 ]; then
-    tar xzvf ../.download/Ipopt-3.9.3.tgz
+# Ipopt 3.11.7
+if [ ! -d Ipopt-3.11.7 ]; then
+    tar xzvf ../.download/Ipopt-3.11.7.tgz
     # bugfix for http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
-    cd Ipopt-3.9.3
-    sed -i -n 'H;${x;s/#include "IpReferenced.hpp"/#include <cstddef>\
-\
-&/;p;}' Ipopt/src/Common/IpSmartPtr.hpp
-    sed -i -n 'H;${x;s/#include <list>/&\
-#include <cstddef>/;p;}' Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp
+    cd Ipopt-3.11.7
     # create build directory
-    mkdir build
+    mkdir -p build
     cd build
     # start building
     ../configure --enable-static --prefix $PSOPT_BUILD_DIR/.target -with-blas="-L$PSOPT_BUILD_DIR/.target/lib -lopenblas" --with-mumps-lib="-L$PSOPT_BUILD_DIR/.target/lib -ldmumps -lmumps_common -lpord -lmpiseq" --with-mumps-incdir="$PSOPT_BUILD_DIR/.target/include"
@@ -155,7 +116,7 @@ if [ ! -d Ipopt-3.9.3 ]; then
     cd ../..
 fi
 # install
-cd Ipopt-3.9.3/build
+cd Ipopt-3.11.7/build
 make install
 cd ../..
 # ColPack
@@ -278,6 +239,7 @@ patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-gnuplot-windows.patch
 patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-c++0x-windows.patch
 patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-lambdafunction-windows.patch
 patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-bugfix-static-variable.patch
+patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-ipopt-3-11-7-compatibility.patch
 # PSOPT static library
 sed -i -n 'H;${x;s#/usr/bin/##g;p;}' PSOPT/lib/Makefile
 sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include#-U WIN32#g;p;}' PSOPT/lib/Makefile
@@ -300,14 +262,14 @@ cp PSOPT/src/psopt.h $PSOPT_BUILD_DIR/.target/include
 # ipopt -> openblas
 # mumps -> metis
 # mumps -> openblas
-chmod a+w PSOPT/lib/Makefile
+cd PSOPT/lib
+chmod a+w Makefile
 echo -e "
-MERGE_LIBS= -L$PSOPT_BUILD_DIR/.target/lib -L$PSOPT_BUILD_DIR/.target/lib/coin -L$PSOPT_BUILD_DIR/.target/lib/coin/ThirdParty -L$PSOPT_BUILD_DIR/.target/lib64 $< -ldmatrix -lcxsparse -ladolc -llusol -lipopt -ldmumps -lmumps_common -lpord -lmpiseq -lopenblas -lgfortran -ldl
+MERGE_LIBS= -L$PSOPT_BUILD_DIR/.target/lib -L$PSOPT_BUILD_DIR/.target/lib/coin -L$PSOPT_BUILD_DIR/.target/lib/coin/ThirdParty -L$PSOPT_BUILD_DIR/.target/lib64 $< -ldmatrix -lcxsparse -ladolc -llusol -lipopt -ldmumps -lmumps_common -lesmumps -lscotch -lscotcherr -lpord -lmpiseq -lopenblas -lgfortran -ldl
 
 libcombinedpsopt.so: \$(PSOPTSRCDIR)/psopt.o
 \t\$(CXX) -shared \$(CXXFLAGS) \$(MERGE_LIBS) -o \$@
-" >> PSOPT/lib/Makefile
-cd PSOPT/lib
+" >> Makefile
 make libcombinedpsopt.so
 cp libcombinedpsopt.so $PSOPT_BUILD_DIR/.target/lib/
 cd ../..
@@ -321,7 +283,7 @@ ADDLIB libcxsparse.a
 ADDLIB ../lib64/libadolc.a
 ADDLIB ../lib64/libColPack.a
 ADDLIB liblusol.a
-ADDLIB coin/libipopt.a
+ADDLIB libipopt.a
 ADDLIB libdmumps.a
 ADDLIB libmumps_common.a
 ADDLIB libpord.a
