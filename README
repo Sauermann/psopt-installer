@@ -115,7 +115,7 @@ http://article.gmane.org/gmane.comp.gnu.mingw.msys/3930
 Gnuplot
 -------
 
-Usage of Gnuplot is optional but supported.
+Usage of Gnuplot is optional and supported.
 
 Get the latest version from http://www.gnuplot.info/ and install it.
 Be sure to include the gnuplot executable into the path - the
@@ -132,7 +132,9 @@ Start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
 user@computer:~$ cd installation_dir
 user@computer:~/installation_dir$ wget -O psopt-installer.zip --no-check-certificate https://github.com/Sauermann/psopt-installer/archive/master.zip
 user@computer:~/installation_dir$ unzip psopt-installer.zip
+user@computer:~/installation_dir$ cp -r psopt-installer-master/patches .
 user@computer:~/installation_dir$ ./psopt-installer-master/wmpis.sh
+user@computer:~/installation_dir$ rm -rf patches
 
 Usage
 -----
@@ -146,7 +148,6 @@ Known issues
 
 On Debian some examples do not give the expected results.
 On Ubuntu the display of gnuplot charts does not happen automatically.
-On Windows Gnuplot does not get installed
 
 
 Contact
@@ -155,6 +156,13 @@ Contact
 Send bugreports, comments or corrections via the github page
 https://github.com/Sauermann/psopt-installer
 or to the E-Mail psopt-installer@sauermann-consulting.de
+
+
+Contributors
+============
+
+Thanks to
+Tavert
 
 
 References

@@ -55,3 +55,15 @@ Bugfix for Psopt that corrects in psopt_main the variable aux_local to
 static. [2]
 
 [2] http://stackoverflow.com/questions/11137516/scope-vs-lifetime-of-variable
+
+psopt-ipopt-3-11-7-compatibility.patch
+======================================
+
+Allow Psopt to be compiled with Ipopt 3.11.7: Include the cassert
+standard header
+
+scotch-mingw-64.patch
+=====================
+
+Allow compilation of Scotch in Mingw-64.
+Add a dummy function 'pipe' and make changes to Makefile.inc
