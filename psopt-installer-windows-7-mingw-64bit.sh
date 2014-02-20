@@ -30,197 +30,27 @@ echo ""
 read -s -p "Press enter to start the installation in the CURRENT DIRECTORY."
 echo ""
 
-wmpisdl()
-{
-    if [ ! -f $1 ]; then
-        wget -O $1 --no-check-certificate $2
-    fi;
-}
 # hide most windows paths
 export ORIGINAL_PATH=$PATH
 export PATH=".:/mingw/bin:/bin:/c/Windows/System32"
 # Build Directory
 export PSOPT_BUILD_DIR=$PWD
 # Download packages
-mkdir -p .download
-cd .download
-wmpisdl OpenBLAS-v0.2.8-x86_64.tar.gz https://github.com/xianyi/OpenBLAS/archive/v0.2.8.tar.gz
-wmpisdl Ipopt-3.11.7.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.11.7.tgz
-wmpisdl ADOL-C-2.4.1.tgz http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.4.1.tgz
-wmpisdl ColPack-1.0.9.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
-wmpisdl dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
-wmpisdl libf2c.zip http://www.netlib.org/f2c/libf2c.zip
-wmpisdl Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
-wmpisdl patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
-wmpisdl UFconfig-3.6.1.tar.gz http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
-wmpisdl CXSparse-2.2.5.tar.gz http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
-wmpisdl lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
-wmpisdl modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip
-wmpisdl MUMPS_4.9.2.tar.gz http://mumps.enseeiht.fr/MUMPS_4.9.2.tar.gz
-wmpisdl scotch_6.0.0_esmumps.tar.gz https://gforge.inria.fr/frs/download.php/31832/scotch_6.0.0_esmumps.tar.gz
-cd ..
-# Dircreation
+./scripts/download-windows.sh
+# Predependency Packages
 mkdir -p .packages
+./scripts/install-openblas.sh
+./scripts/install-scotch.sh
+./scripts/install-mumps.sh
+./scripts/install-ipopt.sh
+./scripts/install-colpack-windows.sh
+./scripts/install-adolc.sh
+./scripts/install-dlfcn-windows.sh
+./scripts/install-libf2c-windows.sh
+./scripts/install-ufconfig.sh
+./scripts/install-cxsparse.sh
+./scripts/install-lusol.sh
 cd .packages
-# OpenBLAS
-if [ ! -d OpenBLAS-0.2.8 ]; then
-    tar xzvf ../.download/OpenBLAS-v0.2.8-x86_64.tar.gz
-    cd OpenBLAS-0.2.8
-    make
-    cd ..
-fi
-cd OpenBLAS-0.2.8
-make PREFIX=$PSOPT_BUILD_DIR/.target install
-cd ..
-# Scotch
-if [ ! -d scotch_6.0.0_esmumps ]; then
-    tar xzvf ../.download/scotch_6.0.0_esmumps.tar.gz
-    cd scotch_6.0.0_esmumps
-    patch -p1 < $PSOPT_BUILD_DIR/patches/scotch-mingw-64.patch
-    cd src
-    make esmumps
-    cd ../..
-fi
-cd scotch_6.0.0_esmumps
-cp include/scotch.h include scotchf.h $PSOPT_BUILD_DIR/.target/include
-cp lib/*.a $PSOPT_BUILD_DIR/.target/lib
-cd ..
-# Mumps
-if [ ! -d MUMPS_4.9.2 ]; then
-    tar xzvf ../.download/MUMPS_4.9.2.tar.gz
-    cd MUMPS_4.9.2
-    cp Make.inc/Makefile.gfortran.SEQ Makefile.inc
-    sed -i 's|#SCOTCHDIR  = ${HOME}/scotch_5.1_esmumps|SCOTCHDIR  = $(PSOPT_BUILD_DIR)/.target/lib|' Makefile.inc
-    sed -i 's|#LSCOTCH    = -L$(SCOTCHDIR)/lib -lesmumps -lscotch -lscotcherr|LSCOTCH    = -L$(SCOTCHDIR) -lesmumps -lscotch -lscotcherr|' Makefile.inc
-    sed -i 's#ORDERINGSF  = -Dpord#& -Dscotch#' Makefile.inc
-    sed -i 's#-lblas#-lopenblas#' Makefile.inc
-    make
-    cd ..
-fi
-cd MUMPS_4.9.2
-cp lib/*.a ../../.target/lib
-cp include/*.h ../../.target/include
-cp libseq/mpi.h ../../.target/include
-cp libseq/libmpiseq.a ../../.target/lib
-cd ..
-# Ipopt 3.11.7
-if [ ! -d Ipopt-3.11.7 ]; then
-    tar xzvf ../.download/Ipopt-3.11.7.tgz
-    # bugfix for http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
-    cd Ipopt-3.11.7
-    # create build directory
-    mkdir -p build
-    cd build
-    # start building
-    ../configure --enable-static --prefix $PSOPT_BUILD_DIR/.target -with-blas="-L$PSOPT_BUILD_DIR/.target/lib -lopenblas" --with-mumps-lib="-L$PSOPT_BUILD_DIR/.target/lib -ldmumps -lmumps_common -lpord -lmpiseq" --with-mumps-incdir="$PSOPT_BUILD_DIR/.target/include"
-    make
-    cd ../..
-fi
-# install
-cd Ipopt-3.11.7/build
-make install
-cd ../..
-# ColPack
-if [ ! -d ColPack-1.0.9 ]; then
-    tar xzvf ../.download/ColPack-1.0.9.tar.gz
-    cd ColPack-1.0.9
-    ./configure --enable-static --prefix $PSOPT_BUILD_DIR/.target --libdir=$PSOPT_BUILD_DIR/.target/lib64
-    make
-    # create shared library (necessary for linking with ADOL-C)
-    # http://stackoverflow.com/questions/12163406/mingw32-compliation-issue-when-static-linking-is-required-adol-c-links-colpack
-    g++ -shared -o libColPack.dll  CoutLock.o command_line_parameter_processor.o File.o DisjointSets.o current_time.o mmio.o Pause.o MatrixDeallocation.o Timer.o StringTokenizer.o extra.o stat.o BipartiteGraphPartialOrdering.o BipartiteGraphPartialColoring.o BipartiteGraphPartialColoringInterface.o BipartiteGraphInputOutput.o BipartiteGraphBicoloring.o BipartiteGraphVertexCover.o BipartiteGraphCore.o BipartiteGraphBicoloringInterface.o BipartiteGraphOrdering.o GraphCore.o GraphColoringInterface.o GraphInputOutput.o GraphOrdering.o GraphColoring.o JacobianRecovery1D.o RecoveryCore.o JacobianRecovery2D.o HessianRecovery.o
-    cd ..
-fi
-cd ColPack-1.0.9
-make install
-cp libColPack.dll $PSOPT_BUILD_DIR/.target/lib64
-sed -i -e "s#^library_names=''#library_names='libColPack.dll'#" $PSOPT_BUILD_DIR/.target/lib64/libColPack.la
-chmod a+w $PSOPT_BUILD_DIR/.target/lib64/libColPack.la
-cd ..
-# Adol-C
-if [ ! -d ADOL-C-2.4.1 ]; then
-    tar xzvf ../.download/ADOL-C-2.4.1.tgz
-    cd ADOL-C-2.4.1
-    ./configure --enable-sparse --enable-static --with-colpack=$PSOPT_BUILD_DIR/.target --prefix $PSOPT_BUILD_DIR/.target
-    make
-    cd ..
-fi
-# installation
-cd ADOL-C-2.4.1
-make install
-cd ..
-# dlfcn
-if [ ! -d dlfcn-19-6 ]; then
-    mkdir dlfcn-19-6
-    cd dlfcn-19-6
-    tar xJvf ../../.download/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
-    sed -i -n 'H;${x;s/sha512sum/shasum/;p;}' pkgbuild.sh
-    sed -i -n 'H;${x;s/do_fixinstall=1/do_fixinstall=0/;p;}' pkgbuild.sh
-    sed -i -n 'H;${x;s/do_pack=1/do_pack=0/;p;}' pkgbuild.sh
-    sed -i -n 'H;${x;s/do_clean=1/do_clean=0/;p;}' pkgbuild.sh
-    sed -i -n 'H;${x;s#instdir=${pkgbuilddir}/inst#instdir=$PSOPT_BUILD_DIR/.target#;p;}' pkgbuild.sh
-    sed -i -n 'H;${x;s/rm -rf ${blddir} ${instdir}/rm -rf ${blddir}/g;p;}' pkgbuild.sh
-    sed -i -n 'H;${x;s#prefix=/mingw#prefix=#;p;}' pkgbuild.sh
-    cd ..
-fi
-cd dlfcn-19-6
-export arch=WIN
-./pkgbuild.sh
-unset arch
-cd ..
-# libf2c
-if [ ! -d libf2c ]; then
-    mkdir libf2c
-    cd libf2c
-    unzip ../../.download/libf2c.zip
-    cp makefile.u Makefile
-    make hadd
-    sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' Makefile
-    sed -i -n 'H;${x;s/a.out/a.exe/g;p;}' Makefile
-    sed -i -n 'H;${x;s/CFLAGS = -O/& -DUSE_CLOCK/;p;}' Makefile
-    sed -i -n 'H;${x;s|#define abs(x) ((x) >= 0 ? (x) : -(x))|//&|;p;}' f2c.h
-    sed -i -n 'H;${x;s|#define min(a,b) ((a) <= (b) ? (a) : (b))|//&|;p;}' f2c.h
-    sed -i -n 'H;${x;s|#define max(a,b) ((a) >= (b) ? (a) : (b))|//&|;p;}' f2c.h
-    make
-    cd ..
-fi
-cd libf2c
-export LIBDIR=$PSOPT_BUILD_DIR/.target/lib
-make install
-unset LIBDIR
-cp f2c.h $PSOPT_BUILD_DIR/.target/include
-cd ..
-# UFconfig
-if [ ! -d UFconfig ]; then
-    tar xzvf ../.download/UFconfig-3.6.1.tar.gz
-    cd UFconfig
-    sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' UFconfig.mk
-    sed -i -n 'H;${x;s#/usr/local#'"$PSOPT_BUILD_DIR"'/.target#g;p;}' UFconfig.mk
-    make
-    cd ..
-fi
-cd UFconfig
-make install
-cd ..
-# CXSparse
-if [ ! -d CXSparse ]; then
-    tar xzvf ../.download/CXSparse-2.2.5.tar.gz
-    cd CXSparse
-    make library
-    cd ..
-fi
-cd CXSparse
-make install
-cd ..
-# lusol
-unzip ../.download/lusol.zip
-cd lusol/csrc
-tar xOzvf ../../../.download/Psopt3.tgz ./Psopt3/Makefile.lusol > Makefile
-sed -i -n 'H;${x;s#I = -I.#& -I'"$PSOPT_BUILD_DIR"'/.target/include#;p;}' Makefile
-make
-cp liblusol.a $PSOPT_BUILD_DIR/.target/lib
-cp *.h $PSOPT_BUILD_DIR/.target/include
-cd ../..
 # Unpack PSOPT (needed for DMatrix)
 tar xzvf ../.download/Psopt3.tgz
 # DMatrix
