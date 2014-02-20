@@ -133,7 +133,7 @@ user@computer:~$ cd installation_dir
 user@computer:~/installation_dir$ wget -O psopt-installer.zip --no-check-certificate https://github.com/Sauermann/psopt-installer/archive/master.zip
 user@computer:~/installation_dir$ unzip psopt-installer.zip
 user@computer:~/installation_dir$ cp -r psopt-installer-master/patches .
-user@computer:~/installation_dir$ ./psopt-installer-master/wmpis.sh
+user@computer:~/installation_dir$ ./psopt-installer-master/psopt-installer-windows-7-mingw-64bit.sh
 user@computer:~/installation_dir$ rm -rf patches
 
 Usage
