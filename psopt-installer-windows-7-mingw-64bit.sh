@@ -1,7 +1,8 @@
 #!/bin/bash
 
 echo ""
-echo "wmpis.sh - PSOPT Installation Script for Windows 7 MinGW-64"
+echo "psopt-installer-windows-7-mingw-64bit.sh - "
+echo "PSOPT Installation Script for Windows 7 MinGW-64"
 echo ""
 echo "Copyright (C) 2014 Markus Sauermann"
 echo ""
