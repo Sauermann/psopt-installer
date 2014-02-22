@@ -1,0 +1,124 @@
+diff -Pur  Psopt3/Makefile Psopt3-new/Makefile
+--- Psopt3/Makefile	2011-07-28 12:41:58.000000000 +0200
++++ Psopt3-new/Makefile	2014-02-22 22:04:18.861501508 +0100
+@@ -1,44 +1,18 @@
+ SHELL         = /bin/sh
+-USERHOME      = ~
+ F2CINC = $(F2CINCLUDE)
+ F2CLIB = $(F2CLIBRARY)
+-DMATRIXDIR=./dmatrix
+-CXSPARSE=./CXSparse
+-LUSOL=./lusol/csrc
+-
+-prefix = $(USERHOME)/Ipopt-3.9.3
+-# Directory with header files
+-IPOPTINCDIR = ${prefix}/include/coin
+-# Directory with libipopt.a
+-IPOPTLIBDIR = ${exec_prefix}/lib
+-exec_prefix = ${prefix}
+ 
+ PSOPTDIR    = ./PSOPT
+ 
+ PSOPTSRCDIR = $(PSOPTDIR)/src
+ EXAMPLESDIR = $(PSOPTDIR)/examples
+-CXSPARSE_LIBS = $(CXSPARSE)/Lib/libcxsparse.a
+-LUSOL_LIBS    = $(LUSOL)/liblusol.a
+-SPARSE_LIBS   = $(CXSPARSE_LIBS) $(LUSOL_LIBS) -ldl
+-IPOPT_LIBS    = -Wl,--rpath -Wl,$(USERHOME)/Ipopt-3.5.4/lib -L$(IPOPTLIBDIR)  -lm  -ldl    -lgcc_s $(IPOPTLIBDIR)/libipopt.a
+-ADOLC_LIBS    = -ladolc
+-PSOPT_LIBS    = $(PSOPTDIR)/lib/libpsopt.a
+-DMATRIX_LIBS  = $(DMATRIXDIR)/lib/libdmatrix.a
++SPARSE_LIBS   = -ldl
++IPOPT_LIBS    = -Wl,--rpath -lm  -ldl -lgcc_s -lipopt -ldmumps -lmumps_common -lpord -lmpiseq -lopenblas -lesmumps -lscotch -lscotcherr
++ADOLC_LIBS    = -L$(PSOPT_BUILD_DIR)/.target/lib64 -ladolc -lColPack
++PSOPT_LIBS    = -lpsopt
++DMATRIX_LIBS  = -ldmatrix
+ 
+ 
+-$(CXSPARSE_LIBS):
+-	(cp UFconfig.h $(CXSPARSE)/Include;cd $(CXSPARSE)/Lib; $(MAKE))
+-
+-$(LUSOL_LIBS):
+-	(cp Makefile.lusol $(LUSOL)/Makefile; cd $(LUSOL); $(MAKE))
+-
+-$(DMATRIX_LIBS): $(DMATRIXDIR)/src/dmatrixv.cxx $(DMATRIXDIR)/include/dmatrixv.h
+-	(cd $(DMATRIXDIR)/lib; $(MAKE))
+-
+-
+-dmatrix_examples:
+-	(cd $(DMATRIXDIR)/examples; $(MAKE) all)
+-
+ $(PSOPT_LIBS):
+ 	(cd $(PSOPTDIR)/lib; $(MAKE))
+ 
+@@ -176,7 +150,7 @@
+ 	(cd $(EXAMPLESDIR)/obstacle; ./obstacle)
+ 
+ 
+-all: $(CXSPARSE_LIBS) $(DMATRIX_LIBS) $(LUSOL_LIBS) $(PSOPT_LIBS) dmatrix_examples bioreactor brac1 shutt manutec missile moon stc1 sing5 steps brymr twoburn twolink twophsc twophro hyper launch lambert bryden delay1 goddard sing5 climb cracking isop catmix chain obstacle crane ipc alpine lts user  coulomb lowthr heat zpm glider notorious reorientation mpec dae_i3 breakwell rayleigh test
++all: bioreactor brac1 shutt manutec missile moon stc1 sing5 steps brymr twoburn twolink twophsc twophro hyper launch lambert bryden delay1 goddard sing5 climb cracking isop catmix chain obstacle crane ipc alpine lts user  coulomb lowthr heat zpm glider notorious reorientation mpec dae_i3 breakwell rayleigh test
+ 
+ 
+ clean:
+diff -Pur Psopt3/PSOPT/examples/Makefile_linux.inc Psopt3-new/PSOPT/examples/Makefile_linux.inc
+--- Psopt3/PSOPT/examples/Makefile_linux.inc	2014-02-22 21:51:58.090814256 +0100
++++ Psopt3-new/PSOPT/examples/Makefile_linux.inc	2014-02-22 22:44:42.143036733 +0100
+@@ -1,40 +1,26 @@
+ #Usage:  make
+ 
+ SHELL         = /bin/sh
+-USERHOME      = /home/$(shell whoami)
+ 
+ F2CINC = $(F2CINCLUDE)
+ F2CLIB = $(F2CLIBRARY)
+ 
+-DMATRIXDIR=../../../dmatrix
+-
+-CXSPARSE=../../../CXSparse
+-LUSOL=../../../lusol/csrc
+-
+-prefix = $(USERHOME)/Ipopt-3.9.3
+-IPOPTINCDIR = ${prefix}/include/coin
+-# Directory with libipopt.a
+-IPOPTLIBDIR = ${exec_prefix}/lib/coin
+-exec_prefix = ${prefix}
+-
+ PSOPTDIR    = ../..
+ 
+ PSOPTSRCDIR = ../../src
+ EXAMPLESDIR = .
+ 
+-
+-SPARSE_LIBS   = $(LUSOL)/liblusol.a  $(CXSPARSE)/Lib/libcxsparse.a -ldl
+-IPOPT_LIBS    =  $(IPOPTLIBDIR)/libipopt.a $(IPOPTLIBDIR)/ThirdParty/libcoinhsl.a
+-ADOLC_LIBS    = -ladolc
++LIBDIR = $(PSOPT_BUILD_DIR)/.target/lib
++IPOPT_LIBS    =  -lipopt -ldmumps -lmumps_common -lpord -lmpiseq -lopenblas -lesmumps -lscotch -lscotcherr
++ADOLC_LIBS    = -L$(PSOPT_BUILD_DIR)/.target/lib64 -ladolc -lColPack
+ PSOPT_LIBS    = $(PSOPTDIR)/lib/libpsopt.a
+-DMATRIX_LIBS  = $(DMATRIXDIR)/lib/libdmatrix.a
+ 
+-LDFLAGS	      = -Wl,--rpath -Wl,$(USERHOME)/Ipopt-3.5.4/lib -L$(IPOPTLIBDIR)  -lm  -ldl    -lgcc_s
++LDFLAGS	      = -lgfortran -lpthread -lm -ldl -static
+ 
+ 
+ CXX           = /usr/bin/g++
+ CC            = /usr/bin/gcc
+-CXXFLAGS      = -O0 -g -std=c++0x -I$(DMATRIXDIR)/include  -I$(PSOPTSRCDIR) -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR) -fomit-frame-pointer -pipe -DNDEBUG -pedantic-errors -Wimplicit -Wparentheses -Wreturn-type -Wcast-qual -Wall -Wpointer-arith -Wwrite-strings -Wconversion -fPIC -DHAVE_MALLOC
++CXXFLAGS      = -O0 -g -std=c++0x -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -fomit-frame-pointer -pipe -DNDEBUG -pedantic-errors -Wimplicit -Wparentheses -Wreturn-type -Wcast-qual -Wall -Wpointer-arith -Wwrite-strings -Wconversion -fPIC -DHAVE_MALLOC -I$(PSOPT_BUILD_DIR)/.target/include
+ 
+ CFLAGS        = -O0 -fPIC
+ 
+@@ -46,10 +32,10 @@
+ # libg2c and libm are added to satisfy  f2c references
+ 
+ # FLIBS        =   /usr/lib/libf2c.a  -lblas -llapack -lm
+-FLIBS        =   /usr/lib/libf2c.a  -lblas /usr/lib/liblapack.a -llapack -lm
++FLIBS        =   -lm
+ #FLIBS = ../dmatrix/lib/lapack_LINUX.a ../dmatrix/lib/blas_LINUX.a ../dmatrix/lib/F2CLIBS/libf2c_LINUX.a   -lm
+ 
+-ALL_LIBRARIES = $(PSOPT_LIBS) $(DMATRIX_LIBS)  $(FLIBS) $(SPARSE_LIBS) $(IPOPT_LIBS)  $(ADOLC_LIBS)
++ALL_LIBRARIES = $(PSOPT_LIBS) -ldmatrix -llusol $(FLIBS) -lcxsparse $(IPOPT_LIBS) $(ADOLC_LIBS)
+ 
+ 
+ 
