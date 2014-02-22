@@ -27,6 +27,6 @@ if [ ! -d scotch_6.0.0_esmumps ]; then
     cd ../..
 fi
 cd scotch_6.0.0_esmumps
-cp include/scotch.h include scotchf.h $PSOPT_BUILD_DIR/.target/include
+cp include/scotch.h $PSOPT_BUILD_DIR/.target/include
 cp lib/*.a $PSOPT_BUILD_DIR/.target/lib
 cd ../..
