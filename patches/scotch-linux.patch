@@ -1,0 +1,15 @@
+diff -Pur scotch_6.0.0_esmumps/src/Make.inc/Makefile.inc.x86-64_pc_linux2 scotch_6.0.0_esmumps-new/src/Make.inc/Makefile.inc.x86-64_pc_linux2
+--- scotch_6.0.0_esmumps/src/Make.inc/Makefile.inc.x86-64_pc_linux2	2011-09-06 18:46:49.000000000 +0200
++++ scotch_6.0.0_esmumps-new/src/Make.inc/Makefile.inc.x86-64_pc_linux2	2014-02-22 19:33:35.357625923 +0100
+@@ -9,9 +9,9 @@
+ CCS		= gcc
+ CCP		= mpicc
+ CCD		= gcc
+-CFLAGS		= -O3 -DCOMMON_FILE_COMPRESS_GZ -DCOMMON_PTHREAD -DCOMMON_RANDOM_FIXED_SEED -DSCOTCH_RENAME -DSCOTCH_PTHREAD -Drestrict=__restrict -DIDXSIZE64
++CFLAGS		= -O3 -DCOMMON_PTHREAD -DCOMMON_RANDOM_FIXED_SEED -DSCOTCH_RENAME -Drestrict=__restrict -DIDXSIZE64
+ CLIBFLAGS	=
+-LDFLAGS		= -lz -lm -lrt
++LDFLAGS		= -lm -lrt
+ CP		= cp
+ LEX		= flex -Pscotchyy -olex.yy.c
+ LN		= ln

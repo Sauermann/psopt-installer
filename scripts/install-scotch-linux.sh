@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# scripts/install-ufconfig.sh
+# scripts/install-scotch-linux.sh
 # This file is part of Psopt Installer.
 #
 # Psopt Installer is free software: you can redistribute it and/or
@@ -17,15 +17,18 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+psoptInstallerDownload scotch_6.0.0_esmumps.tar.gz https://gforge.inria.fr/frs/download.php/31832/scotch_6.0.0_esmumps.tar.gz
+
 cd .packages
-if [ ! -d UFconfig ]; then
-    tar xzvf ../.download/UFconfig-3.6.1.tar.gz
-    cd UFconfig
-    sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' UFconfig.mk
-    sed -i -n 'H;${x;s#/usr/local#'"$PSOPT_BUILD_DIR"'/.target#g;p;}' UFconfig.mk
-    make
-    cd ..
+if [ ! -d scotch_6.0.0_esmumps ]; then
+    tar xzvf ../.download/scotch_6.0.0_esmumps.tar.gz
+    cd scotch_6.0.0_esmumps/src
+    patch -p2 < $PSOPT_BUILD_DIR/patches/scotch-linux.patch
+    ln -s Make.inc/Makefile.inc.x86-64_pc_linux2 Makefile.inc
+    make esmumps
+    cd ../..
 fi
-cd UFconfig
-make install
+cd scotch_6.0.0_esmumps
+cp include/scotch.h $PSOPT_BUILD_DIR/.target/include
+cp lib/*.a $PSOPT_BUILD_DIR/.target/lib
 cd ../..
