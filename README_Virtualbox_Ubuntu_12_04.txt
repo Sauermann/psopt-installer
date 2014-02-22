@@ -1,4 +1,5 @@
 Installation of Ubuntu in a virtual machine under Windows
+Last tested 2014-02-18
 
 1. Installation of VirtualBox
 
@@ -47,12 +48,16 @@ Installing system: <wait ...>
 <press ENTER>
 
 4. Update
+You might need to enter your password for some of these commands
 
 Login Screen: <enter password>
-press Ctrl-Alt-T to open a terminal
+<press Ctrl-Alt-T to open a terminal>
+
 USER@ubupsopt:~$ sudo apt-get update
 USER@ubupsopt:~$ sudo apt-get dist-upgrade
+<if asked to continue, answer 'y'es>
 USER@ubupsopt:~$ sudo apt-get autoremove
+<if asked to continue, answer 'y'es>
 Reboot the machine (click on the rightmost icon on the menubar)->Shut down->Restart
 <a reboot happens>
 
