@@ -17,6 +17,8 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+psoptInstallerDownload Ipopt-3.11.7.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.11.7.tgz
+
 cd .packages
 if [ ! -d Ipopt-3.11.7 ]; then
     tar xzvf ../.download/Ipopt-3.11.7.tgz

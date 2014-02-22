@@ -33,7 +33,15 @@ echo ""
 # Build Directory
 export PSOPT_BUILD_DIR=$PWD
 # Download packages
-./scripts/download-windows.sh
+
+psoptInstallerDownload()
+{
+    if [ ! -f .download/$1 ]; then
+        wget -O .download/$1 --no-check-certificate $2
+    fi;
+}
+export -f psoptInstallerDownload
+
 # Download Dependency Packages
 mkdir -p .packages
 ./scripts/install-openblas-windows.sh

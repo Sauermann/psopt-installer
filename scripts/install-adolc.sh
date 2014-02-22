@@ -17,6 +17,8 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+psoptInstallerDownload ADOL-C-2.4.1.tgz http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.4.1.tgz
+
 cd .packages
 if [ ! -d ADOL-C-2.4.1 ]; then
     tar xzvf ../.download/ADOL-C-2.4.1.tgz

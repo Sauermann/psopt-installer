@@ -17,6 +17,8 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+psoptInstallerDownload MUMPS_4.9.2.tar.gz http://mumps.enseeiht.fr/MUMPS_4.9.2.tar.gz
+
 cd .packages
 if [ ! -d MUMPS_4.9.2 ]; then
     tar xzvf ../.download/MUMPS_4.9.2.tar.gz

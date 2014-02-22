@@ -17,6 +17,9 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+psoptInstallerDownload lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
+psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
+
 cd .packages
 if [ ! -d lusol ]; then
     unzip ../.download/lusol.zip

@@ -30,35 +30,24 @@ echo "Make sure that the current user is in the group sudo."
 echo ""
 read -s -p "Press enter to start the installation."
 
-wmpisdl()
-{
-    if [ ! -f $1 ]; then
-        wget -O $1 --no-check-certificate $2
-    fi;
-}
 
 # install needed packages
 # libgd2-xpm-dev libpango1.0-dev  libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
 sudo apt-get install gfortran g++ libopenblas-dev unzip dos2unix libf2c2-dev
 # Build Directory
 export PSOPT_BUILD_DIR=$PWD
-# Download packages
-mkdir -p .download
-cd .download
-wmpisdl Ipopt-3.11.7.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.11.7.tgz
-wmpisdl ADOL-C-2.1.12.zip http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.1.12.zip
-wmpisdl ColPack-1.0.3.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.3.tar.gz
-wmpisdl dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
-wmpisdl libf2c.zip http://www.netlib.org/f2c/libf2c.zip
-wmpisdl Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
-wmpisdl patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
-wmpisdl UFconfig-3.6.1.tar.gz http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
-wmpisdl CXSparse-2.2.5.tar.gz http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
-wmpisdl lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
-wmpisdl modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip
-cd ..
+
+# download script
+psoptInstallerDownload()
+{
+    if [ ! -f .download/$1 ]; then
+        wget -O .download/$1 --no-check-certificate $2
+    fi;
+}
+export -f psoptInstallerDownload
 # Dir Creation
 mkdir -p .packages
+mkdir -p .download
 cd .packages
 # Ipopt 3.11.7
 if [ ! -d Ipopt-3.11.7 ]; then

@@ -17,6 +17,8 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+psoptInstallerDownload CXSparse-2.2.5.tar.gz http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
+
 cd .packages
 if [ ! -d CXSparse ]; then
     tar xzvf ../.download/CXSparse-2.2.5.tar.gz
