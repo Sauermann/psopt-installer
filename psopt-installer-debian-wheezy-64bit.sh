@@ -59,6 +59,7 @@ mkdir -p .target/include
 ./scripts/install-ufconfig-linux.sh
 ./scripts/install-cxsparse.sh
 ./scripts/install-lusol.sh
+./scripts/install-dmatrix-psopt-linux.sh
 
 
 unset psoptInstallerDownload
