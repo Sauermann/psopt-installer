@@ -6,7 +6,7 @@ This program is free software: you can redistribute it and/or modify
 it under the GPL V3 terms in the file COPYING.
 
 
-Installation scripts for PSOPT [1]
+Installation scripts for PSOPT [1] on 64-bit systems
 
 Currently supported: Debian Wheezy [2] natively, Ubuntu 12.04 [3]
 natively and Windows 7 [4] with MinGW/MSYS [5] and TDM-GCC [6]
@@ -15,26 +15,43 @@ The three scripts dwpis.sh, uppis.sh and wmpis.sh are used to install
 PSOPT in Debian, Ubuntu and Windows respectively.
 
 
-Installation on Debian
-======================
+Installation on Debian Wheezy
+=============================
 
 As a prerequisite, the user must be in the group sudo.
 
+OpenBLAS [7] is used as replacement of the Blas Reference
+Implementation.
+
+PSOPT will be installed in the directory where the script is executed.
+
+You may uninstall it by deleting the directory it was installed into.
+
 Usage:
-In a shell on Debian do the following:
-# ./dwpis.sh
+
+Go to the desired installation directory
+# cd psopt_installation_dir
+
+Download the installer via wget
+# wget -O psopt-installer.zip https://github.com/Sauermann/psopt-installer/archive/master.zip
+# unzip psopt-installer.zip
+# mv psopt-installer-master psopt-installer
+
+or via git
+# git clone https://github.com/Sauermann/psopt-installer.git
+
+Start the installarion by
+# ln -s psopt-installer/patches .
+# ln -s psopt-installer/scripts .
+# ./psopt-installer/psopt-installer-debian-wheezy-64bit.sh
+# rm patches scripts
 
 
-If you do not have downloaded the script yet, do:
-# wget https://raw.github.com/Sauermann/psopt-installer/master/dwpis.sh
-# chmod a+x dwpis.sh
-# ./dwpis.sh
-
-In both cases follow the instructions (enter password for sudo twice)
+If asked, enter your password for sudo.
 
 
-Installation on Ububtu
-======================
+Installation on Ububtu 12.04
+============================
 
 Usage:
 In a shell on Ububtu do the following:
@@ -46,17 +63,17 @@ If you do not have downloaded the script yet, do:
 # ./uppis.sh
 
 
-Installation on Windows
-=======================
+Installation on Windows 7
+=========================
 
 This installation relies completely on Open-source-software, no
 compiler from Microsoft is needed.
 
-OpenBLAS [7] is used as replacement of the Blas Reference
-Implementation.
-
 It was only tested on Windows 7, but should work on other flavors as
 well.
+
+OpenBLAS [7] is used as replacement of the Blas Reference
+Implementation.
 
 PSOPT will be installed in the directory where the script is executed.
 
