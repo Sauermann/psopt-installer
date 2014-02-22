@@ -1,6 +1,7 @@
 #!/bin/sh
 
-echo "dwpis.sh - PSOPT Installation Script for Debian Wheezy"
+echo "psopt-installer-debian-wheezy-64bit.sh -"
+echo "PSOPT Installation Script for Debian Wheezy"
 echo ""
 echo "Copyright (C) 2014 Markus Sauermann"
 echo ""
