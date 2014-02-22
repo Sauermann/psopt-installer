@@ -26,14 +26,12 @@ echo "under certain conditions; see the filecontent for more information."
 # <http://www.gnu.org/licenses/>.
 
 echo ""
-echo "Make sure that the current user is in the group sudo."
-echo ""
-read -s -p "Press enter to start the installation."
+read -s -p "Press enter to start the installation in the current directory."
 
 
 # install needed packages
 # libgd2-xpm-dev libpango1.0-dev  libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
-sudo apt-get install gfortran g++ libopenblas-dev unzip dos2unix libf2c2-dev
+sudo apt-get install gfortran g++ unzip dos2unix libf2c2-dev
 # Build Directory
 export PSOPT_BUILD_DIR=$PWD
 
@@ -48,96 +46,23 @@ export -f psoptInstallerDownload
 # Dir Creation
 mkdir -p .packages
 mkdir -p .download
-cd .packages
-# Ipopt 3.11.7
-if [ ! -d Ipopt-3.11.7 ]; then
-    tar xzvf ../.download/Ipopt-3.11.7.tgz
-    # Documentation for Ipopt Third Party modules:
-    # http://www.coin-or.org/Ipopt/documentation/node13.html
-    cd Ipopt-3.11.7/ThirdParty
-    # Metis
-    cd Metis
-    ./get.Metis
-    cd ..
-    # Mumps
-    cd Mumps
-    ./get.Mumps
-    cd ..
-    # create build directory
-    cd ..
-    mkdir build
-    cd build
-    # start building
-    ../configure --enable-static --prefix=$PSOPT_BUILD_DIR/.target --with-blas="-L$PSOPT_BUILD_DIR/.target/lib -lblas"
-    make
-    cd ../..
-fi
-# install
-cd Ipopt-3.11.7/build
-make install
-cd ../..
-# Adol-C
-if [ ! -d ADOL-C-2.1.12 ]; then
-    unzip ../.download/ADOL-C-2.1.12.zip
-    # with Colpack
-    cd ADOL-C-2.1.12/ThirdParty
-    tar -xzvf ../../../.download/ColPack-1.0.3.tar.gz
-    cd ColPack
-    make
-    cd ../..
-    # and Adol-C Compilation
-    ./configure --enable-sparse --enable-static --enable-shared --prefix $PSOPT_BUILD_DIR/.target
-    make
-    cd ..
-fi
-cd ADOL-C-2.1.12
-make install
-cd ..
-# UFconfig
-if [ ! -d UFconfig ]; then
-    tar xzvf ../.download/UFconfig-3.6.1.tar.gz
-    cd UFconfig
-    sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' UFconfig.mk
-    sed -i -n 'H;${x;s#/usr/local#'"$PSOPT_BUILD_DIR"'/.target#g;p;}' UFconfig.mk
-    sed -i -n 'H;${x;s#CFLAGS = -O3 -fexceptions#& -fPIC#g;p;}' UFconfig.mk
-    make
-    cd ..
-fi
-cd UFconfig
-make install
-cd ..
-# CXSparse
-if [ ! -d CXSparse ]; then
-    tar xzvf ../.download/CXSparse-2.2.5.tar.gz
-    cd CXSparse
-    make library
-    cd ..
-fi
-cd CXSparse
-make install
-cd ..
-# Unpack PSOPT (makefile needed for lusol)
-tar xzvf ../.download/Psopt3.tgz
-# lusol
-unzip ../.download/lusol.zip
-cp Psopt3/Makefile.lusol lusol/csrc/Makefile
-cd lusol/csrc
-sed -i -n 'H;${x;s#I = -I.#& -I'"$PSOPT_BUILD_DIR"'/.target/include#;p;}' Makefile
-make
-cp liblusol.a $PSOPT_BUILD_DIR/.target/lib
-cp *.h $PSOPT_BUILD_DIR/.target/include
-cd ../..
-# DMatrix
-cd Psopt3/dmatrix/lib
-sed -i -n 'H;${x;s#-I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR)#-I'"$PSOPT_BUILD_DIR"'/.target/include#g;p;}' Makefile
-make
-cp libdmatrix.a $PSOPT_BUILD_DIR/.target/lib
-cd ..
-cp include/dmatrixv.h $PSOPT_BUILD_DIR/.target/include
-cd ..
-# PSOPT patching to new release
-unzip ../../.download/patch_3.02.zip
-cp patch_3.02/psopt.cxx PSOPT/src/
+mkdir -p .target/lib
+mkdir -p .target/include
+
+# Installation Scripts
+./scripts/install-openblas.sh
+./scripts/install-scotch-linux.sh
+./scripts/install-mumps.sh
+./scripts/install-ipopt.sh
+./scripts/install-colpack-linux.sh
+./scripts/install-adolc.sh
+./scripts/install-ufconfig-linux.sh
+./scripts/install-cxsparse.sh
+./scripts/install-lusol.sh
+
+
+unset psoptInstallerDownload
+
 # Apply local patches
 dos2unix PSOPT/src/psopt.cxx
 patch --ignore-whitespace -p1 < ../../psopt-installer-master/patches/psopt-bugfix-static-variable.patch
