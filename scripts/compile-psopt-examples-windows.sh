@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# scripts/compile-psopt-examples.sh
+# scripts/compile-psopt-examples-windows.sh
 # This file is part of Psopt Installer.
 #
 # Psopt Installer is free software: you can redistribute it and/or
