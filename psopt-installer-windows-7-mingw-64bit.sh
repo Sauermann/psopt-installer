@@ -42,7 +42,6 @@ psoptInstallerDownload()
 }
 export -f psoptInstallerDownload
 
-# Download Dependency Packages
 mkdir -p .packages
 ./scripts/install-openblas-windows.sh
 ./scripts/install-scotch-windows.sh
@@ -61,5 +60,7 @@ mkdir -p .packages
 ./scripts/create-maindir-example.sh
 ./scripts/install-modern-psopt-interface.sh
 unset PSOPT_BUILD_DIR
+unset psoptInstallerDownload
+
 echo ""
 echo "installation finished"
