@@ -18,11 +18,15 @@
 # <http://www.gnu.org/licenses/>.
 
 cd .packages
-unzip ../.download/lusol.zip
+if [ ! -d lusol ]; then
+    unzip ../.download/lusol.zip
+    cd lusol/csrc
+    tar xOzvf ../../../.download/Psopt3.tgz ./Psopt3/Makefile.lusol > Makefile
+    sed -i -n 'H;${x;s#I = -I.#& -I'"$PSOPT_BUILD_DIR"'/.target/include#;p;}' Makefile
+    make
+    cd ../..
+fi
 cd lusol/csrc
-tar xOzvf ../../../.download/Psopt3.tgz ./Psopt3/Makefile.lusol > Makefile
-sed -i -n 'H;${x;s#I = -I.#& -I'"$PSOPT_BUILD_DIR"'/.target/include#;p;}' Makefile
-make
 cp liblusol.a $PSOPT_BUILD_DIR/.target/lib
 cp *.h $PSOPT_BUILD_DIR/.target/include
-cd ../..
+cd ../../..
