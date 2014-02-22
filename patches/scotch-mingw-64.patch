@@ -13,7 +13,7 @@ diff -Pur scotch_6.0.0_esmumps/src/Makefile.inc scotch_6.0.0_esmumps-new/src/Mak
 +CCS		= gcc
 +CCP		= mpicc
 +CCD		= gcc
-+CFLAGS		= -O3 -DCOMMON_STUB_FORK -DCOMMON_RANDOM_FIXED_SEED -DSCOTCH_RENAME -DSCOTCH_PTHREAD -Drestrict=__restrict -DIDXSIZE64 -DINTSIZE64 -DHAVE_STDINT_H -Du_int32_t=uint32_t -Du_int64_t=uint64_t
++CFLAGS		= -O3 -DCOMMON_STUB_FORK -DCOMMON_RANDOM_FIXED_SEED -DSCOTCH_RENAME -Drestrict=__restrict -DIDXSIZE64 -DINTSIZE64 -DHAVE_STDINT_H -Du_int32_t=uint32_t -Du_int64_t=uint64_t
 +CLIBFLAGS	=
 +LDFLAGS		= -lm
 +CP		= cp
