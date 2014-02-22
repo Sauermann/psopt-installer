@@ -30,9 +30,6 @@ echo ""
 read -s -p "Press enter to start the installation in the CURRENT DIRECTORY."
 echo ""
 
-# hide most windows paths
-export ORIGINAL_PATH=$PATH
-export PATH=".:/mingw/bin:/bin:/c/Windows/System32"
 # Build Directory
 export PSOPT_BUILD_DIR=$PWD
 # Download packages
@@ -145,8 +142,6 @@ sed -i -n 'H;${x;s/gcc_s/gcc/;p;}' PSOPT/examples/Makefile_linux.inc
 sed -i -n 'H;${x;s#EXAMPLESDIR = .#&\
 LIBDIR = '"$PSOPT_BUILD_DIR"'/.target/lib#;p;}' PSOPT/examples/Makefile_linux.inc
 # Compilation
-export PATH=$ORIGINAL_PATH
-unset ORIGINAL_PATH
 if [ ! -f ../../NO_PSOPT_EXAMPLES ]; then
     make all
 fi

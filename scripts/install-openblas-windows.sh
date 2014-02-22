@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# scripts/install-openblas.sh
+# scripts/install-openblas-windows.sh
 # This file is part of Psopt Installer.
 #
 # Psopt Installer is free software: you can redistribute it and/or
@@ -17,6 +17,10 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# hide most windows paths
+export PSOPT_ORIGINAL_PATH=$PATH
+export PATH=".:/mingw/bin:/bin:/c/Windows/System32"
+
 cd .packages
 if [ ! -d OpenBLAS-0.2.8 ]; then
     tar xzvf ../.download/OpenBLAS-v0.2.8-x86_64.tar.gz
@@ -27,3 +31,7 @@ fi
 cd OpenBLAS-0.2.8
 make PREFIX=$PSOPT_BUILD_DIR/.target install
 cd ../..
+
+# Reset path
+export PATH=$ORIGINAL_PATH
+unset PSOPT_ORIGINAL_PATH
