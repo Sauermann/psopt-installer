@@ -24,8 +24,8 @@ if [ ! -d MUMPS_4.9.2 ]; then
     tar xzvf ../.download/MUMPS_4.9.2.tar.gz
     cd MUMPS_4.9.2
     cp Make.inc/Makefile.gfortran.SEQ Makefile.inc
-    sed -i 's|#SCOTCHDIR  = ${HOME}/scotch_5.1_esmumps|SCOTCHDIR  = $(PSOPT_BUILD_DIR)/.target/lib|' Makefile.inc
-    sed -i 's|#LSCOTCH    = -L$(SCOTCHDIR)/lib -lesmumps -lscotch -lscotcherr|LSCOTCH    = -L$(SCOTCHDIR) -lesmumps -lscotch -lscotcherr|' Makefile.inc
+    sed -i 's|#SCOTCHDIR  = ${HOME}/scotch_5.1_esmumps|SCOTCHDIR  = $(PSOPT_BUILD_DIR)/.target|' Makefile.inc
+    sed -i 's|#LSCOTCH    = -L$(SCOTCHDIR)/lib -lesmumps -lscotch -lscotcherr|LSCOTCH    = -L$(SCOTCHDIR)/lib -lesmumps -lscotch -lscotcherr|' Makefile.inc
     sed -i 's#ORDERINGSF  = -Dpord#& -Dscotch#' Makefile.inc
     sed -i 's#-lblas#-lopenblas#' Makefile.inc
     make
