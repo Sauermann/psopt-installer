@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "psopt-installer-debian-wheezy-64bit.sh -"
 echo "PSOPT Installation Script for Debian Wheezy"
@@ -27,11 +27,11 @@ echo "under certain conditions; see the filecontent for more information."
 
 echo ""
 read -s -p "Press enter to start the installation in the current directory."
-
+echo ""
 
 # install needed packages
 # libgd2-xpm-dev libpango1.0-dev  libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
-sudo apt-get install gfortran g++ unzip dos2unix libf2c2-dev
+sudo apt-get install gfortran g++ unzip dos2unix libf2c2-dev gnuplot-x11
 # Build Directory
 export PSOPT_BUILD_DIR=$PWD
 
@@ -60,54 +60,11 @@ mkdir -p .target/include
 ./scripts/install-cxsparse.sh
 ./scripts/install-lusol.sh
 ./scripts/install-dmatrix-psopt-linux.sh
+./scripts/compile-psopt-examples-linux.sh
+./scripts/create-maindir-example-linux.sh
+#./scripts/install-modern-psopt-interface.sh
 
-
+unset PSOPT_BUILD_DIR
 unset psoptInstallerDownload
-
-# Apply local patches
-dos2unix PSOPT/src/psopt.cxx
-patch --ignore-whitespace -p1 < ../../psopt-installer-master/patches/psopt-bugfix-static-variable.patch
-patch -p1 < ../../psopt-installer-master/patches/psopt-c++0x-windows.patch
-patch --binary -p1 < ../../psopt-installer-master/patches/psopt-lambdafunction-windows.patch
-patch -p1 < ../../psopt-installer-master/patches/psopt-ipopt-3-11-7-compatibility.patch
-
-#patch -p1 < ../../psopt-installer-master/patches/psopt-gnuplot.patch
-# PSOPT static library
-sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include##g;p;}' PSOPT/lib/Makefile
-sed -i -n 'H;${x;s#-I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR)#-I'"$PSOPT_BUILD_DIR"'/.target/include -I'"$PSOPT_BUILD_DIR"'/.target/include/coin#g;p;}' PSOPT/lib/Makefile
-make ./PSOPT/lib/libpsopt.a
-cp PSOPT/lib/libpsopt.a $PSOPT_BUILD_DIR/.target/lib
-cp PSOPT/src/psopt.h $PSOPT_BUILD_DIR/.target/include
-# PSOPT Examples
-sed -n 'H;${x;s#CXXFLAGS      = -O0 -g#& -I$(PSOPT_BUILD_DIR)/.target/include#;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
-mv temp_file PSOPT/examples/Makefile_linux.inc
-sed -n 'H;${x;s#ADOLC_LIBS    = -ladolc#ADOLC_LIBS    = $(PSOPT_BUILD_DIR)/.target/lib64/libadolc.a#;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
-mv temp_file PSOPT/examples/Makefile_linux.inc
-sed -n 'H;${x;s#libcoinhsl.a#& $(PSOPT_BUILD_DIR)/.target/lib/libcoinmumps.a $(PSOPT_BUILD_DIR)/.target/lib/libcoinmetis.a -lpthread/#p;}' PSOPT/examples/Makefile_linux.inc > temp_file
-mv temp_file PSOPT/examples/Makefile_linux.inc
-
-
-#sed -i -n 'H;${x;s/$(CXSPARSE_LIBS) $(DMATRIX_LIBS) $(LUSOL_LIBS) $(PSOPT_LIBS) dmatrix_examples //;p;}' Makefile
-#sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include  -I$(PSOPTSRCDIR)#-I'"$PSOPT_BUILD_DIR"'/.target/include#;p;}' PSOPT/examples/Makefile_linux.inc
-#sed -i -n 'H;${x;s#DMATRIX_LIBS  =#DMATRIX_LIBS_UNUSED  =#;p;}' PSOPT/examples/Makefile_linux.inc
-#sed -i -n 'H;${x;s#PSOPT_LIBS    =#PSOPT_LIBS_UNUSED    =#;p;}' PSOPT/examples/Makefile_linux.inc
-#sed -i -n 'H;${x;s#SPARSE_LIBS   =#SPARSE_LIBS_UNUSED   =#;p;}' PSOPT/examples/Makefile_linux.inc
-#sed -i -n 'H;${x;s#FLIBS    #FLIBS_UNUSED    #g;p;}' PSOPT/examples/Makefile_linux.inc
-#sed -i -n 'H;${x;s#ALL_LIBRARIES = $(PSOPT_LIBS) $(DMATRIX_LIBS)  $(FLIBS) $(SPARSE_LIBS) $(IPOPT_LIBS)  $(ADOLC_LIBS)#ALL_LIBRARIES = -L'"$PSOPT_BUILD_DIR/.target/lib -lcombinedpsopt -lpthread -ldl#;p;}" PSOPT/examples/Makefile_linux.inc
-#sed -i -n 'H;${x;s#EXAMPLESDIR = .#&\
-#LIBDIR = '"$PSOPT_BUILD_DIR"'/.target/lib#;p;}' PSOPT/examples/Makefile_linux.inc
-
-
-# Compilation
-if [ ! -f ../../NO_PSOPT_EXAMPLES ]; then
-    make all
-fi
-
-
-
-
-# add directory for content
-
-# Psopt Compilation
-make all
+echo ""
 echo "installation finished"

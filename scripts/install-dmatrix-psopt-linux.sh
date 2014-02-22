@@ -37,14 +37,15 @@ if [ ! -d Psopt3 ]; then
     unzip ../../.download/patch_3.02.zip
     cp patch_3.02/psopt.cxx PSOPT/src/
     # Apply local patches
+    dos2unix PSOPT/src/psopt.cxx
+    dos2unix PSOPT/src/psopt.h
     patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-gnuplot-linux.patch
     patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-c++0x-windows.patch
     patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-lambdafunction-windows.patch
     patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-bugfix-static-variable.patch
     patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-ipopt-3-11-7-compatibility.patch
     # PSOPT static library
-    sed -i -n 'H;${x;s#/usr/bin/##g;p;}' PSOPT/lib/Makefile
-    sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include#-U WIN32#g;p;}' PSOPT/lib/Makefile
+    sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include##g;p;}' PSOPT/lib/Makefile
     sed -i -n 'H;${x;s#-I$(CXSPARSE)/Include -I$(LUSOL) -I$(IPOPTINCDIR)#-I'"$PSOPT_BUILD_DIR"'/.target/include -I'"$PSOPT_BUILD_DIR"'/.target/include/coin#g;p;}' PSOPT/lib/Makefile
     make ./PSOPT/lib/libpsopt.a
     cd ..
