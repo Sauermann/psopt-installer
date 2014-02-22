@@ -57,7 +57,7 @@ mkdir -p .packages
 ./scripts/install-dmatrix-psopt-windows.sh
 ./scripts/create-combined-static-library-windows.sh
 ./scripts/compile-psopt-examples.sh
-./scripts/create-maindir-example.sh
+./scripts/create-maindir-example-windows.sh
 ./scripts/install-modern-psopt-interface.sh
 unset PSOPT_BUILD_DIR
 unset psoptInstallerDownload

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# scripts/create-combined-static-library-windows.sh
+# scripts/create-maindir-example-linux.sh
 # This file is part of Psopt Installer.
 #
 # Psopt Installer is free software: you can redistribute it and/or
@@ -45,7 +45,7 @@ CXXFLAGS  = -O0 -g -std=c++0x -DLAPACK -DUNIX -DSPARSE_MATRIX -DUSE_IPOPT -fomit
 INCLUDES  = -I$(INSTALLDIR).target/include
 #LINKFLAGS = -fPIC -L$(INSTALLDIR).target/lib -L$(INSTALLDIR).target/lib/coin -L$(INSTALLDIR).target/lib/coin/ThirdParty -L$(INSTALLDIR).target/lib64
 #LIBRARIES = -lpsopt -ldmatrix -lcxsparse -ladolc -llusol -lipopt -lcoinmumps -lopenblas -lcoinmetis -lgfortran -ldl -lm -lgcc
-LIBRARIES = -fPIC -L$(INSTALLDIR).target/lib -lcombinedpsopt -lm -lgcc
+LIBRARIES = -fPIC -L$(INSTALLDIR).target/lib -L$(INSTALLDIR).target/lib64 -lpsopt -ldmatrix -llusol -lcxsparse -lipopt -ldmumps -lmumps_common -lpord -lmpiseq -lopenblas -lesmumps -lscotch -lscotcherr -ladolc -lColPack -lgfortran -lpthread -lm -lgcc -ldl -static
 
 $(TARGET): $(TARGET).o $(OBJECT_DEPS)
 \t$(CXX) $(CXXFLAGS) $(CXXFLAGSEXTRA) $(LINKFLAGS) $^ -o $@ $(EXTRALIBS) $(LIBRARIES)
