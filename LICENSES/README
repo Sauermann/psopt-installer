@@ -29,13 +29,6 @@ Version 3.4.2
 Available at http://www.netlib.org/lapack/
 View it's license at LICENSE_LAPACK
 
-Ipopt
-=====
-Version 3.11.7
-Available at https://projects.coin-or.org/Ipopt
-It is available under the EPLv1.0
-LICENSE_EclipsePublicLicenseV1_0
-
 Scotch
 ======
 Version 6.0.0 with a patch to support MinGW compilation
@@ -47,6 +40,13 @@ Mumps
 Version 4.9.2
 Available at http://mumps.enseeiht.fr/index.php
 View it's Public Domain license at LICENSE_Mumps
+
+Ipopt
+=====
+Version 3.11.7
+Available at https://projects.coin-or.org/Ipopt
+It is available under the EPLv1.0
+LICENSE_EclipsePublicLicenseV1_0
 
 ADOL-C
 ======
