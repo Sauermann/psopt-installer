@@ -39,7 +39,7 @@ export PSOPT_BUILD_DIR=$PWD
 ./scripts/download-windows.sh
 # Predependency Packages
 mkdir -p .packages
-./scripts/install-openblas.sh
+./scripts/install-openblas-windows.sh
 ./scripts/install-scotch.sh
 ./scripts/install-mumps.sh
 ./scripts/install-ipopt.sh
