@@ -20,7 +20,6 @@
 cd .packages
 if [ ! -d Ipopt-3.11.7 ]; then
     tar xzvf ../.download/Ipopt-3.11.7.tgz
-    # bugfix for http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
     cd Ipopt-3.11.7
     # create build directory
     mkdir -p build
