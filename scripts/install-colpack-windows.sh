@@ -17,6 +17,8 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+psoptInstallerDownload ColPack-1.0.9.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
+
 cd .packages
 if [ ! -d ColPack-1.0.9 ]; then
     tar xzvf ../.download/ColPack-1.0.9.tar.gz

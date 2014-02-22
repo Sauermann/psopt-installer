@@ -17,6 +17,8 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+psoptInstallerDownload libf2c.zip http://www.netlib.org/f2c/libf2c.zip
+
 cd .packages
 if [ ! -d libf2c ]; then
     mkdir libf2c

@@ -17,6 +17,8 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+psoptInstallerDownload dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
+
 cd .packages
 if [ ! -d dlfcn-19-6 ]; then
     mkdir dlfcn-19-6
