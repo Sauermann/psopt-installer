@@ -1,0 +1,66 @@
+diff -ru Psopt3/PSOPT/src/psopt.cxx Psopt3-new/PSOPT/src/psopt.cxx
+--- Psopt3/PSOPT/src/psopt.cxx	2014-01-15 14:55:35 +0000
++++ Psopt3-new/PSOPT/src/psopt.cxx	2014-01-15 15:00:50 +0000
+@@ -7822,7 +7822,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data lines");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -7927,7 +7927,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data lines");
+ 
+          fprintf(gscript,"\nset multiplot layout %i,%i columnsfirst", nnrows,nncols);
+ 
+@@ -8058,7 +8058,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data lines");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -8200,7 +8200,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data lines");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -8380,7 +8380,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data lines");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -8477,7 +8477,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data lines");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
+@@ -8630,7 +8630,7 @@
+ 
+          if (output!=NULL) fprintf(gscript,"\nset output \"%s\"", output);
+ 
+-         fprintf(gscript,"\nset data style lines");
++         fprintf(gscript,"\nset style data lines");
+ 
+          fprintf(gscript,"\nset multiplot");
+ 
