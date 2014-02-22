@@ -45,17 +45,17 @@ export -f psoptInstallerDownload
 # Download Dependency Packages
 mkdir -p .packages
 ./scripts/install-openblas-windows.sh
-./scripts/install-scotch.sh
+./scripts/install-scotch-windows.sh
 ./scripts/install-mumps.sh
 ./scripts/install-ipopt.sh
 ./scripts/install-colpack-windows.sh
 ./scripts/install-adolc.sh
 ./scripts/install-dlfcn-windows.sh
 ./scripts/install-libf2c-windows.sh
-./scripts/install-ufconfig.sh
+./scripts/install-ufconfig-windows.sh
 ./scripts/install-cxsparse.sh
 ./scripts/install-lusol.sh
-./scripts/install-dmatrix-psopt.sh
+./scripts/install-dmatrix-psopt-windows.sh
 ./scripts/create-combined-static-library-windows.sh
 ./scripts/compile-psopt-examples.sh
 ./scripts/create-maindir-example.sh
