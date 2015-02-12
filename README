@@ -46,21 +46,23 @@ If you do not have downloaded the script yet, do:
 # ./uppis.sh
 
 
-Installation on Windows
-=======================
+Installation on Windows 64 Bit
+==============================
 
 This installation relies completely on Open-source-software, no
-compiler from Microsoft is needed.
+compiler from Microsoft is needed. 32 Bit Installations are not
+supported.
 
 OpenBLAS [7] is used as replacement of the Blas Reference
 Implementation.
 
-It was only tested on Windows 7, but should work on other flavors as
-well.
-
 PSOPT will be installed in the directory where the script is executed.
 
 You may uninstall it by deleting the directory it was installed into.
+
+Last successful tests:
+- Feb 2014 (Windows 7)
+- 2015-02-12 (Windows 8.1)
 
 MSYS
 ----
@@ -69,17 +71,18 @@ Get the MinGW/MSYS Installation tool mingw-get-setup.exe from [5].
 
 Install it in the directory $MinGWInstallDir
 of your choice (should not have whitespaces) with these packages:
-- msys-base
-- msys-wget
-- msys-unzip
-- mingw-developer-tooklitm.
+- msys-base (bin)
+- msys-wget (bin)
+- msys-unzip (bin)
+- mingw-developer-tooklitm (bin)
+- msys-console (bin) optional
 
 TDM-GCC
 -------
 
-For 64-bit support a 64 bit version of MinGW is needed.  According to
-the IPOPT recomentation download tdm-gcc-webdl.exe from [6].  Follow
-the installation instructions and install it in the directory
+A 64 bit version of the GCC compiler suite is needed.  Download
+tdm-gcc-webdl.exe (On-demand installer) from [6].  Follow the
+installation instructions and install it in the directory
 $InstallationPathOfMinGW64 of your choice (must be different from
 $MinGWInstallDir)
 
@@ -92,10 +95,10 @@ Select the following components to install:
 - gcc -> openmp
 - binutils
 - mingw64-runtime
-- mingw32-make: no
+- mingw32-make: deselect
 - gdb: optional
-- Menu items: optional
-- Add to PATH: no
+- Start Menu items: optional
+- Add to PATH: deselect
 
 In the directory $MinGWInstallDir/msys/1.0/etc/ copy fstab.sample to
 fstab and change in this file the lines
@@ -109,24 +112,26 @@ $InstallationPathOfMinGW64		/mingw
 #c:/ActiveState/perl	/perl
 ---
 
-This article might be helpful:
+Optionally in order to get a better console, you might want to use
+Console 2.00 or this article might be helpful:
 http://article.gmane.org/gmane.comp.gnu.mingw.msys/3930
+
 
 Gnuplot
 -------
 
 Usage of Gnuplot is optional and supported.
 
-Get the latest version from http://www.gnuplot.info/ and install it.
-Be sure to include the gnuplot executable into the path - the
-installer has an option for this.
+Get the current version (V 4.6.6) from [8]
+and install it.  Be sure to include the gnuplot executable into the
+path - the Gnuplot installer has an option for this.
 
 Installation
 ------------
 
 During the installation process several software packages are
-downloaded and compiled so be aware that it will take some time. On a
-test computer it lasts about 60 minutes.
+downloaded and compiled so be aware that it will take some time. On
+test computers it tool about 60-90 minutes.
 
 Start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
 user@computer:~$ cd installation_dir
@@ -141,7 +146,7 @@ Usage
 -----
 
 In the directory 'installation_dir' there will be an example-project
-'obscacle' from the PSOPT-examples dir. The accompanying Makefile
+'obstacle' from the PSOPT-examples dir. The accompanying Makefile
 should help you get started to create your own projet.
 
 Known issues
@@ -176,3 +181,4 @@ References
 [5] http://www.mingw.org/
 [6] http://tdm-gcc.tdragon.net/
 [7] http://www.openblas.net/
+[8] http://www.gnuplot.info/

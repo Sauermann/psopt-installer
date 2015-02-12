@@ -34,7 +34,7 @@ echo ""
 export PSOPT_BUILD_DIR=$PWD
 # Download packages
 ./scripts/download-windows.sh
-# Download Dependency Packages
+# Install Packages
 mkdir -p .packages
 ./scripts/install-openblas-windows.sh
 ./scripts/install-scotch.sh
