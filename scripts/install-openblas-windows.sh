@@ -20,18 +20,20 @@
 # hide most windows paths
 export PSOPT_ORIGINAL_PATH=$PATH
 export PATH=".:/mingw/bin:/bin:/c/Windows/System32"
+export PSOPT_OPENBLAS_VERSION="0.2.13"
 
 cd .packages
-if [ ! -d OpenBLAS-0.2.8 ]; then
-    tar xzvf ../.download/OpenBLAS-v0.2.8-x86_64.tar.gz
-    cd OpenBLAS-0.2.8
+if [ ! -d OpenBLAS-${PSOPT_OPENBLAS_VERSION} ]; then
+    tar xzvf ../.download/OpenBLAS-v${PSOPT_OPENBLAS_VERSION}-x86_64.tar.gz
+    cd OpenBLAS-${PSOPT_OPENBLAS_VERSION}
     make
     cd ..
 fi
-cd OpenBLAS-0.2.8
+cd OpenBLAS-${PSOPT_OPENBLAS_VERSION}
 make PREFIX=$PSOPT_BUILD_DIR/.target install
 cd ../..
 
 # Reset path
 export PATH=$ORIGINAL_PATH
 unset PSOPT_ORIGINAL_PATH
+unset PSOPT_OPENBLAS_VERSION
