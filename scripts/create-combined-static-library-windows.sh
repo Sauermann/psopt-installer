@@ -19,7 +19,8 @@
 
 # PSOPT combined static library
 cd .target/lib
-cp /mingw/lib/gcc/x86_64-w64-mingw32/4.8.1/libgfortran.a .
+cp /mingw/lib/gcc/x86_64-w64-mingw32/*/libgfortran.a .
+cp /mingw/lib/gcc/x86_64-w64-mingw32/*/libquadmath.a .
 echo "CREATE libcombinedpsopt.a
 ADDLIB libpsopt.a
 ADDLIB libdmatrix.a
@@ -37,8 +38,9 @@ ADDLIB libesmumps.a
 ADDLIB libscotch.a
 ADDLIB libscotcherr.a
 ADDLIB libgfortran.a
+ADDLIB libquadmath.a
 ADDLIB libdl.a
 SAVE
 END" | ar -M
-rm libgfortran.a
+rm libgfortran.a libquadmath.a
 cd ../..
