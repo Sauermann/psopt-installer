@@ -17,6 +17,13 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Note to self: Whenever there is a new version of Mumps, test if the
+# new version is compatible with Metis
+# http://glaros.dtc.umn.edu/gkhome/metis/metis/overview
+# in order to perhaps replace scotch
+# http://code-saturne.org/forum/viewtopic.php?f=3&t=52
+# http://www.cs.umn.edu/~agupta/doc/pp10.pdf
+
 cd .packages
 if [ ! -d MUMPS_4.9.2 ]; then
     tar xzvf ../.download/MUMPS_4.9.2.tar.gz
