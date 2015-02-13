@@ -1,3 +1,6 @@
 *~
 /.packages/
 /.download/
+/.target/
+/Makefile_include.mk
+/obstacle/
