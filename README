@@ -131,7 +131,7 @@ Installation
 
 During the installation process several software packages are
 downloaded and compiled so be aware that it will take some time. On
-test computers it tool about 60-90 minutes.
+test computers it took about 60-90 minutes.
 
 Start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
 user@computer:~$ cd installation_dir
@@ -139,7 +139,7 @@ user@computer:~/installation_dir$ wget -O psopt-installer.zip --no-check-certifi
 user@computer:~/installation_dir$ unzip psopt-installer.zip
 user@computer:~/installation_dir$ cp -r psopt-installer-master/patches .
 user@computer:~/installation_dir$ cp -r psopt-installer-master/scripts .
-user@computer:~/installation_dir$ ./psopt-installer-master/psopt-installer-windows-7-mingw-64bit.sh
+user@computer:~/installation_dir$ ./psopt-installer-master/psopt-installer-windows-mingw-64bit.sh
 user@computer:~/installation_dir$ rm -rf patches scripts
 
 Usage
