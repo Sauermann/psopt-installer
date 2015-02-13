@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo ""
-echo "psopt-installer-windows-7-mingw-64bit.sh - "
-echo "PSOPT Installation Script for Windows 7 MinGW-64"
+echo "psopt-installer-windows-mingw-64bit.sh - "
+echo "PSOPT Installation Script for Windows MinGW-64"
 echo ""
-echo "Copyright (C) 2014 Markus Sauermann"
+echo "Copyright (C) 2014-2015 Markus Sauermann"
 echo ""
 echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
