@@ -116,7 +116,6 @@ Optionally in order to get a better console, you might want to use
 Console 2.00 or this article might be helpful:
 http://article.gmane.org/gmane.comp.gnu.mingw.msys/3930
 
-
 Gnuplot
 -------
 
@@ -149,6 +148,7 @@ In the directory 'installation_dir' there will be an example-project
 'obstacle' from the PSOPT-examples dir. The accompanying Makefile
 should help you get started to create your own projet.
 
+
 Known issues
 ============
 
@@ -159,9 +159,9 @@ On Ubuntu the display of gnuplot charts does not happen automatically.
 Contact
 =======
 
-Send bugreports, comments or corrections via the github page
-https://github.com/Sauermann/psopt-installer
-or to the E-Mail psopt-installer@sauermann-consulting.de
+Send bugreports, comments or corrections preferrably via the github
+page https://github.com/Sauermann/psopt-installer or as an alternative
+to the E-Mail psopt-installer@sauermann-consulting.de
 
 
 Contributors
