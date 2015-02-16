@@ -17,16 +17,37 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Version
+export PSOPT_SCOTCH_VERSION="6.0.0"
+
+# Download
+source ./scripts/utilities.sh
+psoptInstallerDownload scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz https://gforge.inria.fr/frs/download.php/31832/scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz
+
+# Handle existence of Variable
+if [ -z "${PSOPT_BUILD_DIR+x}" ]; then
+    PSOPT_BUILD_DIR=$(pwd)
+fi
+
+# Compile
+mkdir -p .packages
 cd .packages
-if [ ! -d scotch_6.0.0_esmumps ]; then
-    tar xzvf ../.download/scotch_6.0.0_esmumps.tar.gz
-    cd scotch_6.0.0_esmumps
+if [ ! -d scotch_${PSOPT_SCOTCH_VERSION}_esmumps ]; then
+    tar xzvf ../.download/scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz
+    cd scotch_${PSOPT_SCOTCH_VERSION}_esmumps
     patch -p1 < $PSOPT_BUILD_DIR/patches/scotch-mingw-64.patch
     cd src
     make esmumps
     cd ../..
 fi
-cd scotch_6.0.0_esmumps
+
+# Install
+mkdir -p $PSOPT_BUILD_DIR/.target/lib
+mkdir -p $PSOPT_BUILD_DIR/.target/include
+cd scotch_${PSOPT_SCOTCH_VERSION}_esmumps
 cp include/scotch.h $PSOPT_BUILD_DIR/.target/include
 cp lib/*.a $PSOPT_BUILD_DIR/.target/lib
 cd ../..
+
+# Reset
+unset PSOPT_SCOTCH_VERSION
