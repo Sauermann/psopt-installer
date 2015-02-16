@@ -2,7 +2,11 @@
 
 echo "uppis.sh - PSOPT Installation Script for Ubuntu Precise Pangolin 12.04"
 echo ""
-echo "Copyright (C) 2014 Markus Sauermann"
+echo "Copyright (C) 2014, 2015 Markus Sauermann"
+echo ""
+echo "Last successfull test of this script: 2015-02-16"
+echo "If something does not work, file a bugreport here:"
+echo "https://github.com/Sauermann/psopt-installer/issues"
 echo ""
 echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
@@ -39,16 +43,6 @@ tar xzvf Ipopt-3.9.3.tgz
 # Documentation for Ipopt Third Party modules:
 # http://www.coin-or.org/Ipopt/documentation/node13.html
 cd Ipopt-3.9.3/ThirdParty
-# Blas
-# cd Blas
-# sed -i 's/ftp:/http:/g' get.Blas
-# ./get.Blas
-# cd ..
-# Lapack
-# cd Lapack
-# sed -i 's/ftp:/http:/g' get.Lapack
-# ./get.Lapack
-# cd ..
 # Metis
 cd Metis
 sed -i 's/metis\/metis/metis\/OLD\/metis/g' get.Metis
@@ -63,16 +57,6 @@ cd ..
 cd Mumps
 ./get.Mumps
 cd ..
-# ASL
-# cd ASL
-# wget --recursive --include-directories=ampl/solvers http://www.netlib.org/ampl/solvers || true
-# rm -rf solvers
-# mv www.netlib.org/ampl/solvers .
-# rm -rf www.netlib.org/
-# sed -i 's/^rm/# rm/g' get.ASL
-# sed -i 's/^tar /# tar/g' get.ASL
-# sed -i 's/^$wgetcmd/# $wgetcmd/g' get.ASL
-# cd ..
 # bugfix of http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
 cd ..
 sed -n 'H;${x;s/#include "IpReferenced.hpp"/#include <cstddef>\
@@ -82,7 +66,7 @@ mv IpSmartPtr.hpp Ipopt/src/Common/IpSmartPtr.hpp
 sed -n 'H;${x;s/#include <list>/&\
 #include <cstddef>/;p;}' Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp > IpTripletToCSRConverter.cpp
 mv IpTripletToCSRConverter.cpp Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp
-create build directory
+# create build directory
 mkdir -p build
 cd build
 # start building
@@ -147,7 +131,7 @@ sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}
 mv temp_file PSOPT/lib/Makefile
 sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
-sed -n 'H;${x;s/ADOLC_LIBS    = -ladolc/ADOLC_LIBS    = $(USERHOME)\/adolc_base\/lib64\/libadolc.a $(USERHOME)\/lib\/libColPack.a/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
+sed -n 'H;${x;s/ADOLC_LIBS    = -ladolc/ADOLC_LIBS    = $(USERHOME)\/adolc_base\/lib64\/libadolc.a $(USERHOME)\/Colpack\/lib\/libColPack.a/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
 sed -n 'H;${x;s/libcoinhsl.a/&  $(IPOPTLIBDIR)\/ThirdParty\/libcoinmumps.a $(IPOPTLIBDIR)\/ThirdParty\/libcoinmetis.a -lpthread -lgfortran -lblas -llapack -latlas -lf77blas/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc

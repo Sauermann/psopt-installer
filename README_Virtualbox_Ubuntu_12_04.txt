@@ -1,5 +1,5 @@
 Installation of Ubuntu in a virtual machine under Windows
-Last tested 2014-02-18
+Last tested 2015-02-16
 
 1. Installation of VirtualBox
 
@@ -8,7 +8,7 @@ Install VirtualBox-4.3.6
 
 2. Creation of Ubuntu virtual machine on Virtual Box
 
-Download http://releases.ubuntu.com/12.04/ubuntu-12.04.3-desktop-amd64.iso
+Download http://releases.ubuntu.com/12.04/ubuntu-12.04.5-desktop-amd64.iso
 Start VirtualBox
 Create new Virtual Machine
 Name: UbuPsopt
@@ -24,12 +24,12 @@ General->Advanced->Shared Clipboard: Bidirectional
 System->Processor: 2 CPUs
 System->Processor: + Enable PAE/NX
 Display->Video: + Enable 3D Acceleration
-Storage->Controller->IDE->Empty:Chose a virtual CD/DVD disk file: ubuntu-12.04.3-desktop-amd64.iso
+Storage->Controller->IDE->Empty:Chose a virtual CD/DVD disk file: ubuntu-12.04.5-desktop-amd64.iso
 Network->Adapter 1->Attached to: Bridged Adapter
 Network->Adapter 1->Name: <select your network interface>
 Click "OK" at the bottom of the window to save the configuration
 
-3. Installation of Ubuntu Precise Pangolin 12.04.3
+3. Installation of Ubuntu Precise Pangolin 12.04.5
 
 In VirtualBox: select DepPsopt and click on "Start"
 <click on Install Ubuntu>
@@ -49,6 +49,7 @@ Installing system: <wait ...>
 
 4. Update
 You might need to enter your password for some of these commands
+If a browser window pops up, close it.
 
 Login Screen: <enter password>
 <press Ctrl-Alt-T to open a terminal>
@@ -68,7 +69,7 @@ VirtualBox Menu->Devices->Insert Guest Additions CD Image
 <click on Run>
 Password: <enter your password>
 Press Return to close this window...: <press return>
-Rightclick on CD-Icon->Eject
+Rightclick on CD-Icon in the left toolbar->Eject
 Reboot the machine (click on the rightmost icon on the menubar)->Shut down->Restart
 <a reboot happens>
 
