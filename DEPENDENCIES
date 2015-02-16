@@ -10,6 +10,9 @@ Scotch -> "Graph Partitioning Software";
 Metis -> "Graph Partitioning Software";
 
 "Graph Partitioning Software" -> Mumps;
+"Basic Linear Algebra Subprograms" -> Mumps;
 
 "Basic Linear Algebra Subprograms" -> Ipopt
 Mumps -> Ipopt
+
+Colpack -> AdolC

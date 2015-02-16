@@ -43,7 +43,7 @@ cd OpenBLAS-${PSOPT_OPENBLAS_VERSION}
 make PREFIX=${PSOPT_BUILD_DIR}/.target install
 cd ../..
 
-# Reset path
+# Reset
 export PATH=$ORIGINAL_PATH
 unset PSOPT_ORIGINAL_PATH
 unset PSOPT_OPENBLAS_VERSION

@@ -17,15 +17,28 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Setup
+PSOPT_ADOLC_VERSION="2.4.1"
+source ./scripts/prescript.sh
+
+# Download
+psoptInstallerDownload ADOL-C-${PSOPT_ADOLC_VERSION}.tgz http://www.coin-or.org/download/source/ADOL-C/ADOL-C-${PSOPT_ADOLC_VERSION}.tgz
+
+# Compile
 cd .packages
-if [ ! -d ADOL-C-2.4.1 ]; then
-    tar xzvf ../.download/ADOL-C-2.4.1.tgz
-    cd ADOL-C-2.4.1
+if [ ! -d ADOL-C-${PSOPT_ADOLC_VERSION} ]; then
+    tar xzvf ../.download/ADOL-C-${PSOPT_ADOLC_VERSION}.tgz
+    cd ADOL-C-${PSOPT_ADOLC_VERSION}
     ./configure --enable-sparse --enable-static --with-colpack=$PSOPT_BUILD_DIR/.target --prefix $PSOPT_BUILD_DIR/.target
     make
     cd ..
 fi
-# installation
-cd ADOL-C-2.4.1
+
+# Install
+cd ADOL-C-${PSOPT_ADOLC_VERSION}
 make install
 cd ../..
+
+# Reset
+unset PSOPT_ADOLC_VERSION
+source ./scripts/postscript.sh
