@@ -17,11 +17,19 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Setup
+export PSOPT_DLFCN_VERSION="19-6"
+source ./scripts/prescript.sh
+
+# Download
+psoptInstallerDownload dlfcn-win32-r${PSOPT_DLFCN_VERSION}-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r${PSOPT_DLFCN_VERSION}/dlfcn-win32-r${PSOPT_DLFCN_VERSION}-mingw_i686-src.tar.xz
+
+# Compile
 cd .packages
-if [ ! -d dlfcn-19-6 ]; then
-    mkdir dlfcn-19-6
-    cd dlfcn-19-6
-    tar xJvf ../../.download/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
+if [ ! -d dlfcn-${PSOPT_DLFCN_VERSION} ]; then
+    mkdir dlfcn-${PSOPT_DLFCN_VERSION}
+    cd dlfcn-${PSOPT_DLFCN_VERSION}
+    tar xJvf ../../.download/dlfcn-win32-r${PSOPT_DLFCN_VERSION}-mingw_i686-src.tar.xz
     sed -i -n 'H;${x;s/sha512sum/shasum/;p;}' pkgbuild.sh
     sed -i -n 'H;${x;s/do_fixinstall=1/do_fixinstall=0/;p;}' pkgbuild.sh
     sed -i -n 'H;${x;s/do_pack=1/do_pack=0/;p;}' pkgbuild.sh
@@ -31,8 +39,15 @@ if [ ! -d dlfcn-19-6 ]; then
     sed -i -n 'H;${x;s#prefix=/mingw#prefix=#;p;}' pkgbuild.sh
     cd ..
 fi
-cd dlfcn-19-6
+
+# Install
+cd dlfcn-${PSOPT_DLFCN_VERSION}
 export arch=WIN
 ./pkgbuild.sh
 unset arch
 cd ../..
+
+# Reset
+unset PSOPT_DLFCN_VERSION
+
+source ./scripts/postscript.sh

@@ -26,7 +26,6 @@ psoptInstallerDownload()
 }
 
 
-psoptInstallerDownload dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
 psoptInstallerDownload libf2c.zip http://www.netlib.org/f2c/libf2c.zip
 psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
 psoptInstallerDownload patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
