@@ -77,6 +77,11 @@ of your choice (should not have whitespaces) with these packages:
 - mingw-developer-tooklitm (bin)
 - msys-console (bin) optional
 
+Optionally in order to get a better console, you might want to use
+Console 2.00 or these articles might be helpful:
+http://mingw.5.n7.nabble.com/mingw-get-install-console-2-td9309.html
+http://article.gmane.org/gmane.comp.gnu.mingw.msys/3930
+
 TDM-GCC
 -------
 
@@ -86,7 +91,7 @@ installation instructions and install it in the directory
 $InstallationPathOfMinGW64 of your choice (must be different from
 $MinGWInstallDir)
 
-->Create ->select MinGW-w64/TDM64 (32-bit and 64-bit)
+->Create ->select "MinGW-w64/TDM64 (32-bit and 64-bit)"
 
 Select the following components to install:
 - gcc -> core
@@ -112,16 +117,12 @@ $InstallationPathOfMinGW64		/mingw
 #c:/ActiveState/perl	/perl
 ---
 
-Optionally in order to get a better console, you might want to use
-Console 2.00 or this article might be helpful:
-http://article.gmane.org/gmane.comp.gnu.mingw.msys/3930
-
 Gnuplot
 -------
 
 Usage of Gnuplot is optional and supported.
 
-Get the current version (V 4.6.6) from [8]
+Get the current version (V 5.0.0) from [8]
 and install it.  Be sure to include the gnuplot executable into the
 path - the Gnuplot installer has an option for this.
 
