@@ -17,12 +17,7 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-psoptInstallerDownload()
-{
-    if [ ! -f $1 ]; then
-        wget -O $1 --no-check-certificate $2
-    fi;
-}
+source ./scripts/utilities.sh
 
 mkdir -p .download
 cd .download
