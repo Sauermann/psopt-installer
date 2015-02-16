@@ -27,7 +27,6 @@ psoptInstallerDownload()
 
 
 psoptInstallerDownload ADOL-C-2.4.1.tgz http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.4.1.tgz
-psoptInstallerDownload ColPack-1.0.9.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
 psoptInstallerDownload dlfcn-win32-r19-6-mingw_i686-src.tar.xz http://lrn.no-ip.info/packages/i686-w64-mingw/dlfcn-win32/r19-6/dlfcn-win32-r19-6-mingw_i686-src.tar.xz
 psoptInstallerDownload libf2c.zip http://www.netlib.org/f2c/libf2c.zip
 psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
