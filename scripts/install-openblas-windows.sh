@@ -17,11 +17,24 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-# hide most windows paths
-export PSOPT_ORIGINAL_PATH=$PATH
-export PATH=".:/mingw/bin:/bin:/c/Windows/System32"
+# Version
 export PSOPT_OPENBLAS_VERSION="0.2.13"
 
+# Download
+source ./scripts/utilities.sh
+psoptInstallerDownload OpenBLAS-v${PSOPT_OPENBLAS_VERSION}-x86_64.tar.gz https://github.com/xianyi/OpenBLAS/archive/v${PSOPT_OPENBLAS_VERSION}.tar.gz
+
+# Handle existence of Variable
+if [ -z "${PSOPT_BUILD_DIR+x}" ]; then
+    PSOPT_BUILD_DIR=$(pwd)
+fi
+
+# Hide most windows paths
+export PSOPT_ORIGINAL_PATH=$PATH
+export PATH=".:/mingw/bin:/bin:/c/Windows/System32"
+
+# Compile
+mkdir -p .packages
 cd .packages
 if [ ! -d OpenBLAS-${PSOPT_OPENBLAS_VERSION} ]; then
     tar xzvf ../.download/OpenBLAS-v${PSOPT_OPENBLAS_VERSION}-x86_64.tar.gz
@@ -29,8 +42,10 @@ if [ ! -d OpenBLAS-${PSOPT_OPENBLAS_VERSION} ]; then
     make
     cd ..
 fi
+
+# Install
 cd OpenBLAS-${PSOPT_OPENBLAS_VERSION}
-make PREFIX=$PSOPT_BUILD_DIR/.target install
+make PREFIX=${PSOPT_BUILD_DIR}/.target install
 cd ../..
 
 # Reset path

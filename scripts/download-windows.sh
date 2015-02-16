@@ -19,10 +19,6 @@
 
 source ./scripts/utilities.sh
 
-mkdir -p .download
-cd .download
-
-psoptInstallerDownload OpenBLAS-v0.2.13-x86_64.tar.gz https://github.com/xianyi/OpenBLAS/archive/v0.2.13.tar.gz
 psoptInstallerDownload Ipopt-3.11.7.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-3.11.7.tgz
 psoptInstallerDownload ADOL-C-2.4.1.tgz http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.4.1.tgz
 psoptInstallerDownload ColPack-1.0.9.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
@@ -36,5 +32,3 @@ psoptInstallerDownload lusol.zip http://www.stanford.edu/group/SOL/software/luso
 psoptInstallerDownload modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip
 psoptInstallerDownload MUMPS_4.9.2.tar.gz http://mumps.enseeiht.fr/MUMPS_4.9.2.tar.gz
 psoptInstallerDownload scotch_6.0.0_esmumps.tar.gz https://gforge.inria.fr/frs/download.php/31832/scotch_6.0.0_esmumps.tar.gz
-
-cd ..

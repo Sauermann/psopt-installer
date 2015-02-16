@@ -1,6 +1,6 @@
 PSOPT-Installer
 
-Copyright (C) 2014 Markus Sauermann
+Copyright (C) 2014, 2015 Markus Sauermann
 
 This program is free software: you can redistribute it and/or modify
 it under the GPL V3 terms in the file COPYING.
@@ -8,12 +8,16 @@ it under the GPL V3 terms in the file COPYING.
 
 Installation scripts for PSOPT [1]
 
-Currently supported: Debian Wheezy [2] natively, Ubuntu 12.04 [3]
-natively and Windows 7 [4] with MinGW/MSYS [5] and TDM-GCC [6]
+Currently supported:
+- Debian Wheezy [2] natively
+- Ubuntu 12.04 [3] natively
+- Windows 64 Bit [4] with MinGW/MSYS [5] and TDM-GCC [6]
 
-The three scripts dwpis.sh, uppis.sh and wmpis.sh are used to install
-PSOPT in Debian, Ubuntu and Windows respectively.
+The three scripts dwpis.sh, uppis.sh and
+psopt-installer-windows-mingw-64bit.sh are used to install PSOPT in
+Debian, Ubuntu and Windows respectively.
 
+Last successful tests: February 2015
 
 Installation on Debian
 ======================
@@ -59,10 +63,6 @@ Implementation.
 PSOPT will be installed in the directory where the script is executed.
 
 You may uninstall it by deleting the directory it was installed into.
-
-Last successful tests:
-- Feb 2014 (Windows 7)
-- 2015-02-12 (Windows 8.1)
 
 MSYS
 ----
