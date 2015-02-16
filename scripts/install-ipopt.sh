@@ -17,10 +17,23 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Version
+export PSOPT_IPOPT_VERSION="3.11.7"
+
+# Download
+source ./scripts/utilities.sh
+psoptInstallerDownload Ipopt-${PSOPT_IPOPT_VERSION}.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-${PSOPT_IPOPT_VERSION}.tgz
+
+# Handle existence of Variable
+if [ -z "${PSOPT_BUILD_DIR+x}" ]; then
+    PSOPT_BUILD_DIR=$(pwd)
+fi
+
+# Compile
 cd .packages
 if [ ! -d Ipopt-3.11.7 ]; then
-    tar xzvf ../.download/Ipopt-3.11.7.tgz
-    cd Ipopt-3.11.7
+    tar xzvf ../.download/Ipopt-${PSOPT_IPOPT_VERSION}.tgz
+    cd Ipopt-${PSOPT_IPOPT_VERSION}
     # create build directory
     mkdir -p build
     cd build
@@ -29,7 +42,11 @@ if [ ! -d Ipopt-3.11.7 ]; then
     make
     cd ../..
 fi
-# install
-cd Ipopt-3.11.7/build
+
+# Install
+cd Ipopt-${PSOPT_IPOPT_VERSION}/build
 make install
 cd ../../..
+
+# Reset variables
+unset PSOPT_IPOPT_VERSION
