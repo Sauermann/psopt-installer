@@ -28,7 +28,6 @@ psoptInstallerDownload()
 
 psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
 psoptInstallerDownload patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
-psoptInstallerDownload UFconfig-3.6.1.tar.gz http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
 psoptInstallerDownload CXSparse-2.2.5.tar.gz http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
 psoptInstallerDownload lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 psoptInstallerDownload modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip
