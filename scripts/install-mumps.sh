@@ -24,10 +24,25 @@
 # http://code-saturne.org/forum/viewtopic.php?f=3&t=52
 # http://www.cs.umn.edu/~agupta/doc/pp10.pdf
 
+# Version
+export PSOPT_MUMPS_VERSION="4.9.2"
+
+# Download
+source ./scripts/utilities.sh
+psoptInstallerDownload MUMPS_${PSOPT_MUMPS_VERSION}.tar.gz http://mumps.enseeiht.fr/MUMPS_${PSOPT_MUMPS_VERSION}.tar.gz
+
+# Handle existence of Variable
+if [ -z "${PSOPT_BUILD_DIR+x}" ]; then
+    export PSOPT_BUILD_DIR="$(pwd)"
+    RESET_PSOPT_BUILD_DIR="1"
+fi
+
+# Compile
+mkdir -p .packages
 cd .packages
-if [ ! -d MUMPS_4.9.2 ]; then
-    tar xzvf ../.download/MUMPS_4.9.2.tar.gz
-    cd MUMPS_4.9.2
+if [ ! -d MUMPS_${PSOPT_MUMPS_VERSION} ]; then
+    tar xzvf ../.download/MUMPS_${PSOPT_MUMPS_VERSION}.tar.gz
+    cd MUMPS_${PSOPT_MUMPS_VERSION}
     cp Make.inc/Makefile.gfortran.SEQ Makefile.inc
     sed -i 's|#SCOTCHDIR  = ${HOME}/scotch_5.1_esmumps|SCOTCHDIR  = $(PSOPT_BUILD_DIR)/.target/lib|' Makefile.inc
     sed -i 's|#LSCOTCH    = -L$(SCOTCHDIR)/lib -lesmumps -lscotch -lscotcherr|LSCOTCH    = -L$(SCOTCHDIR) -lesmumps -lscotch -lscotcherr|' Makefile.inc
@@ -36,9 +51,20 @@ if [ ! -d MUMPS_4.9.2 ]; then
     make
     cd ..
 fi
-cd MUMPS_4.9.2
+
+# Install
+mkdir -p $PSOPT_BUILD_DIR/.target/lib
+mkdir -p $PSOPT_BUILD_DIR/.target/include
+cd MUMPS_${PSOPT_MUMPS_VERSION}
 cp lib/*.a ../../.target/lib
 cp include/*.h ../../.target/include
 cp libseq/mpi.h ../../.target/include
 cp libseq/libmpiseq.a ../../.target/lib
 cd ../..
+
+# Reset
+unset PSOPT_MUMPS_VERSION
+if [ -z "${RESET_PSOPT_BUILD_DIR+x}" ]; then
+    unset RESET_PSOPT_BUILD_DIR
+    unset PSOPT_BUILD_DIR
+fi;
