@@ -28,7 +28,7 @@
 export PSOPT_MUMPS_VERSION="4.9.2"
 
 # Download
-source ./scripts/utilities.sh
+source ./scripts/prescript.sh
 psoptInstallerDownload MUMPS_${PSOPT_MUMPS_VERSION}.tar.gz http://mumps.enseeiht.fr/MUMPS_${PSOPT_MUMPS_VERSION}.tar.gz
 
 # Compile

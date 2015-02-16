@@ -21,13 +21,8 @@
 export PSOPT_OPENBLAS_VERSION="0.2.13"
 
 # Download
-source ./scripts/utilities.sh
+source ./scripts/prescript.sh
 psoptInstallerDownload OpenBLAS-v${PSOPT_OPENBLAS_VERSION}-x86_64.tar.gz https://github.com/xianyi/OpenBLAS/archive/v${PSOPT_OPENBLAS_VERSION}.tar.gz
-
-# Handle existence of Variable
-if [ -z "${PSOPT_BUILD_DIR+x}" ]; then
-    PSOPT_BUILD_DIR=$(pwd)
-fi
 
 # Hide most windows paths
 export PSOPT_ORIGINAL_PATH=$PATH
@@ -52,3 +47,5 @@ cd ../..
 export PATH=$ORIGINAL_PATH
 unset PSOPT_ORIGINAL_PATH
 unset PSOPT_OPENBLAS_VERSION
+
+source ./scripts/postscript.sh

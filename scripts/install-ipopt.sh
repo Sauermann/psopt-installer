@@ -21,13 +21,8 @@
 export PSOPT_IPOPT_VERSION="3.11.7"
 
 # Download
-source ./scripts/utilities.sh
+source ./scripts/prescript.sh
 psoptInstallerDownload Ipopt-${PSOPT_IPOPT_VERSION}.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-${PSOPT_IPOPT_VERSION}.tgz
-
-# Handle existence of Variable
-if [ -z "${PSOPT_BUILD_DIR+x}" ]; then
-    PSOPT_BUILD_DIR=$(pwd)
-fi
 
 # Compile
 cd .packages
@@ -50,3 +45,5 @@ cd ../../..
 
 # Reset variables
 unset PSOPT_IPOPT_VERSION
+
+source ./scripts/postscript.sh

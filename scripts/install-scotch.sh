@@ -21,7 +21,7 @@
 export PSOPT_SCOTCH_VERSION="6.0.0"
 
 # Download
-source ./scripts/utilities.sh
+source ./scripts/prescript.sh
 psoptInstallerDownload scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz https://gforge.inria.fr/frs/download.php/31832/scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz
 
 # Handle existence of Variable
@@ -51,3 +51,5 @@ cd ../..
 
 # Reset
 unset PSOPT_SCOTCH_VERSION
+
+source ./scripts/postscript.sh
