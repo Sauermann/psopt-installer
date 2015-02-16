@@ -17,7 +17,14 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-source ./scripts/utilities.sh
+psoptInstallerDownload()
+{
+    mkdir -p .download
+    if [ ! -f .download/$1 ]; then
+        wget -O .download/$1 --no-check-certificate $2
+    fi;
+}
+
 
 psoptInstallerDownload ADOL-C-2.4.1.tgz http://www.coin-or.org/download/source/ADOL-C/ADOL-C-2.4.1.tgz
 psoptInstallerDownload ColPack-1.0.9.tar.gz http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
