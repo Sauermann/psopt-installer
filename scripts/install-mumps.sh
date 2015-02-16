@@ -31,12 +31,6 @@ export PSOPT_MUMPS_VERSION="4.9.2"
 source ./scripts/utilities.sh
 psoptInstallerDownload MUMPS_${PSOPT_MUMPS_VERSION}.tar.gz http://mumps.enseeiht.fr/MUMPS_${PSOPT_MUMPS_VERSION}.tar.gz
 
-# Handle existence of Variable
-if [ -z "${PSOPT_BUILD_DIR+x}" ]; then
-    export PSOPT_BUILD_DIR="$(pwd)"
-    RESET_PSOPT_BUILD_DIR="1"
-fi
-
 # Compile
 mkdir -p .packages
 cd .packages
@@ -64,7 +58,5 @@ cd ../..
 
 # Reset
 unset PSOPT_MUMPS_VERSION
-if [ -z "${RESET_PSOPT_BUILD_DIR+x}" ]; then
-    unset RESET_PSOPT_BUILD_DIR
-    unset PSOPT_BUILD_DIR
-fi;
+
+source ./scripts/postscript.sh
