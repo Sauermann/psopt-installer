@@ -28,5 +28,4 @@ psoptInstallerDownload()
 
 psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
 psoptInstallerDownload patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
-psoptInstallerDownload lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 psoptInstallerDownload modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip

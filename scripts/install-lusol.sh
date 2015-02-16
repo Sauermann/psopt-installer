@@ -17,6 +17,14 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Setup
+source ./scripts/prescript.sh
+
+# Download
+psoptInstallerDownload lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
+psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
+
+# Compile
 cd .packages
 if [ ! -d lusol ]; then
     unzip ../.download/lusol.zip
@@ -26,7 +34,12 @@ if [ ! -d lusol ]; then
     make
     cd ../..
 fi
+
+# Install
 cd lusol/csrc
 cp liblusol.a $PSOPT_BUILD_DIR/.target/lib
 cp *.h $PSOPT_BUILD_DIR/.target/include
 cd ../../..
+
+# Reset
+source ./scripts/postscript.sh
