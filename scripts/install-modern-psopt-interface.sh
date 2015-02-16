@@ -17,9 +17,21 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Setup
+source ./scripts/prescript.sh
+
+# Download
+psoptInstallerDownload modern-psopt-interface.zip https://github.com/Sauermann/modern-psopt-interface/archive/master.zip
+
+# Compile
 cd .packages
 unzip ../.download/modern-psopt-interface.zip
 cd modern-psopt-interface-master
 make PSOPT=../..
+
+# Install
 make install PSOPT=../.. PREFIX=../../.target
 cd ../..
+
+# Reset
+source ./scripts/postscript.sh
