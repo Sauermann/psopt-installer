@@ -37,8 +37,6 @@ echo ""
 
 # Build Directory
 export PSOPT_BUILD_DIR=$PWD
-# Download packages
-./scripts/download-windows.sh
 # Install Packages
 mkdir -p .packages
 ./scripts/install-openblas-windows.sh
