@@ -17,6 +17,14 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Setup
+source ./scripts/prescript.sh
+
+# Download
+psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
+psoptInstallerDownload patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
+
+# Compile
 cd .packages
 if [ ! -d Psopt3 ]; then
     tar xzvf ../.download/Psopt3.tgz
@@ -46,7 +54,11 @@ if [ ! -d Psopt3 ]; then
     make ./PSOPT/lib/libpsopt.a
     cd ..
 fi
-# Install Psopt
+
+# Install
 cp Psopt3/PSOPT/lib/libpsopt.a $PSOPT_BUILD_DIR/.target/lib
 cp Psopt3/PSOPT/src/psopt.h $PSOPT_BUILD_DIR/.target/include
 cd ..
+
+# Reset
+source ./scripts/postscript.sh

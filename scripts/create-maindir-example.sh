@@ -61,4 +61,5 @@ psoptclean: clean projectpsoptclean
 ' > Makefile_include.mk
 cd obstacle
 make
+./obstacle.exe
 cd ..

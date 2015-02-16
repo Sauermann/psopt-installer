@@ -17,6 +17,9 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Setup
+source ./scripts/prescript.sh
+
 cd .packages/Psopt3
 # PSOPT Examples
 sed -i -n 'H;${x;s#"obstacle_xy.pdf");#&\
@@ -33,8 +36,12 @@ sed -i -n 'H;${x;s#ALL_LIBRARIES = $(PSOPT_LIBS) $(DMATRIX_LIBS)  $(FLIBS) $(SPA
 sed -i -n 'H;${x;s/gcc_s/gcc/;p;}' PSOPT/examples/Makefile_linux.inc
 sed -i -n 'H;${x;s#EXAMPLESDIR = .#&\
 LIBDIR = '"$PSOPT_BUILD_DIR"'/.target/lib#;p;}' PSOPT/examples/Makefile_linux.inc
-# Compilation
+
+# Compile
 if [ ! -f ../../NO_PSOPT_EXAMPLES ]; then
     make all
 fi
 cd ../..
+
+# Reset
+source ./scripts/postscript.sh
