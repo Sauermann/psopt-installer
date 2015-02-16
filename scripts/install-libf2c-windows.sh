@@ -17,6 +17,13 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+# Setup
+source ./scripts/prescript.sh
+
+# Download
+psoptInstallerDownload libf2c.zip http://www.netlib.org/f2c/libf2c.zip
+
+# Compile
 cd .packages
 if [ ! -d libf2c ]; then
     mkdir libf2c
@@ -33,9 +40,14 @@ if [ ! -d libf2c ]; then
     make
     cd ..
 fi
+
+# Install
 cd libf2c
 export LIBDIR=$PSOPT_BUILD_DIR/.target/lib
 make install
 unset LIBDIR
 cp f2c.h $PSOPT_BUILD_DIR/.target/include
 cd ../..
+
+# Reset
+source ./scripts/postscript.sh

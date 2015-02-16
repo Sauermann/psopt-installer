@@ -26,7 +26,6 @@ psoptInstallerDownload()
 }
 
 
-psoptInstallerDownload libf2c.zip http://www.netlib.org/f2c/libf2c.zip
 psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
 psoptInstallerDownload patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
 psoptInstallerDownload UFconfig-3.6.1.tar.gz http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
