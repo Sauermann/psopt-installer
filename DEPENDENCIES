@@ -1,0 +1,11 @@
+"Graph Partitioning Software" -> Mumps;
+Scotch -> "Graph Partitioning Software";
+Metis -> "Graph Partitioning Software";
+OpenBlas -> "Basic Linear Algebra Subprograms"
+Atlas -> "Basic Linear Algebra Subprograms"
+"Blas Reference Implementation" -> "Basic Linear Algebra Subprograms"
+"Basic Linear Algebra Subprograms" -> Ipopt
+Mumps -> Ipopt
+OpenBlas -> "Linear Algebra Package"
+Atlas -> "Linear Algebra Package"
+"LAPACK Refrence Implementation" -> "Linear Algebra Package"
