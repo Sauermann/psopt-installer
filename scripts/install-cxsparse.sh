@@ -17,13 +17,28 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
+
+# Setup
+export PSOPT_CXSPARSE_VERSION="2.2.5"
+source ./scripts/prescript.sh
+
+# Download
+psoptInstallerDownload CXSparse-${PSOPT_CXSPARSE_VERSION}.tar.gz http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-${PSOPT_CXSPARSE_VERSION}.tar.gz
+
+# Compile
 cd .packages
 if [ ! -d CXSparse ]; then
-    tar xzvf ../.download/CXSparse-2.2.5.tar.gz
+    tar xzvf ../.download/CXSparse-${PSOPT_CXSPARSE_VERSION}.tar.gz
     cd CXSparse
     make library
     cd ..
 fi
+
+# Install
 cd CXSparse
 make install
 cd ../..
+
+# Reset
+unset PSOPT_CXSPARSE_VERSION
+source ./scripts/postscript.sh
