@@ -2,7 +2,11 @@
 
 echo "uppis.sh - PSOPT Installation Script for Ubuntu Precise Pangolin 12.04"
 echo ""
-echo "Copyright (C) 2014 Markus Sauermann"
+echo "Copyright (C) 2014, 2015 Markus Sauermann"
+echo ""
+echo "Last successfull test of this script: 2015-02-16"
+echo "If something does not work, file a bugreport here:"
+echo "https://github.com/Sauermann/psopt-installer/issues"
 echo ""
 echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
@@ -39,16 +43,6 @@ tar xzvf Ipopt-3.9.3.tgz
 # Documentation for Ipopt Third Party modules:
 # http://www.coin-or.org/Ipopt/documentation/node13.html
 cd Ipopt-3.9.3/ThirdParty
-# Blas
-cd Blas
-sed -i 's/ftp:/http:/g' get.Blas
-./get.Blas
-cd ..
-# Lapack
-cd Lapack
-sed -i 's/ftp:/http:/g' get.Lapack
-./get.Lapack
-cd ..
 # Metis
 cd Metis
 sed -i 's/metis\/metis/metis\/OLD\/metis/g' get.Metis
@@ -62,16 +56,6 @@ cd ..
 # Mumps
 cd Mumps
 ./get.Mumps
-cd ..
-# ASL
-cd ASL
-wget --recursive --include-directories=ampl/solvers http://www.netlib.org/ampl/solvers || true
-rm -rf solvers
-mv www.netlib.org/ampl/solvers .
-rm -rf www.netlib.org/
-sed -i 's/^rm/# rm/g' get.ASL
-sed -i 's/^tar /# tar/g' get.ASL
-sed -i 's/^$wgetcmd/# $wgetcmd/g' get.ASL
 cd ..
 # bugfix of http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
 cd ..
@@ -90,18 +74,23 @@ cd build
 make install
 cd ../../..
 # Adol-C
-wget www.coin-or.org/download/source/ADOL-C/ADOL-C-2.1.12.tgz
-tar xzfv ADOL-C-2.1.12.tgz
+wget www.coin-or.org/download/source/ADOL-C/ADOL-C-2.5.0.tgz
+tar xzfv ADOL-C-2.5.0.tgz
 # with Colpack
-cd ADOL-C-2.1.12/ThirdParty
-wget http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.3.tar.gz
-tar -xzvf ColPack-1.0.3.tar.gz
+cd ADOL-C-2.5.0
+mkdir ThirdParty
+cd ThirdParty
+wget http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
+tar -xzvf ColPack-1.0.9.tar.gz
+mv ColPack-1.0.9 ColPack
 cd ColPack
+./configure --enable-static --prefix=$HOME/Colpack
 make
+make install
 cd ../..
 # and Adol-C Compilation
 # see http://list.coin-or.org/pipermail/adol-c/2012-March/000808.html
-./configure --enable-sparse --enable-static
+./configure --enable-sparse --enable-static --with-colpack=$HOME/Colpack
 make
 make install
 cd ..
@@ -142,9 +131,9 @@ sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}
 mv temp_file PSOPT/lib/Makefile
 sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
-sed -n 'H;${x;s/ADOLC_LIBS    = -ladolc/ADOLC_LIBS    = $(USERHOME)\/adolc_base\/lib64\/libadolc.a/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
+sed -n 'H;${x;s/ADOLC_LIBS    = -ladolc/ADOLC_LIBS    = $(USERHOME)\/adolc_base\/lib64\/libadolc.a $(USERHOME)\/Colpack\/lib\/libColPack.a/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
-sed -n 'H;${x;s/libcoinhsl.a/&  $(IPOPTLIBDIR)\/ThirdParty\/libcoinmumps.a $(IPOPTLIBDIR)\/ThirdParty\/libcoinmetis.a -lpthread -lgfortran $(IPOPTLIBDIR)\/ThirdParty\/libcoinblas.a $(IPOPTLIBDIR)\/ThirdParty\/libcoinlapack.a -latlas -lf77blas/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
+sed -n 'H;${x;s/libcoinhsl.a/&  $(IPOPTLIBDIR)\/ThirdParty\/libcoinmumps.a $(IPOPTLIBDIR)\/ThirdParty\/libcoinmetis.a -lpthread -lgfortran -lblas -llapack -latlas -lf77blas/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
 # Psopt Compilation
 make all
