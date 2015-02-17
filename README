@@ -131,7 +131,9 @@ Installation
 
 During the installation process several software packages are
 downloaded and compiled so be aware that it will take some time. On
-test computers it took about 60-90 minutes.
+test computers it took about 60-90 minutes und uses roughly 1.5 GB of
+empty HardDisk space.
+
 
 Start a msys shell (can be found in $MinGWInstallDir\msys\1.0\msys.bat)
 user@computer:~$ cd installation_dir
@@ -165,11 +167,11 @@ page https://github.com/Sauermann/psopt-installer or as an alternative
 to the E-Mail psopt-installer@sauermann-consulting.de
 
 
-Contributors
-============
+Thanks four your Contributions and Suggestions
+==============================================
 
-Thanks to
 Tavert
+Quang Hoa Le
 
 
 References
