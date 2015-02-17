@@ -38,7 +38,6 @@ echo ""
 # Build Directory
 export PSOPT_BUILD_DIR=$PWD
 # Install Packages
-mkdir -p .packages
 ./scripts/install-openblas-windows.sh
 ./scripts/install-scotch.sh
 ./scripts/install-mumps.sh
