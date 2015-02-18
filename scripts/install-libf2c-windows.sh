@@ -34,9 +34,6 @@ if [ ! -d libf2c ]; then
     sed -i -n 'H;${x;s/CC = cc/CC = gcc/;p;}' Makefile
     sed -i -n 'H;${x;s/a.out/a.exe/g;p;}' Makefile
     sed -i -n 'H;${x;s/CFLAGS = -O/& -DUSE_CLOCK/;p;}' Makefile
-    sed -i -n 'H;${x;s|#define abs(x) ((x) >= 0 ? (x) : -(x))|//&|;p;}' f2c.h
-    sed -i -n 'H;${x;s|#define min(a,b) ((a) <= (b) ? (a) : (b))|//&|;p;}' f2c.h
-    sed -i -n 'H;${x;s|#define max(a,b) ((a) >= (b) ? (a) : (b))|//&|;p;}' f2c.h
     make
     cd ..
 fi

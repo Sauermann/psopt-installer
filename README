@@ -120,11 +120,11 @@ $InstallationPathOfMinGW64		/mingw
 Gnuplot
 -------
 
-Usage of Gnuplot is optional and supported.
+Usage of Gnuplot is recommended.
 
-Get the current version (V 5.0.0) from [8]
-and install it.  Be sure to include the gnuplot executable into the
-path - the Gnuplot installer has an option for this.
+Get the current version (V 5.0.0) from [8] and install it.  Be sure to
+include the gnuplot executable into the path - the Gnuplot installer
+has an option for this.
 
 Installation
 ------------

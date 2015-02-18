@@ -18,7 +18,7 @@
 # <http://www.gnu.org/licenses/>.
 
 # Setup
-PSOPT_ADOLC_VERSION="2.4.1"
+PSOPT_ADOLC_VERSION="2.5.2"
 source ./scripts/prescript.sh
 
 # Download

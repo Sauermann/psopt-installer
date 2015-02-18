@@ -6,8 +6,8 @@ echo "PSOPT Installation Script for Windows MinGW-64"
 echo ""
 echo "Copyright (C) 2014-2015 Markus Sauermann"
 echo ""
-echo "Last verified successes of this script: "
-echo "Windows 7: 2015-02-17, Windows 8.1: 2015-02-12"
+echo "Last verified successful installations of this script: "
+echo "Windows 7: 2015-02-17, Windows 8.1: 2015-02-19"
 echo "If something does not work, file a bugreport here:"
 echo "https://github.com/Sauermann/psopt-installer/issues"
 echo ""
@@ -53,7 +53,13 @@ export PSOPT_BUILD_DIR=$PWD
 ./scripts/create-combined-static-library-windows.sh
 ./scripts/compile-psopt-examples.sh
 ./scripts/create-maindir-example.sh
-./scripts/install-modern-psopt-interface.sh
+
+# the upgrade of AdolC from 2.4.1 to 2.5.0 makes mix/max definition
+# changes in libf2c necessary. But somehow this broke modern psopt
+# interface.
+
+#./scripts/install-modern-psopt-interface.sh
+
 unset PSOPT_BUILD_DIR
 echo ""
 echo "installation finished"
