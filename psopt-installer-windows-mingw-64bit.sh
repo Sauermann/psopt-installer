@@ -46,7 +46,6 @@ export PSOPT_BUILD_DIR=$PWD
 ./scripts/install-adolc.sh
 ./scripts/install-dlfcn-windows.sh
 ./scripts/install-libf2c-windows.sh
-./scripts/install-ufconfig.sh
 ./scripts/install-cxsparse.sh
 ./scripts/install-lusol.sh
 ./scripts/install-dmatrix-psopt.sh

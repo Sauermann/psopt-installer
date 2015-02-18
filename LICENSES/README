@@ -79,17 +79,12 @@ Version 3.02
 Available at http://www.psopt.org/
 View it's LGPL license at LICENSE_PSOPT
 
-UFconfig
-========
-Version 3.6.1
-Available at https://www.cise.ufl.edu/research/sparse/SuiteSparse_config/
-View it's license at LICENSE_UFconfig
-
-CXSparse
-========
-Version 2.2.5
-Available at https://www.cise.ufl.edu/research/sparse/CXSparse/
-View it's LGPL license at LICENSE_CXSparse
+SuiteSparse
+===========
+Version 4.4.3
+Available at http://faculty.cse.tamu.edu/davis/suitesparse.html
+View the license of SuiteSparse_Config at LICENSE_SuitSparse_Config
+View the LGPL license of CXSparse at LICENSE_CXSparse
 
 lusol
 =====
