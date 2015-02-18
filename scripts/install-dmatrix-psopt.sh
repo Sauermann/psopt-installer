@@ -46,7 +46,7 @@ if [ ! -d Psopt3 ]; then
     patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-c++0x-windows.patch
     patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-lambdafunction-windows.patch
     patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-bugfix-static-variable.patch
-    patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-ipopt-3-11-7-compatibility.patch
+    patch -p1 < $PSOPT_BUILD_DIR/patches/psopt-ipopt-compatibility.patch
     # PSOPT static library
     sed -i -n 'H;${x;s#/usr/bin/##g;p;}' PSOPT/lib/Makefile
     sed -i -n 'H;${x;s#-I$(DMATRIXDIR)/include#-U WIN32#g;p;}' PSOPT/lib/Makefile

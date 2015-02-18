@@ -18,7 +18,7 @@
 # <http://www.gnu.org/licenses/>.
 
 # Version
-export PSOPT_IPOPT_VERSION="3.11.7"
+export PSOPT_IPOPT_VERSION="3.12.1"
 
 # Download
 source ./scripts/prescript.sh
@@ -26,7 +26,7 @@ psoptInstallerDownload Ipopt-${PSOPT_IPOPT_VERSION}.tgz http://www.coin-or.org/d
 
 # Compile
 cd .packages
-if [ ! -d Ipopt-3.11.7 ]; then
+if [ ! -d Ipopt-${PSOPT_IPOPT_VERSION} ]; then
     tar xzvf ../.download/Ipopt-${PSOPT_IPOPT_VERSION}.tgz
     cd Ipopt-${PSOPT_IPOPT_VERSION}
     # create build directory
@@ -43,7 +43,6 @@ cd Ipopt-${PSOPT_IPOPT_VERSION}/build
 make install
 cd ../../..
 
-# Reset variables
+# Reset
 unset PSOPT_IPOPT_VERSION
-
 source ./scripts/postscript.sh
