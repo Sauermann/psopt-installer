@@ -4,7 +4,7 @@ echo "uppis.sh - PSOPT Installation Script for Ubuntu Precise Pangolin 12.04"
 echo ""
 echo "Copyright (C) 2014, 2015 Markus Sauermann"
 echo ""
-echo "Last successfull test of this script: 2015-02-16"
+echo "Last successfull test of this script: 2015-00-00"
 echo "If something does not work, file a bugreport here:"
 echo "https://github.com/Sauermann/psopt-installer/issues"
 echo ""
@@ -30,6 +30,9 @@ echo "under certain conditions; see the filecontent for more information."
 
 echo ""
 read -s -p "Press enter to start the installation."
+
+./scripts/install-blas-linux.sh
+./scripts/install-scotch.sh
 
 # install necessary packages
 sudo apt-get install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran

@@ -24,11 +24,6 @@ export PSOPT_SCOTCH_VERSION="6.0.0"
 source ./scripts/prescript.sh
 psoptInstallerDownload scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz https://gforge.inria.fr/frs/download.php/31832/scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz
 
-# Handle existence of Variable
-if [ -z "${PSOPT_BUILD_DIR+x}" ]; then
-    PSOPT_BUILD_DIR=$(pwd)
-fi
-
 # Compile
 mkdir -p .packages
 cd .packages
