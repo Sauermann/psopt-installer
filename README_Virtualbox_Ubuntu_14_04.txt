@@ -1,14 +1,15 @@
-Installation of Ubuntu in a virtual machine under Windows
-Last tested 2015-02-16
+Installation of Ubuntu 14.4 in a virtual machine under Windows
+WIP ... NOT WORKING YET!!!
+Last tested 2015-00-00
 
 1. Installation of VirtualBox
 
-Download http://download.virtualbox.org/virtualbox/4.3.6/VirtualBox-4.3.6-91406-Win.exe
-Install VirtualBox-4.3.6
+Download http://download.virtualbox.org/virtualbox/4.3.18/VirtualBox-4.3.18-96516-Win.exe
+Install VirtualBox-4.3.18
 
 2. Creation of Ubuntu virtual machine on Virtual Box
 
-Download http://releases.ubuntu.com/14.04/ubuntu-14.04.1-desktop-amd64.iso
+Download http://releases.ubuntu.com/14.04/ubuntu-14.04.2-desktop-amd64.iso
 Start VirtualBox
 Create new Virtual Machine
 Name: UbuPsopt
@@ -24,18 +25,18 @@ General->Advanced->Shared Clipboard: Bidirectional
 System->Processor: 2 CPUs
 System->Processor: + Enable PAE/NX
 Display->Video: + Enable 3D Acceleration
-Storage->Controller->IDE->Empty:Chose a virtual CD/DVD disk file: ubuntu-12.04.5-desktop-amd64.iso
+Storage->Controller->IDE->Empty:Chose a virtual CD/DVD disk file: ubuntu-14.04.2-desktop-amd64.iso
 Network->Adapter 1->Attached to: Bridged Adapter
 Network->Adapter 1->Name: <select your network interface>
 Click "OK" at the bottom of the window to save the configuration
 
-3. Installation of Ubuntu Trusty Tahr 14.04.5
+3. Installation of Ubuntu 14.04.2
 
-In VirtualBox: select DepPsopt and click on "Start"
+In VirtualBox: select UbuPsopt and click on "Start"
 <click on Install Ubuntu>
-Preparing to install Ubuntu -> Continue
-Erase disk and install Ubuntu -> Continue
--> Install Now
+"Preparing to install Ubuntu" -> Continue
+Select "Erase disk and install Ubuntu" -> "Install Now"
+-> Continue
 Where are you? <your choice>
 Keyboard layout <your choice>
 Who are you?
@@ -44,7 +45,7 @@ computers name: ubupsopt
 username: <your choice for this document we assume USER>
 <the other options on this page are up to you> -> <continue>
 Installing system: <wait ...>
-<click on Restart Now>
+<click on "Restart Now">
 <press ENTER>
 
 4. Update
