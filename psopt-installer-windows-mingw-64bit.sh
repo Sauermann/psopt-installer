@@ -39,7 +39,7 @@ echo ""
 export PSOPT_BUILD_DIR=$PWD
 # Install Packages
 ./scripts/install-openblas-windows.sh
-./scripts/install-scotch.sh
+./scripts/install-scotch-windows.sh
 ./scripts/install-mumps.sh
 ./scripts/install-ipopt.sh
 ./scripts/install-colpack-windows.sh
