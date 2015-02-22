@@ -31,7 +31,7 @@ Click "OK" at the bottom of the window to save the configuration
 
 3. Installation of Ubuntu Precise Pangolin 12.04.5
 
-In VirtualBox: select DepPsopt and click on "Start"
+In VirtualBox: select UbuPsopt and click on "Start"
 <click on Install Ubuntu>
 Preparing to install Ubuntu -> Continue
 Erase disk and install Ubuntu -> Continue
