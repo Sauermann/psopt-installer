@@ -28,9 +28,11 @@ psoptInstallerDownload scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz https://gfo
 cd .packages
 if [ ! -d scotch_${PSOPT_SCOTCH_VERSION}_esmumps ]; then
     tar xzvf ../.download/scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz
-    cd scotch_${PSOPT_SCOTCH_VERSION}_esmumps
-    patch -p1 < $PSOPT_BUILD_DIR/patches/scotch-mingw-64.patch
-    cd src
+    cd scotch_${PSOPT_SCOTCH_VERSION}_esmumps/src
+    cp Make.inc/Makefile.inc.x86-64_pc_linux2 Makefile.inc
+    sed -i -n 'H;${x;s#-lz ##g;p;}' Makefile.inc
+    sed -i -n 'H;${x;s#-DCOMMON_FILE_COMPRESS_GZ -DCOMMON_PTHREAD ##g;p;}' Makefile.inc
+    sed -i -n 'H;${x;s# -DSCOTCH_PTHREAD##g;p;}' Makefile.inc
     make esmumps
     cd ../..
 fi
