@@ -31,11 +31,14 @@ echo "under certain conditions; see the filecontent for more information."
 echo ""
 read -s -p "Press enter to start the installation."
 
-./scripts/install-blas-linux.sh
-./scripts/install-scotch.sh
+# install necessary prerequisite packages
+sudo apt-get install -y gfortran g++       f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf
 
-# install necessary packages
-sudo apt-get install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
+./scripts/install-blas-linux.sh
+./scripts/install-scotch-linux.sh
+./scripts/install-mumps.sh
+./scripts/install-ipopt.sh
+
 # add directory for content
 cd ~
 mkdir -p packages
