@@ -31,6 +31,8 @@ echo "Make sure that the current user is in the groups sudo and staff."
 echo "When you are asked for the sudo password, enter your password."
 echo ""
 read -s -p "Press enter to start the installation in your homedirectory."
+echo ""
+echo ""
 
 # install needed packages
 sudo apt-get install gfortran g++ libgd2-xpm-dev libpango1.0-dev unzip libf2c2-dev libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
