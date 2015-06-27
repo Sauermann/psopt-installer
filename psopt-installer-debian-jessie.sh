@@ -26,6 +26,8 @@ echo "under certain conditions; see the filecontent for more information."
 
 echo ""
 echo "Last verified successful installation: 2015-06-27"
+echo "If this script does not work, file a bugreport here:"
+echo "https://github.com/Sauermann/psopt-installer/issues"
 echo ""
 echo "Make sure that the current user is in the groups sudo and staff."
 echo "When you are asked for the sudo password, enter your password."
