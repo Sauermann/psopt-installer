@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
-echo "dwpis.sh - PSOPT Installation Script for Debian Wheezy"
+echo "psopt-installer-debian-jessie.sh - PSOPT Installation Script for Debian Jessie"
 echo ""
-echo "Copyright (C) 2014 Markus Sauermann"
+echo "Copyright (C) 2014-2015 Markus Sauermann"
 echo ""
 echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
@@ -25,9 +25,12 @@ echo "under certain conditions; see the filecontent for more information."
 # <http://www.gnu.org/licenses/>.
 
 echo ""
-echo "Make sure that the current user is in the groups sudo and staff."
+echo "Last verified successful installation: 2015-06-27"
 echo ""
-read -s -p "Press enter to start the installation."
+echo "Make sure that the current user is in the groups sudo and staff."
+echo "When you are asked for the sudo password, enter your password."
+echo ""
+read -s -p "Press enter to start the installation in your homedirectory."
 
 # install needed packages
 sudo apt-get install gfortran g++ libgd2-xpm-dev libpango1.0-dev unzip libf2c2-dev libblas-dev liblapack-dev libatlas-base-dev f2c libblas3gf liblapack3gf
@@ -65,14 +68,14 @@ cd Mumps
 ./get.Mumps
 cd ..
 # ASL
-cd ASL
-wget --recursive --include-directories=ampl/solvers http://www.netlib.org/ampl/solvers
-mv www.netlib.org/ampl/solvers .
-rm -rf www.netlib.org/
-sed -i 's/^rm/# rm/g' get.ASL
-sed -i 's/^tar /# tar/g' get.ASL
-sed -i 's/^$wgetcmd/# $wgetcmd/g' get.ASL
-cd ..
+#cd ASL
+#wget --recursive --include-directories=ampl/solvers http://www.netlib.org/ampl/solvers
+#mv www.netlib.org/ampl/solvers .
+#rm -rf www.netlib.org/
+#sed -i 's/^rm/# rm/g' get.ASL
+#sed -i 's/^tar /# tar/g' get.ASL
+#sed -i 's/^$wgetcmd/# $wgetcmd/g' get.ASL
+#cd ..
 # Compile Ipopt
 cd ..
 # bugfix of http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
@@ -118,25 +121,33 @@ sudo ldconfig -v
 cd ..
 # Gnuplot
 wget -O gnuplot-4.2.6.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz/download
-tar xzfv gnuplot-4.2.6.tgz
+tar xzfv gnuplot-4.2.6.tar.gz
 cd gnuplot-4.2.6
 ./configure
 make
 make install
 cd ..
+# SuiteSparse
+wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.4.3.tar.gz
+tar xzvf ../packages/SuiteSparse-4.4.3.tar.gz
+tar xzvf ../packages/SuiteSparse-4.4.3.tar.gz
+cd SuiteSparse
+cd SuiteSparse_config
+make library
+make install
+cd ../CXSparse
+make library
+make install
+cd ../..
 # getting PSOPT
 wget http://psopt.googlecode.com/files/Psopt3.tgz
 wget http://psopt.googlecode.com/files/patch_3.02.zip
-wget http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
-wget http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
 wget http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 unzip patch_3.02.zip
 cd ..
 tar xzvf packages/Psopt3.tgz
 cp packages/patch_3.02/psopt.cxx Psopt3/PSOPT/src/
 cd Psopt3
-tar xzvf ../packages/UFconfig-3.6.1.tar.gz
-tar xzvf ../packages/CXSparse-2.2.5.tar.gz
 unzip ../packages/lusol.zip
 # PSOPT makefile adjustment
 sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}' PSOPT/lib/Makefile > temp_file
@@ -146,6 +157,14 @@ mv temp_file PSOPT/examples/Makefile_linux.inc
 sed -n 'H;${x;s/ADOLC_LIBS    = -ladolc/ADOLC_LIBS    = $(USERHOME)\/adolc_base\/lib64\/libadolc.a/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
 sed -n 'H;${x;s/libcoinhsl.a/& $(IPOPTLIBDIR)\/ThirdParty\/libcoinmumps.a $(IPOPTLIBDIR)\/ThirdParty\/libcoinmetis.a -lpthread/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
+mv temp_file PSOPT/examples/Makefile_linux.inc
+sed -n 'H;${x;s/all: $(CXSPARSE_LIBS)/all:/;p;}' Makefile > temp_file
+mv temp_file Makefile
+sed -n 'H;${x;s/CXSPARSE=..\/..\/CXSparse/CXSPARSE=..\/..\/..\/packages\/SuiteSparse\/CXSparse/;p;}' dmatrix/examples/Makefile > temp_file
+mv temp_file dmatrix/examples/Makefile
+sed -n 'H;${x;s/CXSPARSE=..\/..\/..\/CXSparse/CXSPARSE=..\/..\/..\/..\/packages\/SuiteSparse\/CXSparse/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
+mv temp_file PSOPT/examples/Makefile_linux.inc
+sed -n 'H;${x;s/\/usr\/lib\/liblapack.a -llapack -lm/-llapack -lgfortran -lm/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
 # Psopt Compilation
 make all
