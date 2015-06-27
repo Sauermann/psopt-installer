@@ -32,8 +32,8 @@ if [ ! -d SuiteSparse ]; then
     sed -i -n 'H;${x;s/# CC = gcc/CC = gcc/;p;}' SuiteSparse_config/SuiteSparse_config.mk
     sed -i -n 'H;${x;s/# CF = $(CFLAGS) -O3 -fexceptions -m64/CF = $(CFLAGS) -O3 -fexceptions -m64/;p;}' SuiteSparse_config/SuiteSparse_config.mk
     sed -i -n 'H;${x;s#/usr/local#'"$PSOPT_BUILD_DIR"'/.target#g;p;}' SuiteSparse_config/SuiteSparse_config.mk
-    cd SuiteSparse_config;
-    make library;
+    cd SuiteSparse_config
+    make library
     cd ../CXSparse
     make library
     cd ../..

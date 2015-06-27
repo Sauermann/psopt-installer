@@ -9,7 +9,7 @@ it under the GPL V3 terms in the file COPYING.
 Installation scripts for PSOPT [1]
 
 Currently supported:
-- Debian Wheezy [2] natively
+- Debian Jessie [2] natively
 - Ubuntu 12.04 [3] natively
 - Windows 64 Bit [4] with MinGW/MSYS [5] and TDM-GCC [6]
 
@@ -17,7 +17,7 @@ The three scripts dwpis.sh, uppis.sh and
 psopt-installer-windows-mingw-64bit.sh are used to install PSOPT in
 Debian, Ubuntu and Windows respectively.
 
-Last successful tests: February 2015
+Last successful tests: June 2015
 
 Installation on Debian
 ======================
@@ -25,14 +25,14 @@ Installation on Debian
 As a prerequisite, the user must be in the groups sudo and staff.
 
 Usage:
-In a shell on Debian do the following:
-# ./dwpis.sh
+In a shell on Debian Jessie do the following:
+# ./psopt-installer-debian-jessie.sh
 
 
 If you do not have downloaded the script yet, do:
-# wget https://raw.github.com/Sauermann/psopt-installer/master/dwpis.sh
-# chmod a+x dwpis.sh
-# ./dwpis.sh
+# wget wget https://raw.github.com/Sauermann/psopt-installer/master/psopt-installer-debian-jessie.sh
+# chmod a+x psopt-installer-debian-jessie.sh
+# ./psopt-installer-debian-jessie.sh
 
 In both cases follow the instructions (enter password for sudo twice)
 
@@ -178,7 +178,7 @@ References
 ==========
 
 [1] http://www.psopt.org/
-[2] http://www.debian.org/releases/wheezy/
+[2] http://www.debian.org/releases/jessie/
 [3] http://releases.ubuntu.com/12.04/
 [4] http://windows.microsoft.com
 [5] http://www.mingw.org/
