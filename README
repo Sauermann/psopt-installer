@@ -1,6 +1,6 @@
 PSOPT-Installer
 
-*Currently only the debian installer works, since the other installers are affected by some missing download packages*
+*Currently the Ubuntu installer noes not work, since some download packages are missing*
 
 Copyright (C) 2014, 2015 Markus Sauermann
 
