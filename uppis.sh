@@ -70,7 +70,7 @@ mv IpTripletToCSRConverter.cpp Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRC
 mkdir -p build
 cd build
 # start building
-../configure --enable-static --prefix ~/Ipopt-3.9.3
+../configure --enable-static --prefix ~/Ipopt-3.9.3 LDFLAGS="-Wl,--no-as-needed" ac_cv_have_decl_drand48=yes ac_cv_have_decl_rand=yes ac_cv_have_decl_srand=yes COIN_SKIP_PROJECTS=ASL
 make install
 cd ../../..
 # Adol-C
@@ -135,6 +135,16 @@ sed -n 'H;${x;s/ADOLC_LIBS    = -ladolc/ADOLC_LIBS    = $(USERHOME)\/adolc_base\
 mv temp_file PSOPT/examples/Makefile_linux.inc
 sed -n 'H;${x;s/libcoinhsl.a/&  $(IPOPTLIBDIR)\/ThirdParty\/libcoinmumps.a $(IPOPTLIBDIR)\/ThirdParty\/libcoinmetis.a -lpthread -lgfortran -lblas -llapack -latlas -lf77blas/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
+if ! test "x$CXX" = "x"; then
+  sed -i 's/CXX           =/#/' dmatrix/lib/Makefile
+  sed -i 's/CXX           =/#/' dmatrix/examples/Makefile
+  sed -i 's/CXX           =/#/' PSOPT/lib/Makefile
+  sed -i 's/CXX           =/#/' PSOPT/examples/Makefile_linux.inc
+fi
+for i in `ls lusol/csrc/*.h`; do
+  chmod +w $i
+  echo "" >> $i
+done
 # Psopt Compilation
 make all
 echo "installation finished"
