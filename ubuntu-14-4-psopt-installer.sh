@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "uppis.sh - PSOPT Installation Script for Ubuntu Precise Pangolin 12.04"
+echo "uppis.sh - PSOPT Installation Script for Ubuntu Trusty Tahr 14.04"
 echo ""
 echo "Copyright (C) 2014, 2015 Markus Sauermann"
 echo ""
@@ -29,15 +29,18 @@ echo "under certain conditions; see the filecontent for more information."
 # <http://www.gnu.org/licenses/>.
 
 echo ""
-read -s -p "Press enter to start the installation."
+read -s -p "Press enter to start the installation in the current directory."
+echo ""
+echo ""
 
 # install necessary prerequisite packages
-sudo apt-get install -y gfortran g++       f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf
+sudo apt-get -y install gfortran g++
+#sudo apt-get install -y gfortran g++       f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf
 
-./scripts/install-blas-linux.sh
+./scripts/install-openblas-linux.sh
 ./scripts/install-scotch-linux.sh
 ./scripts/install-mumps.sh
-./scripts/install-ipopt.sh
+./scripts/install-ipopt-ubuntu.sh
 
 # add directory for content
 cd ~
