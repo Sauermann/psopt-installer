@@ -13,7 +13,7 @@ Currently supported:
 - Ubuntu 12.04 [3] natively
 - Windows 64 Bit [4] with MinGW/MSYS [5] and TDM-GCC [6]
 
-The three installation scripts for three different operating systems:
+The three installation scripts for the three different operating systems are:
 - debian-jessie-psopt-installer.sh
 - ubuntu-12-04-psopt-installer.sh
 - windows-mingw-64bit-psopt-installer.sh
@@ -150,7 +150,7 @@ Usage
 
 In the directory 'installation_dir' there will be an example-project
 'obstacle' from the PSOPT-examples dir. The accompanying Makefile
-should help you get started to create your own projet.
+should help you get started to create your own project.
 
 
 Known issues
