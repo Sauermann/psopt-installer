@@ -22,7 +22,7 @@ export PSOPT_SCOTCH_VERSION="6.0.0"
 
 # Download
 source ./scripts/prescript.sh
-psoptInstallerDownload scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz https://gforge.inria.fr/frs/download.php/31832/scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz
+psoptInstallerDownload scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz http://sauermann.github.io/psopt-installer/download/scotch_${PSOPT_SCOTCH_VERSION}_esmumps.tar.gz
 
 # Compile
 cd .packages
