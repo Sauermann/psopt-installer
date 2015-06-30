@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# scripts/install-lusol.sh
+# scripts/install-ipopt.sh
 # This file is part of Psopt Installer.
 #
 # Psopt Installer is free software: you can redistribute it and/or
@@ -17,29 +17,32 @@
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-# Setup
-source ./scripts/prescript.sh
+# Version
+export PSOPT_IPOPT_VERSION="3.12.3"
 
 # Download
-psoptInstallerDownload lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
-psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
+source ./scripts/prescript.sh
+psoptInstallerDownload Ipopt-${PSOPT_IPOPT_VERSION}.tgz http://www.coin-or.org/download/source/Ipopt/Ipopt-${PSOPT_IPOPT_VERSION}.tgz
 
 # Compile
 cd .packages
-if [ ! -d lusol ]; then
-    unzip ../.download/lusol.zip
-    cd lusol/csrc
-    tar xOzvf ../../../.download/Psopt3.tgz ./Psopt3/Makefile.lusol > Makefile
-    sed -i -n 'H;${x;s#I = -I.#& -I'"$PSOPT_BUILD_DIR"'/.target/include#;p;}' Makefile
+if [ ! -d Ipopt-${PSOPT_IPOPT_VERSION} ]; then
+    tar xzvf ../.download/Ipopt-${PSOPT_IPOPT_VERSION}.tgz
+    cd Ipopt-${PSOPT_IPOPT_VERSION}
+    # create build directory
+    mkdir -p build
+    cd build
+    # start building
+    ../configure --prefix $PSOPT_BUILD_DIR/.target -with-blas="-lopenblas" --with-mumps-lib="-L$PSOPT_BUILD_DIR/.target/lib -ldmumps -lmumps_common -lpord -lmpiseq" --with-mumps-incdir="$PSOPT_BUILD_DIR/.target/include"
     make
     cd ../..
 fi
 
 # Install
-cd lusol/csrc
-cp liblusol.a $PSOPT_BUILD_DIR/.target/lib
-cp *.h $PSOPT_BUILD_DIR/.target/include
+cd Ipopt-${PSOPT_IPOPT_VERSION}/build
+make install
 cd ../../..
 
 # Reset
+unset PSOPT_IPOPT_VERSION
 source ./scripts/postscript.sh
