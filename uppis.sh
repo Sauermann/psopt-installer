@@ -30,9 +30,11 @@ echo "under certain conditions; see the filecontent for more information."
 
 echo ""
 read -s -p "Press enter to start the installation."
+echo ""
+echo ""
 
 # install necessary packages
-sudo apt-get install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
+sudo apt-get -y install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
 # add directory for content
 cd ~
 mkdir -p packages
@@ -112,19 +114,26 @@ cd gnuplot-4.2.6
 make
 sudo make install || true
 cd ..
+# SuiteSparse
+wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.4.3.tar.gz
+tar xzvf ../packages/SuiteSparse-4.4.3.tar.gz
+cd SuiteSparse
+cd SuiteSparse_config
+make library
+sudo make install
+cd ../CXSparse
+make library
+sudo make install
+cd ../..
 # getting PSOPT
 wget http://psopt.googlecode.com/files/Psopt3.tgz
 wget http://psopt.googlecode.com/files/patch_3.02.zip
-wget http://www.cise.ufl.edu/research/sparse/SuiteSparse_config/UFconfig-3.6.1.tar.gz
-wget http://www.cise.ufl.edu/research/sparse/CXSparse/versions/CXSparse-2.2.5.tar.gz
 wget http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 unzip patch_3.02.zip
 cd ..
 tar xzvf packages/Psopt3.tgz
 cp packages/patch_3.02/psopt.cxx Psopt3/PSOPT/src/
 cd Psopt3
-tar xzvf ../packages/UFconfig-3.6.1.tar.gz
-tar xzvf ../packages/CXSparse-2.2.5.tar.gz
 unzip ../packages/lusol.zip
 # PSOPT makefile adjustment
 sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}' PSOPT/lib/Makefile > temp_file
@@ -134,6 +143,12 @@ mv temp_file PSOPT/examples/Makefile_linux.inc
 sed -n 'H;${x;s/ADOLC_LIBS    = -ladolc/ADOLC_LIBS    = $(USERHOME)\/adolc_base\/lib64\/libadolc.a $(USERHOME)\/Colpack\/lib\/libColPack.a/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
 sed -n 'H;${x;s/libcoinhsl.a/&  $(IPOPTLIBDIR)\/ThirdParty\/libcoinmumps.a $(IPOPTLIBDIR)\/ThirdParty\/libcoinmetis.a -lpthread -lgfortran -lblas -llapack -latlas -lf77blas/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
+mv temp_file PSOPT/examples/Makefile_linux.inc
+sed -n 'H;${x;s/all: $(CXSPARSE_LIBS)/all:/;p;}' Makefile > temp_file
+mv temp_file Makefile
+sed -n 'H;${x;s/CXSPARSE=..\/..\/CXSparse/CXSPARSE=..\/..\/..\/packages\/SuiteSparse\/CXSparse/;p;}' dmatrix/examples/Makefile > temp_file
+mv temp_file dmatrix/examples/Makefile
+sed -n 'H;${x;s/CXSPARSE=..\/..\/..\/CXSparse/CXSPARSE=..\/..\/..\/..\/packages\/SuiteSparse\/CXSparse/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
 mv temp_file PSOPT/examples/Makefile_linux.inc
 # Psopt Compilation
 make all
