@@ -1,7 +1,5 @@
 PSOPT-Installer
 
-*Currently the Ubuntu installer noes not work, since some download packages are missing*
-
 Copyright (C) 2014, 2015 Markus Sauermann
 
 This program is free software: you can redistribute it and/or modify
@@ -15,9 +13,10 @@ Currently supported:
 - Ubuntu 12.04 [3] natively
 - Windows 64 Bit [4] with MinGW/MSYS [5] and TDM-GCC [6]
 
-The three scripts dwpis.sh, uppis.sh and
-psopt-installer-windows-mingw-64bit.sh are used to install PSOPT in
-Debian, Ubuntu and Windows respectively.
+The three installation scripts for three different operating systems:
+- debian-jessie-psopt-installer.sh
+- ubuntu-12-04-psopt-installer.sh
+- windows-mingw-64bit-psopt-installer.sh
 
 Last successful tests: June 2015
 
@@ -28,15 +27,15 @@ As a prerequisite, the user must be in the groups sudo and staff.
 
 Usage:
 In a shell on Debian Jessie do the following:
-# ./psopt-installer-debian-jessie.sh
+# ./debian-jessie-psopt-installer.sh
 
 
 If you do not have downloaded the script yet, do:
-# wget wget https://raw.github.com/Sauermann/psopt-installer/master/psopt-installer-debian-jessie.sh
-# chmod a+x psopt-installer-debian-jessie.sh
-# ./psopt-installer-debian-jessie.sh
+# wget https://raw.github.com/Sauermann/psopt-installer/master/debian-jessie-psopt-installer.sh
+# chmod a+x debian-jessie-psopt-installer.sh
+# ./debian-jessie-psopt-installer.sh
 
-In both cases follow the instructions (enter password for sudo twice)
+In both cases follow the instructions (enter password for sudo when asked)
 
 
 Installation on Ububtu
@@ -44,12 +43,12 @@ Installation on Ububtu
 
 Usage:
 In a shell on Ububtu do the following:
-# ./uppis.sh
+# ./ubuntu-12-04-psopt-installer.sh
 
 If you do not have downloaded the script yet, do:
-# wget https://raw.github.com/Sauermann/psopt-installer/master/uppis.sh
-# chmod a+x uppis.sh
-# ./uppis.sh
+# wget https://raw.github.com/Sauermann/psopt-installer/master/ubuntu-12-04-psopt-installer.sh
+# chmod a+x ubuntu-12-04-psopt-installer.sh
+# ./ubuntu-12-04-psopt-installer.sh
 
 
 Installation on Windows 64 Bit
@@ -143,7 +142,7 @@ user@computer:~/installation_dir$ wget -O psopt-installer.zip --no-check-certifi
 user@computer:~/installation_dir$ unzip psopt-installer.zip
 user@computer:~/installation_dir$ cp -r psopt-installer-master/patches .
 user@computer:~/installation_dir$ cp -r psopt-installer-master/scripts .
-user@computer:~/installation_dir$ ./psopt-installer-master/psopt-installer-windows-mingw-64bit.sh
+user@computer:~/installation_dir$ ./psopt-installer-master/windows-mingw-64bit-psopt-installer.sh
 user@computer:~/installation_dir$ rm -rf patches scripts
 
 Usage
@@ -157,7 +156,6 @@ should help you get started to create your own projet.
 Known issues
 ============
 
-On Debian some examples do not give the expected results.
 On Ubuntu the display of gnuplot charts does not happen automatically.
 
 

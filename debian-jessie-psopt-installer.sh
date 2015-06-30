@@ -1,8 +1,14 @@
 #!/bin/bash
 
-echo "psopt-installer-debian-jessie.sh - PSOPT Installation Script for Debian Jessie"
+echo ""
+echo "debian-jessie-psopt-installer.sh -"
+echo "PSOPT Installation Script for Debian Jessie"
 echo ""
 echo "Copyright (C) 2014-2015 Markus Sauermann"
+echo ""
+echo "Last verified successful installation: 2015-06-27"
+echo "If this script does not work, file a bugreport here:"
+echo "https://github.com/Sauermann/psopt-installer/issues"
 echo ""
 echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
@@ -24,10 +30,6 @@ echo "under certain conditions; see the filecontent for more information."
 # along with Psopt Installer.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-echo ""
-echo "Last verified successful installation: 2015-06-27"
-echo "If this script does not work, file a bugreport here:"
-echo "https://github.com/Sauermann/psopt-installer/issues"
 echo ""
 echo "Make sure that the current user is in the groups sudo and staff."
 echo "When you are asked for the sudo password, enter your password."

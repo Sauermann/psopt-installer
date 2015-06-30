@@ -1,10 +1,12 @@
 #!/bin/bash
 
-echo "uppis.sh - PSOPT Installation Script for Ubuntu Precise Pangolin 12.04"
+echo ""
+echo "ubuntu-12-04-psopt-installer.sh -"
+echo "PSOPT Installation Script for Ubuntu Precise Pangolin 12.04"
 echo ""
 echo "Copyright (C) 2014, 2015 Markus Sauermann"
 echo ""
-echo "Last successfull test of this script: 2015-02-16"
+echo "Last verified successful installation: 2015-06-30"
 echo "If something does not work, file a bugreport here:"
 echo "https://github.com/Sauermann/psopt-installer/issues"
 echo ""
@@ -29,7 +31,9 @@ echo "under certain conditions; see the filecontent for more information."
 # <http://www.gnu.org/licenses/>.
 
 echo ""
-read -s -p "Press enter to start the installation."
+echo "When you are asked for the sudo password, enter your password."
+echo ""
+read -s -p "Press enter to start the installation in your homedirectory."
 echo ""
 echo ""
 

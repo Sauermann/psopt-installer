@@ -81,7 +81,7 @@ Login Screen: <enter password>
 press Ctrl-Alt-T to open a terminal
 
 
-USER@ubupsopt:~$ wget https://raw.github.com/Sauermann/psopt-installer/master/uppis.sh
-USER@ubupsopt:~$ chmod a+x uppis.sh
-USER@ubupsopt:~$ ./uppis.sh
+USER@ubupsopt:~$ wget https://raw.github.com/Sauermann/psopt-installer/master/ubuntu-12-04-psopt-installer.sh
+USER@ubupsopt:~$ chmod a+x ubuntu-12-04-psopt-installer.sh
+USER@ubupsopt:~$ ./ubuntu-12-04-psopt-installer.sh
 <wait during installation and enter user-password for sudo twice>

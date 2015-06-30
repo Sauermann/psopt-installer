@@ -103,7 +103,7 @@ Applications Menu->Log Out -> Restart
 Login: USER, Password: <your password>
 Chose "Use default config"
 Applications Menu->Terminal Emulator
-USER@debpsopt:~$ wget https://raw.github.com/Sauermann/psopt-installer/master/psopt-installer-debian-jessie.sh
-USER@debpsopt:~$ chmod a+x psopt-installer-debian-jessie.sh
-USER@debpsopt:~$ ./psopt-installer-debian-jessie.sh
+USER@debpsopt:~$ wget https://raw.github.com/Sauermann/psopt-installer/master/debian-jessie-psopt-installer.sh
+USER@debpsopt:~$ chmod a+x debian-jessie-psopt-installer.sh
+USER@debpsopt:~$ ./debian-jessie-psopt-installer.sh
 <follow the instructions during the installation and enter user-password for sudo when asked>

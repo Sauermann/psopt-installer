@@ -1,12 +1,12 @@
 #!/bin/bash
 
 echo ""
-echo "psopt-installer-windows-mingw-64bit.sh - "
+echo "windows-mingw-64bit-psopt-installer.sh -"
 echo "PSOPT Installation Script for Windows MinGW-64"
 echo ""
 echo "Copyright (C) 2014-2015 Markus Sauermann"
 echo ""
-echo "Last verified successful installations with this script: "
+echo "Last verified successful installations: "
 echo "Windows 7: 2015-02-17, Windows 8.1: 2015-06-28"
 echo "If something does not work, file a bugreport here:"
 echo "https://github.com/Sauermann/psopt-installer/issues"
@@ -32,7 +32,8 @@ echo "under certain conditions; see the filecontent for more information."
 # <http://www.gnu.org/licenses/>.
 
 echo ""
-read -s -p "Press enter to start the installation in the CURRENT DIRECTORY."
+read -s -p "Press enter to start the installation in the current directory."
+echo ""
 echo ""
 
 # Build Directory
