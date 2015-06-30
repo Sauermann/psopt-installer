@@ -5,7 +5,7 @@ Last successfull verified installation: 2015-06-27
 1. Installation of VirtualBox
 
 Download http://download.virtualbox.org/virtualbox/4.3.28/VirtualBox-4.3.28-100309-Win.exe
-Install VirtualBox-4.3.6
+Install VirtualBox-4.3.28
 
 2. Creation of Debian Wheezy virtual machine on Virtual Box
 

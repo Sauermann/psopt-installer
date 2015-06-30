@@ -3,8 +3,8 @@ Last tested 2015-02-16
 
 1. Installation of VirtualBox
 
-Download http://download.virtualbox.org/virtualbox/4.3.6/VirtualBox-4.3.6-91406-Win.exe
-Install VirtualBox-4.3.6
+Download http://download.virtualbox.org/virtualbox/4.3.28/VirtualBox-4.3.28-100309-Win.exe
+Install VirtualBox-4.3.28
 
 2. Creation of Ubuntu virtual machine on Virtual Box
 
@@ -55,10 +55,8 @@ Login Screen: <enter password>
 <press Ctrl-Alt-T to open a terminal>
 
 USER@ubupsopt:~$ sudo apt-get update
-USER@ubupsopt:~$ sudo apt-get dist-upgrade
-<if asked to continue, answer 'y'es>
-USER@ubupsopt:~$ sudo apt-get autoremove
-<if asked to continue, answer 'y'es>
+USER@ubupsopt:~$ sudo apt-get -y dist-upgrade
+USER@ubupsopt:~$ sudo apt-get -y autoremove
 Reboot the machine (click on the rightmost icon on the menubar)->Shut down->Restart
 <a reboot happens>
 
