@@ -73,15 +73,6 @@ cd ..
 cd Mumps
 ./get.Mumps
 cd ..
-# ASL
-#cd ASL
-#wget --recursive --include-directories=ampl/solvers http://www.netlib.org/ampl/solvers
-#mv www.netlib.org/ampl/solvers .
-#rm -rf www.netlib.org/
-#sed -i 's/^rm/# rm/g' get.ASL
-#sed -i 's/^tar /# tar/g' get.ASL
-#sed -i 's/^$wgetcmd/# $wgetcmd/g' get.ASL
-#cd ..
 # Compile Ipopt
 cd ..
 # bugfix of http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=625018#10
