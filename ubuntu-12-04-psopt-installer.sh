@@ -14,6 +14,13 @@ echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
 echo "under certain conditions; see the filecontent for more information."
 
+ipv_apt=""
+ipv_wget=""
+
+#Uncomment these lines to use IPv4!
+#ipv_apt="-o Acquire::ForceIPv4=true"
+#ipv_wget="-4"
+
 # This file is part of Psopt Installer.
 #
 # Psopt Installer is free software: you can redistribute it and/or
@@ -38,13 +45,13 @@ echo ""
 echo ""
 
 # install necessary packages
-sudo apt-get -o Acquire::ForceIPv4=true -y install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
+sudo apt-get $ipv_apt -y install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
 # add directory for content
 cd ~
 mkdir -p packages
 cd packages
 # get Ipopt 3.9.3
-wget --continue http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
+wget --continue $ipv_wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
 tar xzvf Ipopt-3.9.3.tgz
 # Documentation for Ipopt Third Party modules:
 # http://www.coin-or.org/Ipopt/documentation/node13.html
@@ -56,7 +63,7 @@ sed -i 's/metis-4\.0/metis-4\.0\.1/g' get.Metis
 sed -i 's/mv metis/#mv metis/g' get.Metis
 ./get.Metis
 # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
-wget --continue http://www.math-linux.com/IMG/patch/metis-4.0.patch
+wget --continue $ipv_wget http://www.math-linux.com/IMG/patch/metis-4.0.patch
 patch -p0 < metis-4.0.patch
 cd ..
 # Mumps
@@ -80,13 +87,13 @@ cd build
 make install
 cd ../../..
 # Adol-C
-wget --continue www.coin-or.org/download/source/ADOL-C/ADOL-C-2.5.0.tgz
+wget --continue $ipv_wget www.coin-or.org/download/source/ADOL-C/ADOL-C-2.5.0.tgz
 tar xzfv ADOL-C-2.5.0.tgz
 # with Colpack
 cd ADOL-C-2.5.0
 mkdir ThirdParty
 cd ThirdParty
-wget --continue http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
+wget --continue $ipv_wget http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
 tar -xzvf ColPack-1.0.9.tar.gz
 mv ColPack-1.0.9 ColPack
 cd ColPack
@@ -101,8 +108,8 @@ make
 make install
 cd ..
 # PDFlib for Gnuplot
-cd packages
-wget --continue http://www.pdflib.com/binaries/PDFlib/705/PDFlib-Lite-7.0.5p3.tar.gz
+cd packages #TODO: Not sure why this is here, given the previous `cd` call
+wget --continue $ipv_wget http://www.pdflib.com/binaries/PDFlib/705/PDFlib-Lite-7.0.5p3.tar.gz
 tar xzvf PDFlib-Lite-7.0.5p3.tar.gz
 cd PDFlib-Lite-7.0.5p3
 ./configure --enable-static
@@ -111,7 +118,7 @@ sudo make install
 sudo ldconfig -v
 cd ..
 # Gnuplot
-wget --continue -O gnuplot-4.2.6.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz/download
+wget --continue $ipv_wget -O gnuplot-4.2.6.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz/download
 tar xzfv gnuplot-4.2.6.tar.gz
 cd gnuplot-4.2.6
 ./configure --without-tutorial
@@ -119,7 +126,7 @@ make
 sudo make install || true
 cd ..
 # SuiteSparse
-wget --continue http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.4.3.tar.gz
+wget --continue $ipv_wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.4.3.tar.gz
 tar xzvf ../packages/SuiteSparse-4.4.3.tar.gz
 cd SuiteSparse
 cd SuiteSparse_config
@@ -130,9 +137,9 @@ make library
 sudo make install
 cd ../..
 # getting PSOPT
-wget --continue http://psopt.googlecode.com/files/Psopt3.tgz
-wget --continue http://psopt.googlecode.com/files/patch_3.02.zip
-wget --continue http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
+wget --continue $ipv_wget -4 https://psopt.googlecode.com/files/Psopt3.tgz
+wget --continue $ipv_wget -4 https://psopt.googlecode.com/files/patch_3.02.zip
+wget --continue $ipv_wget -4 http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 unzip patch_3.02.zip
 cd ..
 tar xzvf packages/Psopt3.tgz
