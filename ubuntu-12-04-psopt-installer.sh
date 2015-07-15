@@ -44,7 +44,7 @@ cd ~
 mkdir -p packages
 cd packages
 # get Ipopt 3.9.3
-wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
+wget --continue http://www.coin-or.org/download/source/Ipopt/Ipopt-3.9.3.tgz
 tar xzvf Ipopt-3.9.3.tgz
 # Documentation for Ipopt Third Party modules:
 # http://www.coin-or.org/Ipopt/documentation/node13.html
@@ -56,7 +56,7 @@ sed -i 's/metis-4\.0/metis-4\.0\.1/g' get.Metis
 sed -i 's/mv metis/#mv metis/g' get.Metis
 ./get.Metis
 # Patching is necessary. See http://www.math-linux.com/mathematics/Linear-Systems/How-to-patch-metis-4-0-error
-wget http://www.math-linux.com/IMG/patch/metis-4.0.patch
+wget --continue http://www.math-linux.com/IMG/patch/metis-4.0.patch
 patch -p0 < metis-4.0.patch
 cd ..
 # Mumps
@@ -80,13 +80,13 @@ cd build
 make install
 cd ../../..
 # Adol-C
-wget www.coin-or.org/download/source/ADOL-C/ADOL-C-2.5.0.tgz
+wget --continue www.coin-or.org/download/source/ADOL-C/ADOL-C-2.5.0.tgz
 tar xzfv ADOL-C-2.5.0.tgz
 # with Colpack
 cd ADOL-C-2.5.0
 mkdir ThirdParty
 cd ThirdParty
-wget http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
+wget --continue http://cscapes.cs.purdue.edu/download/ColPack/ColPack-1.0.9.tar.gz
 tar -xzvf ColPack-1.0.9.tar.gz
 mv ColPack-1.0.9 ColPack
 cd ColPack
@@ -102,7 +102,7 @@ make install
 cd ..
 # PDFlib for Gnuplot
 cd packages
-wget http://www.pdflib.com/binaries/PDFlib/705/PDFlib-Lite-7.0.5p3.tar.gz
+wget --continue http://www.pdflib.com/binaries/PDFlib/705/PDFlib-Lite-7.0.5p3.tar.gz
 tar xzvf PDFlib-Lite-7.0.5p3.tar.gz
 cd PDFlib-Lite-7.0.5p3
 ./configure --enable-static
@@ -111,7 +111,7 @@ sudo make install
 sudo ldconfig -v
 cd ..
 # Gnuplot
-wget -O gnuplot-4.2.6.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz/download
+wget --continue -O gnuplot-4.2.6.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz/download
 tar xzfv gnuplot-4.2.6.tar.gz
 cd gnuplot-4.2.6
 ./configure --without-tutorial
@@ -119,7 +119,7 @@ make
 sudo make install || true
 cd ..
 # SuiteSparse
-wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.4.3.tar.gz
+wget --continue http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.4.3.tar.gz
 tar xzvf ../packages/SuiteSparse-4.4.3.tar.gz
 cd SuiteSparse
 cd SuiteSparse_config
@@ -130,9 +130,9 @@ make library
 sudo make install
 cd ../..
 # getting PSOPT
-wget http://psopt.googlecode.com/files/Psopt3.tgz
-wget http://psopt.googlecode.com/files/patch_3.02.zip
-wget http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
+wget --continue http://psopt.googlecode.com/files/Psopt3.tgz
+wget --continue http://psopt.googlecode.com/files/patch_3.02.zip
+wget --continue http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 unzip patch_3.02.zip
 cd ..
 tar xzvf packages/Psopt3.tgz
