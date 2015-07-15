@@ -77,10 +77,10 @@ cd ..
 sed -n 'H;${x;s/#include "IpReferenced.hpp"/#include <cstddef>\
 \
 &/;p;}' Ipopt/src/Common/IpSmartPtr.hpp > IpSmartPtr.hpp
-mv IpSmartPtr.hpp Ipopt/src/Common/IpSmartPtr.hpp
+mv -f IpSmartPtr.hpp Ipopt/src/Common/IpSmartPtr.hpp
 sed -n 'H;${x;s/#include <list>/&\
 #include <cstddef>/;p;}' Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp > IpTripletToCSRConverter.cpp
-mv IpTripletToCSRConverter.cpp Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp
+mv -f IpTripletToCSRConverter.cpp Ipopt/src/Algorithm/LinearSolvers/IpTripletToCSRConverter.cpp
 # create build directory
 mkdir -p build
 cd build
@@ -150,19 +150,19 @@ cd Psopt3
 unzip ../packages/lusol.zip
 # PSOPT makefile adjustment
 sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}' PSOPT/lib/Makefile > temp_file
-mv temp_file PSOPT/lib/Makefile
+mv -f temp_file PSOPT/lib/Makefile
 sed -n 'H;${x;s/CXXFLAGS      = -O0 -g/& -I$(USERHOME)\/adolc_base\/include/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
-mv temp_file PSOPT/examples/Makefile_linux.inc
+mv -f temp_file PSOPT/examples/Makefile_linux.inc
 sed -n 'H;${x;s/ADOLC_LIBS    = -ladolc/ADOLC_LIBS    = $(USERHOME)\/adolc_base\/lib64\/libadolc.a $(USERHOME)\/Colpack\/lib\/libColPack.a/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
-mv temp_file PSOPT/examples/Makefile_linux.inc
+mv -f temp_file PSOPT/examples/Makefile_linux.inc
 sed -n 'H;${x;s/libcoinhsl.a/&  $(IPOPTLIBDIR)\/ThirdParty\/libcoinmumps.a $(IPOPTLIBDIR)\/ThirdParty\/libcoinmetis.a -lpthread -lgfortran -lblas -llapack -latlas -lf77blas/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
-mv temp_file PSOPT/examples/Makefile_linux.inc
+mv -f temp_file PSOPT/examples/Makefile_linux.inc
 sed -n 'H;${x;s/all: $(CXSPARSE_LIBS)/all:/;p;}' Makefile > temp_file
-mv temp_file Makefile
+mv -f temp_file Makefile
 sed -n 'H;${x;s/CXSPARSE=..\/..\/CXSparse/CXSPARSE=..\/..\/..\/packages\/SuiteSparse\/CXSparse/;p;}' dmatrix/examples/Makefile > temp_file
-mv temp_file dmatrix/examples/Makefile
+mv -f temp_file dmatrix/examples/Makefile
 sed -n 'H;${x;s/CXSPARSE=..\/..\/..\/CXSparse/CXSPARSE=..\/..\/..\/..\/packages\/SuiteSparse\/CXSparse/;p;}' PSOPT/examples/Makefile_linux.inc > temp_file
-mv temp_file PSOPT/examples/Makefile_linux.inc
+mv -f temp_file PSOPT/examples/Makefile_linux.inc
 # Psopt Compilation
 make all
 echo "installation finished"
