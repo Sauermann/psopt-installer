@@ -38,7 +38,7 @@ echo ""
 echo ""
 
 # install necessary packages
-sudo apt-get -y install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
+sudo apt-get -o Acquire::ForceIPv4=true -y install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
 # add directory for content
 cd ~
 mkdir -p packages
