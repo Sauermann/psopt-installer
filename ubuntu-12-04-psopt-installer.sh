@@ -44,6 +44,8 @@ read -s -p "Press enter to start the installation in your homedirectory."
 echo ""
 echo ""
 
+instdir=/z/
+
 # install necessary packages
 sudo apt-get $ipv_apt -y install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
 # add directory for content
@@ -85,7 +87,7 @@ cd build
 # start building
 ../configure --enable-static --prefix ~/Ipopt-3.9.3
 make install
-cd ../../..
+cd ~/packages
 # Adol-C
 wget --continue $ipv_wget www.coin-or.org/download/source/ADOL-C/ADOL-C-2.5.0.tgz
 tar xzfv ADOL-C-2.5.0.tgz
@@ -100,13 +102,13 @@ cd ColPack
 ./configure --enable-static --prefix=$HOME/Colpack
 make
 make install
-cd ../..
+cd ../..  #Puts us in the ADOL-C-2.5.0 directory
 # and Adol-C Compilation
 # see http://list.coin-or.org/pipermail/adol-c/2012-March/000808.html
 ./configure --enable-sparse --enable-static --with-colpack=$HOME/Colpack
 make
 make install
-cd ..
+cd ..       #Takes us back to ~/packages
 # PDFlib for Gnuplot
 cd packages #TODO: Not sure why this is here, given the previous `cd` call
 wget --continue $ipv_wget http://www.pdflib.com/binaries/PDFlib/705/PDFlib-Lite-7.0.5p3.tar.gz
@@ -135,7 +137,7 @@ sudo make install
 cd ../CXSparse
 make library
 sudo make install
-cd ../..
+cd ~/packages
 # getting PSOPT
 wget --continue $ipv_wget -4 https://psopt.googlecode.com/files/Psopt3.tgz
 wget --continue $ipv_wget -4 https://psopt.googlecode.com/files/patch_3.02.zip
