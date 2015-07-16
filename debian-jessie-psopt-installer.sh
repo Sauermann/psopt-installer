@@ -117,7 +117,7 @@ make install
 sudo ldconfig -v
 cd ..
 # Gnuplot
-wget -O gnuplot-4.2.6.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz/download
+wget -O gnuplot-4.2.6.tar.gz http://sauermann.github.io/psopt-installer/download/gnuplot-4.2.6.tar.gz
 tar xzfv gnuplot-4.2.6.tar.gz
 cd gnuplot-4.2.6
 ./configure

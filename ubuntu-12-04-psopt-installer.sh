@@ -6,7 +6,7 @@ echo "PSOPT Installation Script for Ubuntu Precise Pangolin 12.04"
 echo ""
 echo "Copyright (C) 2014, 2015 Markus Sauermann"
 echo ""
-echo "Last verified successful installation: 2015-06-30"
+echo "Last verified successful installation: 2015-07-16"
 echo "If something does not work, file a bugreport here:"
 echo "https://github.com/Sauermann/psopt-installer/issues"
 echo ""
@@ -17,7 +17,7 @@ echo "under certain conditions; see the filecontent for more information."
 ipv_apt=""
 ipv_wget=""
 
-#Uncomment these lines to use IPv4!
+#Uncomment these lines to use IPv4
 #ipv_apt="-o Acquire::ForceIPv4=true"
 #ipv_wget="-4"
 
@@ -43,8 +43,6 @@ echo ""
 read -s -p "Press enter to start the installation in your homedirectory."
 echo ""
 echo ""
-
-instdir=/z/
 
 # install necessary packages
 sudo apt-get $ipv_apt -y install f2c libf2c2-dev libf2c2 libblas-dev libblas3gf libatlas-base-dev liblapack-dev liblapack3gf g++ gfortran
@@ -102,15 +100,14 @@ cd ColPack
 ./configure --enable-static --prefix=$HOME/Colpack
 make
 make install
-cd ../..  #Puts us in the ADOL-C-2.5.0 directory
+cd ../.. #Puts us in the ADOL-C-2.5.0 directory
 # and Adol-C Compilation
 # see http://list.coin-or.org/pipermail/adol-c/2012-March/000808.html
 ./configure --enable-sparse --enable-static --with-colpack=$HOME/Colpack
 make
 make install
-cd ..       #Takes us back to ~/packages
+cd ~/packages #Takes us back to ~/packages
 # PDFlib for Gnuplot
-cd packages #TODO: Not sure why this is here, given the previous `cd` call
 wget --continue $ipv_wget http://www.pdflib.com/binaries/PDFlib/705/PDFlib-Lite-7.0.5p3.tar.gz
 tar xzvf PDFlib-Lite-7.0.5p3.tar.gz
 cd PDFlib-Lite-7.0.5p3
@@ -120,7 +117,7 @@ sudo make install
 sudo ldconfig -v
 cd ..
 # Gnuplot
-wget --continue $ipv_wget -O gnuplot-4.2.6.tar.gz http://sourceforge.net/projects/gnuplot/files/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz/download
+wget --continue $ipv_wget -O gnuplot-4.2.6.tar.gz http://sauermann.github.io/psopt-installer/download/gnuplot-4.2.6.tar.gz
 tar xzfv gnuplot-4.2.6.tar.gz
 cd gnuplot-4.2.6
 ./configure --without-tutorial
@@ -139,9 +136,9 @@ make library
 sudo make install
 cd ~/packages
 # getting PSOPT
-wget --continue $ipv_wget -4 https://psopt.googlecode.com/files/Psopt3.tgz
-wget --continue $ipv_wget -4 https://psopt.googlecode.com/files/patch_3.02.zip
-wget --continue $ipv_wget -4 http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
+wget --continue $ipv_wget https://psopt.googlecode.com/files/Psopt3.tgz
+wget --continue $ipv_wget https://psopt.googlecode.com/files/patch_3.02.zip
+wget --continue $ipv_wget http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 unzip patch_3.02.zip
 cd ..
 tar xzvf packages/Psopt3.tgz
