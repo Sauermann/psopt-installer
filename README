@@ -6,7 +6,10 @@ This program is free software: you can redistribute it and/or modify
 it under the GPL V3 terms in the file COPYING.
 
 
-Installation scripts for PSOPT [1]
+Installation scripts for PSOPT3 [1]
+
+PSOPT4 [9] comes with it's own Ubuntu 14.04 installer and is not supported
+by these scripts.
 
 Currently supported:
 - Debian Jessie [2] natively
@@ -187,3 +190,4 @@ References
 [6] http://tdm-gcc.tdragon.net/
 [7] http://www.openblas.net/
 [8] http://www.gnuplot.info/
+[9] https://github.com/PSOPT/psopt
