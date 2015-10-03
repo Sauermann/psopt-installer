@@ -21,7 +21,7 @@ The three installation scripts for the three different operating systems are:
 - ubuntu-12-04-psopt-installer.sh
 - windows-mingw-64bit-psopt-installer.sh
 
-Last successful tests: June 2015
+Last successful tests: October 2015
 
 
 Installation on Debian
@@ -98,7 +98,7 @@ $MinGWInstallDir)
 
 ->Create ->select "MinGW-w64/TDM64 (32-bit and 64-bit)"
 
-Select the following components to install:
+Select the following components to install (GCC v5.1 is the intended version):
 - gcc -> core
 - gcc -> c++
 - gcc -> fortran

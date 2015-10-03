@@ -1,0 +1,128 @@
+diff -ru Psopt3/PSOPT/src/psopt.cxx Psopt3-new/PSOPT/src/psopt.cxx
+--- Psopt3/PSOPT/src/psopt.cxx	2015-10-03 14:03:36 +0000
++++ Psopt3-new/PSOPT/src/psopt.cxx	2015-10-03 14:34:42 +0000
+@@ -7775,7 +7775,7 @@
+ 
+ 
+ 
+-void plot(DMatrix& xa, DMatrix& ya, const string& title, char* xlabel, char* ylabel, char* legend, char* terminal, char* output)
++void plot(DMatrix& xa, DMatrix& ya, const string& title, const char* xlabel, const char* ylabel, const char* legend, const char* terminal, const char* output)
+ {
+ 
+          DMatrix x = xa;
+@@ -7873,7 +7873,7 @@
+ }
+ 
+ 
+-void multiplot(DMatrix& xa, DMatrix& ya, const string& title, char* xlabel, char* ylabel, char* legend, int nrows, int ncols, char* terminal,  char* output )
++void multiplot(DMatrix& xa, DMatrix& ya, const string& title, const char* xlabel, const char* ylabel, const char* legend, int nrows, int ncols, const char* terminal,  const char* output )
+ {
+          DMatrix x = xa;
+ 
+@@ -8009,7 +8009,7 @@
+ 
+ 
+ 
+-void plot(DMatrix& x1a, DMatrix& y1a, DMatrix& x2a, DMatrix& y2a, const string& title, char* xlabel, char* ylabel, char* legend, char* terminal, char* output)
++void plot(DMatrix& x1a, DMatrix& y1a, DMatrix& x2a, DMatrix& y2a, const string& title, const char* xlabel, const char* ylabel, const char* legend, const char* terminal, const char* output)
+ {
+ 
+          DMatrix x1 = x1a;
+@@ -8150,7 +8150,7 @@
+ 
+ 
+ void plot(DMatrix& x1a, DMatrix& y1a, DMatrix& x2a, DMatrix& y2a, DMatrix& x3a, DMatrix& y3a,
+-          const string& title, char* xlabel, char* ylabel, char* legend, char* terminal, char* output)
++          const string& title, const char* xlabel, const char* ylabel, const char* legend, const char* terminal, const char* output)
+ {
+          DMatrix x1 = x1a;
+ 	 DMatrix y1 = y1a;
+@@ -8788,7 +8788,7 @@
+ 
+ 
+ 
+-void surf(DMatrix& xa, DMatrix& ya, DMatrix& za, const string& title, char* xlabel, char* ylabel, char* zlabel, char* terminal, char* output, char* view)
++void surf(DMatrix& xa, DMatrix& ya, DMatrix& za, const string& title, const char* xlabel, const char* ylabel, const char* zlabel, const char* terminal, const char* output, const char* view)
+ {
+ 	 // This function creates surface plots given the co-ordinate values (x,y) and the height matrix z.
+ 
+@@ -8883,7 +8883,7 @@
+ 
+ }
+ 
+-void plot3(DMatrix& xa, DMatrix& ya, DMatrix& za, const string& title, char* xlabel, char* ylabel, char* zlabel, char* terminal, char* output, char* view)
++void plot3(DMatrix& xa, DMatrix& ya, DMatrix& za, const string& title, const char* xlabel, const char* ylabel, const char* zlabel, const char* terminal, const char* output, const char* view)
+ {
+ 	 // This function creates 3d plots given the co-ordinate values (x,y) and the height vector z.
+ 
+@@ -9424,7 +9424,7 @@
+ }
+ 
+ 
+-void psopt_print(char* msg)
++void psopt_print(const char* msg)
+ {
+     if (aux_local_pr->algorithm->print_level) {
+          fprintf(stderr,"%s", msg);
+@@ -11302,7 +11302,7 @@
+ }
+ 
+ 
+-void load_parameter_estimation_data(Prob& problem, int iphase, char* filename)
++void load_parameter_estimation_data(Prob& problem, int iphase, const char* filename)
+ {
+     // This function reads data for parameter estimation problems for a given phase "iphase" from a file
+     // whose columns contain the following information:
+diff -ru Psopt3/PSOPT/src/psopt.h Psopt3-new/PSOPT/src/psopt.h
+--- Psopt3/PSOPT/src/psopt.h	2015-10-03 14:03:36 +0000
++++ Psopt3-new/PSOPT/src/psopt.h	2015-10-03 14:34:50 +0000
+@@ -796,15 +796,15 @@
+ void auto_link_2(adouble* linkages, int* index, adouble* xad, int iphase_a, int iphase_b);
+ 
+ void plot(DMatrix& x, DMatrix& y,const string& title,
+-          char* xlabel, char* ylabel, char* legend=NULL, char* terminal=NULL, char* output=NULL);
++          const char* xlabel, const char* ylabel, const char* legend=NULL, const char* terminal=NULL, const char* output=NULL);
+ 
+ void plot(DMatrix& x1, DMatrix& y1, DMatrix& x2, DMatrix& y2, const string& title,
+-          char* xlabel, char* ylabel, char* legend=NULL, char* terminal=NULL, char* output=NULL);
++          const char* xlabel, const char* ylabel, const char* legend=NULL, const char* terminal=NULL, const char* output=NULL);
+ 
+ void plot(DMatrix& x1, DMatrix& y1, DMatrix& x2, DMatrix& y2, DMatrix& x3, DMatrix& y3,
+-          const string& title, char* xlabel, char* ylabel, char* legend=NULL, char* terminal=NULL, char* output=NULL);
++          const string& title, const char* xlabel, const char* ylabel, const char* legend=NULL, const char* terminal=NULL, const char* output=NULL);
+ 
+-void multiplot(DMatrix& x, DMatrix& y, const string& title, char* xlabel, char* ylabel, char* legend, int nrows=0, int ncols=0,  char* terminal=NULL, char* output=NULL ) ;
++void multiplot(DMatrix& x, DMatrix& y, const string& title, const char* xlabel, const char* ylabel, const char* legend, int nrows=0, int ncols=0,  const char* terminal=NULL, const char* output=NULL ) ;
+ 
+ void polar(DMatrix& theta, DMatrix& r, const string& title,
+            char* legend=NULL, char* terminal=NULL, char* output=NULL);
+@@ -815,9 +815,9 @@
+ void polar(DMatrix& theta, DMatrix& r, DMatrix& theta2, DMatrix& r2,  DMatrix& theta3, DMatrix& r3, const string& title,
+             char* legend=NULL, char* terminal=NULL, char* output=NULL);
+ 
+-void surf(DMatrix& x, DMatrix& y, DMatrix& z, const string& title, char* xlabel, char* ylabel, char* zlabel, char* terminal=NULL, char* output=NULL, char* view=NULL);
++void surf(DMatrix& x, DMatrix& y, DMatrix& z, const string& title, const char* xlabel, const char* ylabel, const char* zlabel, const char* terminal=NULL, const char* output=NULL, const char* view=NULL);
+ 
+-void plot3(DMatrix& x, DMatrix& y, DMatrix& z, const string& title, char* xlabel, char* ylabel, char* zlabel, char* terminal=NULL, char* output=NULL, char* view=NULL);
++void plot3(DMatrix& x, DMatrix& y, DMatrix& z, const string& title, const char* xlabel, const char* ylabel, const char* zlabel, const char* terminal=NULL, const char* output=NULL, const char* view=NULL);
+ 
+ void psopt_error_message(const char *error_text);
+ 
+@@ -837,7 +837,7 @@
+ 
+ void clip_vector_given_bounds(DMatrix& xp, DMatrix& xlb, DMatrix& xub);
+ 
+-void psopt_print(char* msg);
++void psopt_print(const char* msg);
+ 
+ int auto_link_count(Prob& problem, int nstates);
+ 
+@@ -899,7 +899,7 @@
+ 
+ void resample_trajectory(DMatrix& Y, DMatrix& X, DMatrix& Ydata, DMatrix& Xdata);
+ 
+-void load_parameter_estimation_data(Prob& problem, int iphase, char* filename);
++void load_parameter_estimation_data(Prob& problem, int iphase, const char* filename);
+ 
+ bool compute_parameter_statistics(DMatrix& Qp, DMatrix& p, DMatrix& plow, DMatrix& phigh, DMatrix& r);
+ 

@@ -67,3 +67,13 @@ scotch-mingw-64.patch
 
 Allow compilation of Scotch in Mingw-64.
 Add a dummy function 'pipe' and make changes to Makefile.inc
+
+psopt-gcc-5.patch
+=================
+
+Make Psopt compilable under gcc v5.1.
+Make some function parameters string constants.
+
+Note to self
+============
+diff -ru Psopt3/PSOPT/src Psopt3-new/PSOPT/src > diff.txt
