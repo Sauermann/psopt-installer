@@ -21,8 +21,8 @@
 source ./scripts/prescript.sh
 
 # Download
-psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
-psoptInstallerDownload patch_3.02.zip http://psopt.googlecode.com/files/patch_3.02.zip
+psoptInstallerDownload Psopt3.tgz https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/psopt/Psopt3.tgz
+psoptInstallerDownload patch_3.02.zip https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/psopt/patch_3.02.zip
 
 # Compile
 cd .packages
