@@ -136,8 +136,8 @@ make library
 sudo make install
 cd ~/packages
 # getting PSOPT
-wget --continue $ipv_wget https://psopt.googlecode.com/files/Psopt3.tgz
-wget --continue $ipv_wget https://psopt.googlecode.com/files/patch_3.02.zip
+wget --continue $ipv_wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/psopt/Psopt3.tgz
+wget --continue $ipv_wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/psopt/patch_3.02.zip
 wget --continue $ipv_wget http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
 unzip patch_3.02.zip
 cd ..
