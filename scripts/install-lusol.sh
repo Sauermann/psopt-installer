@@ -22,7 +22,7 @@ source ./scripts/prescript.sh
 
 # Download
 psoptInstallerDownload lusol.zip http://www.stanford.edu/group/SOL/software/lusol/lusol.zip
-psoptInstallerDownload Psopt3.tgz http://psopt.googlecode.com/files/Psopt3.tgz
+psoptInstallerDownload Psopt3.tgz https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/psopt/Psopt3.tgz
 
 # Compile
 cd .packages
